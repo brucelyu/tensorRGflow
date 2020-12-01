@@ -34,8 +34,8 @@
 \usepackage[english]{babel}
 \usepackage{helvet}
 \usepackage{microtype}
-% \usepackage[pdftex]{hyperref}
-\usepackage[hidelinks]{hyperref}
+\usepackage[pdftex,hidelinks]{hyperref}
+% \usepackage[hidelinks]{hyperref}
 \usepackage{bbold}
 \usepackage{mathrsfs}
 
@@ -1826,17 +1826,29 @@ performing the response analysis, since the perturbations around the
 fixed-point tensor do not have to preserve $\mathbb{Z}_2$ symmetry (for
 example, the spin operator). The second remark is about the improvement
 of the results of response analysis as the bound dimension
-$\chi$ increases. 
-% TODO
-
-The final remark is that the Gilt-HOTRG
-can be replaced with TNR~\cite{tnr,tnralgo} with few changes of other
-procedures, since TNR is known to be capable of exhibiting critical
-fixed-point tensors and its RG equation is similar to that of
-Gilt-HOTRG. Considering the unprecedented accuracy of TNR, the
-estimation of scaling dimensions might be much better. We develop the
-response analysis in tensor space using Gilt-HOTRG in this paper in
-order to prepare for the further applications on 3D systems.
+$\chi$ increases. There are two sources of approximation errors in the
+above computations. One comes from the truncations of CDL tensors during
+Gilt process that is necessary to produce the critical fixed point. This
+error is controlled by the hyperparameter $\epsilon_{\text{gilt}}$. The
+other source is the leg squeezing step during HOTRG to prevent the grow
+of the bound dimension. This error can be reduced by increasing the bound
+dimension $\chi$. In general, for a given $\chi$,
+$\epsilon_{\text{gilt}}$ should be as small as possible provided that
+Gilt-HOTRG can exhibit a critical fixed-point tensor. In practice, we
+tried $\chi = 10, 20, 30$, and $\epsilon_{\text{gilt}}$ goes down from
+$6\times 10^{-4}$ to $6\times10^{-5}$ and further to $6\times10^{-6}$.
+The estimated scaling dimensions converge to the exact results in this
+process. However, as $\chi$ increases further, $\epsilon_{\text{gilt}}$
+does not go down much. As a result, the estimation accuracy of scaling
+dimensions is bounded by the approximation errors during Gilt. The final
+remark is that the Gilt-HOTRG can be replaced with
+TNR~\cite{tnr,tnralgo} with few changes of other procedures, since TNR
+is known to be capable of exhibiting critical fixed-point tensors and
+its RG equation is similar to that of Gilt-HOTRG. Considering the
+unprecedented accuracy of TNR, the estimation of scaling dimensions
+might be much better. We develop the response analysis in tensor space
+using Gilt-HOTRG in this paper in order to prepare for the further
+applications on 3D systems.
 %
 
 

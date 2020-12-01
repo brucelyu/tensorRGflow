@@ -38,6 +38,7 @@
 % \usepackage[hidelinks]{hyperref}
 \usepackage{bbold}
 \usepackage{mathrsfs}
+\usepackage{makecell}
 
 \DeclareMathOperator{\Tr}{Tr}
 % Some new commands
@@ -1225,11 +1226,12 @@ in Hamiltonian space\label{relateTensorCoupling}}
 In the old approach, the RG flow of Hamiltonians is parameterized by a
 flow in coupling constants space $\mathbf{K}$ after various interaction
 terms $s_j(\mathbf{r})$ are given. In the tensor approach, we skip the
-Hamiltonian description of the system. Insteand, we use a tensor $A$
+Hamiltonian description of the system. Instead, we use a tensor $A$
 that encodes Boltzamann weight of local configurations to describe the
 system. The RG flow is then parameterized by a flow in tensor space. We
 claim that the components of the tensor $A$ can be thought of as some
-proxies of the coupling constants $\mathbf{K}$.
+proxies of the coupling constants $\mathbf{K}$ (also see a brief
+discussion in Ref.~\cite{GuWen2009}).
 %
 
 To see why this claim is reasonable, note that we can map the partition
@@ -1773,10 +1775,10 @@ transfer matrix \`a la Gu and Wen~\cite{GuWen2009}, both with $\chi =
 \begin{tabular}{ c c c c c c c c c }
 Exact      & 0.125 & 1 & 1.125 & 1.125 & 2 & 2 & 2 & 2 \\
 \hline
-Resp. ana. & 0.127 & 1.009 & 1.125 & 1.128 & 2.002 & 2.004 & 2.068 &
-2.073 \\
-Tran. mat. & 0.125 & 1.009 & 1.130 & 1.148 & 1.313 & 1.457 & 1.558 & 
-1.654
+\thead{Resp.\\ ana.} & 0.127 & 1.009 & 1.125 & 1.128 & 2.002 &
+2.004 & 2.068 & 2.073 \\
+\thead{Trans.\\ mat.} & 0.125 & 1.009 & 1.130 & 1.148 & 1.313 &
+1.457 & 1.558 & 1.654
 \end{tabular}
 \end{ruledtabular}
 \end{table}
@@ -1810,50 +1812,93 @@ $2$ accurately, but the remaining two are overestimated and more close
 to $2.125$.
 %
 
-We end this section with a few remarks on the above calculation. First,
-we impose the $\mathbb{Z}_2$ symmetry of the tensors~\cite{Singh2010SymTen,
-Singh2011U1Ten} when generating the RG flow in tensor space. There are
-three reasons. Only if the $\mathbb{Z}_2$ symmetry of the tensor is
-imposed will the low-temperature fixed-point tensor be stable under RG.
-Otherwise, it will flow to the high-temperature fixed point eventually
-due to the numerical errors, which will make the bisection search of the
-estimated critical temperature $T_c^{[\chi]}$ less convenient. The
-second merit of symmetric tensors is that half of the gauge redundancy
-can be automatically fixed (see Sec.~\ref{RespAnaGiltHOTRG}), making the
-sign fixing procedure in Gilt-HOTRG easier. The third reason is to speed
-up the computations. However, we roll back to ordinary tensors when
+We end this section with a few remarks on the above calculation. 
+%
+
+Firstly we impose the $\mathbb{Z}_2$ symmetry of the
+tensors~\cite{Singh2010SymTen, Singh2011U1Ten} when generating the RG
+flow in tensor space. There are three reasons. Only if the
+$\mathbb{Z}_2$ symmetry of the tensor is imposed will the
+low-temperature fixed-point tensor be stable under RG.  Otherwise, it
+will flow to the high-temperature fixed point eventually due to the
+numerical errors, which will make the bisection search of the estimated
+critical temperature $T_c^{[\chi]}$ less convenient. The second merit of
+symmetric tensors is that half of the gauge redundancy can be
+automatically fixed (see Sec.~\ref{RespAnaGiltHOTRG}), making the sign
+fixing procedure in Gilt-HOTRG easier. The third reason is to speed up
+the computations. However, we roll back to ordinary tensors when
 performing the response analysis, since the perturbations around the
 fixed-point tensor do not have to preserve $\mathbb{Z}_2$ symmetry (for
-example, the spin operator). The second remark is about the improvement
-of the results of response analysis as the bound dimension
-$\chi$ increases. There are two sources of approximation errors in the
-above computations. One comes from the truncations of CDL tensors during
-Gilt process that is necessary to produce the critical fixed point. This
-error is controlled by the hyperparameter $\epsilon_{\text{gilt}}$. The
-other source is the leg squeezing step during HOTRG to prevent the grow
-of the bound dimension. This error can be reduced by increasing the bound
-dimension $\chi$. In general, for a given $\chi$,
-$\epsilon_{\text{gilt}}$ should be as small as possible provided that
-Gilt-HOTRG can exhibit a critical fixed-point tensor. In practice, we
-tried $\chi = 10, 20, 30$, and $\epsilon_{\text{gilt}}$ goes down from
-$6\times 10^{-4}$ to $6\times10^{-5}$ and further to $6\times10^{-6}$.
-The estimated scaling dimensions converge to the exact results in this
-process. However, as $\chi$ increases further, $\epsilon_{\text{gilt}}$
-does not go down much. As a result, the estimation accuracy of scaling
-dimensions is bounded by the approximation errors during Gilt. The final
-remark is that the Gilt-HOTRG can be replaced with
+example, the spin operator). 
+%
+
+The second remark is about the improvement of the results of response
+analysis as the bound dimension $\chi$ increases. There are two sources
+of approximation errors in the above computations. One comes from the
+truncations of CDL tensors during Gilt process that is necessary to
+produce the critical fixed point. This error is controlled by the
+hyperparameter $\epsilon_{\text{gilt}}$. The other source is the leg
+squeezing step during HOTRG to prevent the grow of the bound dimension.
+This error can be reduced by increasing the bound dimension $\chi$. In
+general, for a given $\chi$, $\epsilon_{\text{gilt}}$ should be as small
+as possible provided that Gilt-HOTRG can exhibit a critical fixed-point
+tensor. In practice, we tried $\chi = 10, 20, 30$, and
+$\epsilon_{\text{gilt}}$ goes down from $6\times 10^{-4}$ to
+$6\times10^{-5}$ and further to $6\times10^{-6}$.  The estimated scaling
+dimensions converge to the exact results in this process. However, as
+$\chi$ increases further, $\epsilon_{\text{gilt}}$ does not go down
+much. As a result, the estimation accuracy of scaling dimensions is
+bounded by the approximation errors during Gilt. 
+%
+
+The third is about the overall multiplication constant in front of the
+fixed-point tensor.
+% TODO
+%
+
+The final remark is that the Gilt-HOTRG can be replaced with
 TNR~\cite{tnr,tnralgo} with few changes of other procedures, since TNR
-is known to be capable of exhibiting critical fixed-point tensors and
-its RG equation is similar to that of Gilt-HOTRG. Considering the
-unprecedented accuracy of TNR, the estimation of scaling dimensions
-might be much better. We develop the response analysis in tensor space
-using Gilt-HOTRG in this paper in order to prepare for the further
+is known to be capable of exhibiting critical fixed-point tensors with
+its RG equation similar to that of Gilt-HOTRG, and there is a method to
+fix the gauge redundancy~\cite{tnralgo}. Considering the unprecedented
+accuracy of TNR, the estimation of scaling dimensions might be much
+better. We develop the response analysis in tensor space using
+Gilt-HOTRG in this paper in order to prepare for the further
 applications on 3D systems.
 %
 
 
 \section{Summary and discussion}
-\blindtext
+In this paper, we show how to extract scaling dimensions of scaling
+operators by analyzing a fixed point (termed as response analysis
+here) in tensor space generated by a TRG-type RG equation. There are two
+major obstacles for such an analysis. The first one is the failure of
+the exhibition of critical fixed points in TRG-type methods. We develop
+Gilt-HOTRG to solve this problem. The second obstacle is the potential
+gauge redundancy in tensor network language. This is solved due to a
+nice property of Gilt-HOTRG.  We use the 1D Ising model to demonstrate
+the relation between the old and the new approaches of response
+analysis, and also present nice benchmark results for the 2D Ising model
+by generating RG flow in tensor space using Gilt-HOTRG and carrying out
+the response analysis. 
+%
+
+The general procedure of response analysis in tensor space is summarized
+as follows: Reach a fixed-point tensor using a TRG-type RG equation, fix
+the gauge redundancy to make the fixed-point tensor manifestly fixed,
+linearize the RG equation at this fixed-point tensor to get the response
+matrix and finally calculate the scaling dimensions from the
+eigenvalues of the response matrix.
+%
+
+The response analysis in tensor space accomplishes an important step of
+RG methods in tensor network language. It extends the success of
+TRG-type techniques in calculting accurate free energy further to
+the excellent performance of extracting scaling dimensions directly from
+the tensor RG equation. It also has advantage over the transfer matrix
+method for systems in dimensions higher than 2. In particular,
+Gilt-HOTRG is developed in a fashion that the generaliztaion to 3D
+system is the most convenient.
 
 
 % If you have acknowledgments, this puts in the proper section head.

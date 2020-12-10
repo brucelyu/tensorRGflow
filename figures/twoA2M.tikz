@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (0, 1) {$A$};
+		\node [style=green] (1) at (0, -1) {$A$};
+		\node [style=none] (2) at (-1.5, 1) {};
+		\node [style=none] (3) at (0.1, 2) {};
+		\node [style=none] (4) at (1.5, 1) {};
+		\node [style=none] (5) at (-1.5, -1) {};
+		\node [style=none] (6) at (0.1, -2) {};
+		\node [style=none] (7) at (1.5, -1) {};
+		\node [style=none] (8) at (-1.25, 1.5) {$\chi$};
+		\node [style=none] (9) at (-1.25, -0.5) {$\chi$};
+		\node [style=none] (10) at (1.5, 2) {};
+		\node [style=none] (11) at (1.5, -2) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (0) to (1);
+		\draw [style=greenMidLine] (2.center) to (0);
+		\draw [style=greenMidLine] (0) to (4.center);
+		\draw [style=greenMidLine] (5.center) to (1);
+		\draw [style=greenMidLine] (1) to (7.center);
+		\draw [style=greenMidLine, in=-135, out=90, looseness=0.75] (0) to (3.center);
+		\draw [style=greenMidLine, in=-180, out=45, looseness=0.25] (3.center) to (10.center);
+		\draw [style=greenMidLine, in=150, out=-90, looseness=0.75] (1) to (6.center);
+		\draw [style=greenMidLine, in=180, out=-45, looseness=0.25] (6.center) to (11.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

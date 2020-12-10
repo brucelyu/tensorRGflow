@@ -1,0 +1,93 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (-2.1, 1) {$A$};
+		\node [style=green] (1) at (-2.1, -1) {$A$};
+		\node [style=none] (2) at (-3.35, 1) {};
+		\node [style=none] (3) at (-2.1, 2.5) {};
+		\node [style=none] (4) at (-3.35, -1) {};
+		\node [style=none] (5) at (-2.1, -2.5) {};
+		\node [style=none] (6) at (-3.35, 1.25) {};
+		\node [style=none] (7) at (-3.35, -1.25) {};
+		\node [style=none] (8) at (-0.35, 0) {};
+		\node [style=none] (9) at (-0.85, 1.25) {};
+		\node [style=none] (10) at (-0.85, -1.25) {};
+		\node [style=none] (11) at (-3.85, 0) {};
+		\node [style=none] (12) at (-0.85, 1) {};
+		\node [style=none] (13) at (-0.85, -1) {};
+		\node [style=none] (14) at (-0.425, 1.5) {$w$};
+		\node [style=none] (15) at (-3.9, 1.6) {$w^{\dagger}$};
+		\node [style=none] (16) at (-4.475, 0) {};
+		\node [style=green] (18) at (2.1, 1) {$A$};
+		\node [style=green] (19) at (2.1, -1) {$A$};
+		\node [style=none] (20) at (0.85, 1) {};
+		\node [style=none] (21) at (2.1, 2.5) {};
+		\node [style=none] (22) at (0.85, -1) {};
+		\node [style=none] (23) at (2.1, -2.5) {};
+		\node [style=none] (24) at (0.85, 1.25) {};
+		\node [style=none] (25) at (0.85, -1.25) {};
+		\node [style=none] (26) at (3.85, 0) {};
+		\node [style=none] (27) at (3.35, 1.25) {};
+		\node [style=none] (28) at (3.35, -1.25) {};
+		\node [style=none] (29) at (0.35, 0) {};
+		\node [style=none] (30) at (3.35, 1) {};
+		\node [style=none] (31) at (3.35, -1) {};
+		\node [style=none] (32) at (3.775, 1.5) {$w$};
+		\node [style=none] (33) at (0.7, 1.65) {$w^{\dagger}$};
+		\node [style=none] (35) at (4.475, 0) {};
+		\node [style=none] (36) at (-2.6, 2.5) {};
+		\node [style=none] (37) at (2.6, 2.5) {};
+		\node [style=none] (38) at (0, 3) {};
+		\node [style=none] (39) at (0, 3.75) {};
+		\node [style=none] (40) at (-2.6, -2.5) {};
+		\node [style=none] (41) at (2.6, -2.5) {};
+		\node [style=none] (42) at (0, -3) {};
+		\node [style=none] (43) at (0, -3.75) {};
+		\node [style=none] (44) at (1.1, 3.25) {$v^{\dagger}$};
+		\node [style=none] (45) at (0.85, -3.25) {$v$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (0) to (1);
+		\draw [style=greenMidLine] (2.center) to (0);
+		\draw [style=greenMidLine] (3.center) to (0);
+		\draw [style=greenMidLine] (4.center) to (1);
+		\draw [style=greenMidLine] (1) to (5.center);
+		\draw [style=blackMidLine] (10.center)
+			 to (8.center)
+			 to (9.center)
+			 to cycle;
+		\draw [style=blackMidLine] (6.center)
+			 to (7.center)
+			 to (11.center)
+			 to cycle;
+		\draw [style=greenMidLine] (0) to (12.center);
+		\draw [style=greenMidLine] (1) to (13.center);
+		\draw [style=blackMidLine] (16.center) to (11.center);
+		\draw [style=greenMidLine] (18) to (19);
+		\draw [style=greenMidLine] (20.center) to (18);
+		\draw [style=greenMidLine] (21.center) to (18);
+		\draw [style=greenMidLine] (22.center) to (19);
+		\draw [style=greenMidLine] (19) to (23.center);
+		\draw [style=blackMidLine] (28.center)
+			 to (26.center)
+			 to (27.center)
+			 to cycle;
+		\draw [style=blackMidLine] (24.center)
+			 to (25.center)
+			 to (29.center)
+			 to cycle;
+		\draw [style=greenMidLine] (18) to (30.center);
+		\draw [style=greenMidLine] (19) to (31.center);
+		\draw [style=blackMidLine] (26.center) to (35.center);
+		\draw [style=blackMidLine] (8.center) to (29.center);
+		\draw [style=blackMidLine] (37.center)
+			 to (36.center)
+			 to (38.center)
+			 to cycle;
+		\draw [style=blackMidLine] (38.center) to (39.center);
+		\draw [style=blackMidLine] (42.center)
+			 to (40.center)
+			 to (41.center)
+			 to cycle;
+		\draw [style=blackMidLine] (42.center) to (43.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

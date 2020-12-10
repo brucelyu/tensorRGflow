@@ -1,0 +1,35 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (0, 0) {$A_c$};
+		\node [style=none] (1) at (0, 2) {};
+		\node [style=none] (2) at (-2, 0) {};
+		\node [style=none] (3) at (2, 0) {};
+		\node [style=none] (4) at (0, -2) {};
+		\node [style=cdlMat] (5) at (-0.75, 1) {};
+		\node [style=cdlMat] (7) at (0.65, 1) {};
+		\node [style=cdlMat] (9) at (-0.75, -1) {};
+		\node [style=cdlMat] (10) at (0.65, -1) {};
+		\node [style=none] (11) at (-0.25, 0.5) {};
+		\node [style=none] (12) at (-0.5, 0.25) {};
+		\node [style=none] (13) at (0.25, 0.5) {};
+		\node [style=none] (14) at (0.5, 0.25) {};
+		\node [style=none] (15) at (-0.5, -0.25) {};
+		\node [style=none] (16) at (-0.25, -0.5) {};
+		\node [style=none] (17) at (0.25, -0.5) {};
+		\node [style=none] (18) at (0.5, -0.25) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=blackMidLine] (0) to (1.center);
+		\draw [style=blackMidLine] (0) to (3.center);
+		\draw [style=blackMidLine] (2.center) to (0);
+		\draw [style=blackMidLine] (0) to (4.center);
+		\draw [style=cdlMatLeg, bend right, looseness=1.25] (5) to (12.center);
+		\draw [style=cdlMatLeg, bend left=45, looseness=1.50] (5) to (11.center);
+		\draw [style=cdlMatLeg, bend left=300, looseness=1.50] (7) to (13.center);
+		\draw [style=cdlMatLeg, bend left=15, looseness=1.25] (7) to (14.center);
+		\draw [style=cdlMatLeg, bend left, looseness=1.25] (9) to (15.center);
+		\draw [style=cdlMatLeg, bend right=45, looseness=1.25] (9) to (16.center);
+		\draw [style=cdlMatLeg, bend left=45, looseness=1.25] (10) to (17.center);
+		\draw [style=cdlMatLeg, bend right=15, looseness=1.25] (10) to (18.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

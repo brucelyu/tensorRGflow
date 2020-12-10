@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (0, 0) {$A$};
+		\node [style=bluedot] (1) at (1.75, 0) {};
+		\node [style=bluedot] (2) at (0, 1.75) {};
+		\node [style=bluedot] (3) at (-1.75, 0) {};
+		\node [style=bluedot] (4) at (0, -1.75) {};
+		\node [style=none] (6) at (-1.5, -0.75) {$\sigma_i$};
+		\node [style=none] (7) at (-0.75, 1.5) {$\sigma_j$};
+		\node [style=none] (8) at (1.5, 0.75) {$\sigma_k$};
+		\node [style=none] (9) at (0.75, -1.5) {$\sigma_l$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (0) to (1);
+		\draw [style=greenMidLine] (0) to (2);
+		\draw [style=greenMidLine] (0) to (3);
+		\draw [style=greenMidLine] (0) to (4);
+	\end{pgfonlayer}
+\end{tikzpicture}

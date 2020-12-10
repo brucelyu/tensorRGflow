@@ -1,0 +1,49 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (0, 1) {$A$};
+		\node [style=green] (1) at (0, -1) {$A$};
+		\node [style=none] (2) at (-1.5, 1) {};
+		\node [style=none] (3) at (0, 2.5) {};
+		\node [style=none] (4) at (1.5, 1) {};
+		\node [style=none] (5) at (-1.5, -1) {};
+		\node [style=none] (6) at (0, -2.5) {};
+		\node [style=none] (7) at (1.5, -1) {};
+		\node [style=none] (8) at (-1.025, -1.45) {$\chi$};
+		\node [style=none] (9) at (-1.025, 0.575) {$\chi$};
+		\node [style=none] (10) at (-1.5, 1.25) {};
+		\node [style=none] (11) at (-1.5, -1.25) {};
+		\node [style=none] (12) at (-2.5, 0) {};
+		\node [style=none] (13) at (-3, 1.25) {};
+		\node [style=none] (14) at (-3, -1.25) {};
+		\node [style=none] (15) at (-2, 0) {};
+		\node [style=none] (16) at (-3, 1) {};
+		\node [style=none] (17) at (-3, -1) {};
+		\node [style=none] (18) at (-3.75, 1) {};
+		\node [style=none] (19) at (-3.75, -1) {};
+		\node [style=none] (20) at (-2.575, 1.5) {$w$};
+		\node [style=none] (21) at (-1.05, 1.65) {$w^{\dagger}$};
+		\node [style=none] (22) at (-3.625, 0.575) {$\chi$};
+		\node [style=none] (23) at (-3.625, -1.425) {$\chi$};
+		\node [style=none] (24) at (-2.25, -0.5) {$\tilde{\chi}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (0) to (1);
+		\draw [style=greenMidLine] (2.center) to (0);
+		\draw [style=greenMidLine] (3.center) to (0);
+		\draw [style=greenMidLine] (0) to (4.center);
+		\draw [style=greenMidLine] (5.center) to (1);
+		\draw [style=greenMidLine] (1) to (6.center);
+		\draw [style=greenMidLine] (1) to (7.center);
+		\draw [style=blackMidLine] (14.center)
+			 to (12.center)
+			 to (13.center)
+			 to cycle;
+		\draw [style=blackMidLine] (10.center)
+			 to (11.center)
+			 to (15.center)
+			 to cycle;
+		\draw [style=blackMidLine] (12.center) to (15.center);
+		\draw [style=greenMidLine] (16.center) to (18.center);
+		\draw [style=greenMidLine] (17.center) to (19.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (0, 0) {$A'$};
+		\node [style=none] (1) at (0, 2) {};
+		\node [style=none] (2) at (2, 0) {};
+		\node [style=none] (3) at (-2, 0) {};
+		\node [style=none] (4) at (0, -2) {};
+		\node [style=cdlMat] (5) at (-0.675, 1) {};
+		\node [style=none] (6) at (-0.2, 2) {};
+		\node [style=cdlMat] (8) at (0.725, 1) {};
+		\node [style=none] (9) at (0.25, 2) {};
+		\node [style=cdlMat] (10) at (-0.675, -1) {};
+		\node [style=none] (11) at (-0.2, -2) {};
+		\node [style=cdlMat] (12) at (0.725, -1) {};
+		\node [style=none] (13) at (0.25, -2) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (1.center) to (0);
+		\draw [style=greenMidLine] (0) to (4.center);
+		\draw [style=blackMidLine] (0) to (2.center);
+		\draw [style=blackMidLine] (3.center) to (0);
+		\draw [style=cdlMatLeg, in=-90, out=15] (5) to (6.center);
+		\draw [style=cdlMatLeg] (5) to (0);
+		\draw [style=cdlMatLeg, in=-90, out=165] (8) to (9.center);
+		\draw [style=cdlMatLeg] (8) to (0);
+		\draw [style=cdlMatLeg, in=90, out=-15] (10) to (11.center);
+		\draw [style=cdlMatLeg, in=90, out=-165] (12) to (13.center);
+		\draw [style=cdlMatLeg] (10) to (0);
+		\draw [style=cdlMatLeg] (0) to (12);
+	\end{pgfonlayer}
+\end{tikzpicture}

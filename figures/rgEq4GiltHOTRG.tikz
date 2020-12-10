@@ -1,0 +1,171 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (-3.25, 1) {$A$};
+		\node [style=green] (1) at (-3.25, -1) {$A$};
+		\node [style=none] (2) at (-5.75, 1) {};
+		\node [style=none] (4) at (-5.75, -1) {};
+		\node [style=none] (6) at (-5.75, 1.25) {};
+		\node [style=none] (7) at (-5.75, -1.25) {};
+		\node [style=none] (8) at (-0.25, 0) {};
+		\node [style=none] (9) at (-0.75, 1.25) {};
+		\node [style=none] (10) at (-0.75, -1.25) {};
+		\node [style=none] (11) at (-6.25, 0) {};
+		\node [style=none] (12) at (-0.75, 1) {};
+		\node [style=none] (13) at (-0.75, -1) {};
+		\node [style=none] (14) at (-0.075, 0.75) {$w$};
+		\node [style=none] (15) at (-6.55, 0.725) {$w^{\dagger}$};
+		\node [style=none] (16) at (-7, 0) {};
+		\node [style=Qul] (18) at (-1.5, -1) {};
+		\node [style=Qur] (19) at (-5, -1) {};
+		\node [style=cdlMat] (20) at (-3.85, -2) {};
+		\node [style=cdlMat] (21) at (-2.625, -2) {};
+		\node [style=none] (23) at (-2.75, -2.75) {};
+		\node [style=none] (24) at (-4.675, -1.25) {};
+		\node [style=none] (25) at (-1.825, -1.25) {};
+		\node [style=Qdl] (26) at (-1.5, 1) {};
+		\node [style=Qdr] (27) at (-5, 1) {};
+		\node [style=cdlMat] (29) at (-3.85, 2) {};
+		\node [style=cdlMat] (30) at (-2.625, 2) {};
+		\node [style=none] (32) at (-2.75, 2.75) {};
+		\node [style=none] (33) at (-4.675, 1.25) {};
+		\node [style=none] (34) at (-1.825, 1.25) {};
+		\node [style=none] (35) at (-4.625, -0.125) {$Q_{Al}$};
+		\node [style=none] (36) at (-1.75, -0.125) {$Q_{Ar}$};
+		\node [style=none] (37) at (-5, 1.825) {$Q_{Bl}$};
+		\node [style=none] (38) at (-1.25, 1.825) {$Q_{Br}$};
+		\node [style=green] (39) at (3.25, 1) {$A$};
+		\node [style=green] (40) at (3.25, -1) {$A$};
+		\node [style=none] (41) at (0.75, 1) {};
+		\node [style=none] (43) at (0.75, -1) {};
+		\node [style=none] (45) at (0.75, 1.25) {};
+		\node [style=none] (46) at (0.75, -1.25) {};
+		\node [style=none] (47) at (6.25, 0) {};
+		\node [style=none] (48) at (5.75, 1.25) {};
+		\node [style=none] (49) at (5.75, -1.25) {};
+		\node [style=none] (50) at (0.25, 0) {};
+		\node [style=none] (51) at (5.75, 1) {};
+		\node [style=none] (52) at (5.75, -1) {};
+		\node [style=none] (56) at (7, 0) {};
+		\node [style=Qul] (57) at (5, -1) {};
+		\node [style=Qur] (58) at (1.5, -1) {};
+		\node [style=cdlMat] (59) at (2.65, -2) {};
+		\node [style=cdlMat] (60) at (3.875, -2) {};
+		\node [style=none] (62) at (2.725, -2.75) {};
+		\node [style=none] (63) at (1.825, -1.25) {};
+		\node [style=none] (64) at (4.675, -1.25) {};
+		\node [style=Qdl] (65) at (5, 1) {};
+		\node [style=Qdr] (66) at (1.5, 1) {};
+		\node [style=cdlMat] (68) at (2.65, 2) {};
+		\node [style=cdlMat] (69) at (3.875, 2) {};
+		\node [style=none] (70) at (2.75, 2.75) {};
+		\node [style=none] (72) at (1.825, 1.25) {};
+		\node [style=none] (73) at (4.675, 1.25) {};
+		\node [style=Qdpl] (74) at (-3.25, 2.75) {};
+		\node [style=none] (75) at (-3.525, 2.475) {};
+		\node [style=Qdpr] (76) at (-3.25, -2.75) {};
+		\node [style=none] (77) at (-3.525, -2.475) {};
+		\node [style=none] (78) at (-3.25, 3.25) {};
+		\node [style=none] (79) at (-3.25, -3.25) {};
+		\node [style=none] (80) at (-3.125, 3.25) {};
+		\node [style=none] (81) at (-3.125, -3.25) {};
+		\node [style=Qupl] (82) at (3.25, 2.75) {};
+		\node [style=none] (83) at (3.525, 2.475) {};
+		\node [style=Qupr] (84) at (3.25, -2.75) {};
+		\node [style=none] (85) at (3.525, -2.475) {};
+		\node [style=none] (86) at (3.25, 3.25) {};
+		\node [style=none] (87) at (3.15, 3.25) {};
+		\node [style=none] (88) at (3.25, -3.25) {};
+		\node [style=none] (89) at (3.125, -3.25) {};
+		\node [style=none] (90) at (-3.75, 3.25) {};
+		\node [style=none] (91) at (3.75, 3.25) {};
+		\node [style=none] (92) at (0, 3.75) {};
+		\node [style=none] (93) at (-3.75, -3.25) {};
+		\node [style=none] (94) at (3.75, -3.25) {};
+		\node [style=none] (95) at (0, -3.75) {};
+		\node [style=none] (96) at (0, 4.5) {};
+		\node [style=none] (97) at (0, -4.5) {};
+		\node [style=none] (98) at (2, 4.05) {$v^{\dagger}$};
+		\node [style=none] (99) at (2, -3.925) {$v$};
+		\node [style=none] (100) at (-4.375, 2.75) {$Q'_{Bu}$};
+		\node [style=none] (101) at (-4.375, -2.75) {$Q'_{Bd}$};
+		\node [style=none] (102) at (4.5, 2.75) {$Q'_{Au}$};
+		\node [style=none] (103) at (4.5, -2.75) {$Q'_{Ad}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (0) to (1);
+		\draw [style=blackMidLine] (10.center)
+			 to (8.center)
+			 to (9.center)
+			 to cycle;
+		\draw [style=blackMidLine] (6.center)
+			 to (7.center)
+			 to (11.center)
+			 to cycle;
+		\draw [style=blackMidLine] (16.center) to (11.center);
+		\draw [style=greenMidLine] (1) to (18);
+		\draw [style=greenMidLine] (19) to (1);
+		\draw [style=cdlMatLeg, in=-15, out=105, looseness=1.25] (20) to (24.center);
+		\draw [style=cdlMatLeg, in=-165, out=75] (21) to (25.center);
+		\draw [style=cdlMatLeg, in=90, out=-165] (21) to (23.center);
+		\draw [style=greenMidLine] (4.center) to (19);
+		\draw [style=greenMidLine] (18) to (13.center);
+		\draw [style=greenMidLine] (27) to (0);
+		\draw [style=greenMidLine] (2.center) to (27);
+		\draw [style=greenMidLine] (0) to (26);
+		\draw [style=greenMidLine] (26) to (12.center);
+		\draw [style=cdlMatLeg, in=15, out=-105, looseness=1.25] (29) to (33.center);
+		\draw [style=cdlMatLeg, in=165, out=-75] (30) to (34.center);
+		\draw [style=cdlMatLeg, in=-90, out=165] (30) to (32.center);
+		\draw [style=greenMidLine] (39) to (40);
+		\draw [style=blackMidLine] (47.center)
+			 to (48.center)
+			 to (49.center)
+			 to cycle;
+		\draw [style=blackMidLine] (46.center)
+			 to (50.center)
+			 to (45.center)
+			 to cycle;
+		\draw [style=blackMidLine] (47.center) to (56.center);
+		\draw [style=greenMidLine] (40) to (57);
+		\draw [style=greenMidLine] (58) to (40);
+		\draw [style=cdlMatLeg, in=-15, out=105, looseness=1.25] (59) to (63.center);
+		\draw [style=cdlMatLeg, in=-165, out=75] (60) to (64.center);
+		\draw [style=greenMidLine] (43.center) to (58);
+		\draw [style=greenMidLine] (57) to (52.center);
+		\draw [style=greenMidLine] (66) to (39);
+		\draw [style=greenMidLine] (41.center) to (66);
+		\draw [style=greenMidLine] (39) to (65);
+		\draw [style=greenMidLine] (65) to (51.center);
+		\draw [style=cdlMatLeg, in=15, out=-105, looseness=1.25] (68) to (72.center);
+		\draw [style=cdlMatLeg, in=165, out=-75] (69) to (73.center);
+		\draw [style=cdlMatLeg, in=-90, out=15] (68) to (70.center);
+		\draw [style=blackMidPureLine] (8.center) to (50.center);
+		\draw [style=greenMidLine] (0) to (74);
+		\draw [style=cdlMatLeg] (29) to (75.center);
+		\draw [style=cdlMatLeg] (20) to (77.center);
+		\draw [style=greenMidLine] (1) to (76);
+		\draw [style=greenMidLine] (78.center) to (74);
+		\draw [style=greenMidLine] (76) to (79.center);
+		\draw [style=cdlMatLeg, in=105, out=-90, looseness=0.75] (80.center) to (32.center);
+		\draw [style=cdlMatLeg, in=90, out=-105, looseness=1.50] (23.center) to (81.center);
+		\draw [style=greenMidLine] (39) to (82);
+		\draw [style=cdlMatLeg] (69) to (83.center);
+		\draw [style=cdlMatLeg] (60) to (85.center);
+		\draw [style=greenMidLine] (40) to (84);
+		\draw [style=greenMidLine] (82) to (86.center);
+		\draw [style=cdlMatLeg, in=-90, out=105, looseness=1.25] (70.center) to (87.center);
+		\draw [style=cdlMatLeg, in=60, out=0] (59) to (62.center);
+		\draw [style=greenMidLine] (84) to (88.center);
+		\draw [style=cdlMatLeg, in=90, out=-90, looseness=1.50] (62.center) to (89.center);
+		\draw [style=blackMidLine] (91.center)
+			 to (92.center)
+			 to (90.center)
+			 to cycle;
+		\draw [style=blackMidLine] (94.center)
+			 to (93.center)
+			 to (95.center)
+			 to cycle;
+		\draw [style=blackMidPureLine] (92.center) to (96.center);
+		\draw [style=blackMidPureLine] (95.center) to (97.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

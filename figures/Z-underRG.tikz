@@ -1,0 +1,54 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (-1.5, 1.5) {$A_c$};
+		\node [style=green] (1) at (1.5, 1.5) {$A_c$};
+		\node [style=green] (2) at (-1.5, -1.5) {$A_c$};
+		\node [style=green] (3) at (1.5, -1.5) {$A_c$};
+		\node [style=none] (4) at (-2.5, 1.5) {};
+		\node [style=none] (5) at (-2.5, -1.5) {};
+		\node [style=none] (6) at (-1.5, 2.5) {};
+		\node [style=none] (7) at (1.5, 2.5) {};
+		\node [style=none] (8) at (2.5, 1.5) {};
+		\node [style=none] (9) at (2.5, -1.5) {};
+		\node [style=none] (10) at (1.5, -2.5) {};
+		\node [style=none] (11) at (-1.5, -2.5) {};
+		\node [style=none] (12) at (-3, 2.5) {};
+		\node [style=none] (13) at (-3, -2.5) {};
+		\node [style=none] (14) at (3, 2.5) {};
+		\node [style=none] (15) at (3, -2.5) {};
+		\node [style=none] (16) at (-1.625, 0.5) {};
+		\node [style=none] (17) at (-1.625, -0.5) {};
+		\node [style=none] (18) at (1.65, 0.5) {};
+		\node [style=none] (19) at (1.65, -0.5) {};
+		\node [style=none] (20) at (-1.375, 0.5) {};
+		\node [style=none] (21) at (1.375, 0.5) {};
+		\node [style=none] (22) at (1.375, -0.5) {};
+		\node [style=none] (23) at (-1.375, -0.5) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenThick] (0) to (1);
+		\draw [style=greenThick] (1) to (3);
+		\draw [style=greenThick] (0) to (2);
+		\draw [style=greenThick] (2) to (3);
+		\draw [style=greenThick] (0) to (6.center);
+		\draw [style=greenThick, in=90, out=90, looseness=0.75] (6.center) to (12.center);
+		\draw [style=greenThick] (12.center) to (13.center);
+		\draw [style=greenThick, in=-90, out=-90, looseness=0.75] (13.center) to (11.center);
+		\draw [style=greenThick] (2) to (11.center);
+		\draw [style=greenThick] (7.center) to (1);
+		\draw [style=greenThick, in=90, out=90, looseness=0.75] (7.center) to (14.center);
+		\draw [style=greenThick] (14.center) to (15.center);
+		\draw [style=greenThick, in=-90, out=-90, looseness=0.75] (10.center) to (15.center);
+		\draw [style=greenThick] (3) to (10.center);
+		\draw [style=greenThick] (4.center) to (0);
+		\draw [style=greenThick] (1) to (8.center);
+		\draw [style=greenThick] (5.center) to (2);
+		\draw [style=greenThick] (3) to (9.center);
+		\draw [style=greenThick] (20.center) to (21.center);
+		\draw [style=greenThick] (23.center) to (22.center);
+		\draw [style=greenThick, in=180, out=-180, looseness=1.50] (4.center) to (16.center);
+		\draw [style=greenThick, in=0, out=0, looseness=1.50] (8.center) to (18.center);
+		\draw [style=greenThick, in=180, out=-180, looseness=1.50] (5.center) to (17.center);
+		\draw [style=greenThick, in=0, out=0, looseness=1.50] (19.center) to (9.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

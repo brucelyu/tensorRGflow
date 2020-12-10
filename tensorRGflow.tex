@@ -39,6 +39,9 @@
 \usepackage{bbold}
 \usepackage{mathrsfs}
 \usepackage{makecell}
+\usepackage{tikzit}
+\input{tensorFig.tikzstyles}
+\input{tensorFig.tikzdefs}
 
 \DeclareMathOperator{\Tr}{Tr}
 % Some new commands
@@ -107,24 +110,24 @@ Kashiwa, Chiba 277-8581, Japan}
 \date{\today}
 
 \begin{abstract}
-We show a way to analyze a renormalization
-group fixed point in tensor network language. Compared with
-previous real-space renormalization group schemes, the approximations
-in the newer tensor renormalization group methods can be
-improved
-systematically by including more interactions. Thus, the newer methods can produce accurate free energy. However,
-little progress has been made on the fixed-point analysis in tensor
-space due to two
-obstacles in the tensor methods: their failure to exhibit a critical fixed
-point and the gauge redundancy of a tensor description. We overcome the
-obstacles with the help of a recently-developed tensor network technique
-and a carefully-designed tensor renormalization group transformation. The
-benchmark results of the scaling dimensions for the 2-dimensional Ising
-model from analyzing a fixed-point tensor are comparable with the
-existing method. The advantage of the tensor fixed-point analysis
-compared to the existing method is its potential applications on
-3-dimensional systems. It also accomplishes an important step of
-renormalization group methods in tensor network language.
+We show a way to analyze a renormalization group fixed point in tensor
+network language. Compared with previous real-space renormalization
+group schemes, the approximations in the newer tensor renormalization
+group methods can be improved systematically by including more
+interactions. Thus, the newer methods can produce accurate free energy.
+However, little progress has been made on the fixed-point analysis in
+tensor space due to two obstacles in the tensor methods: their failure
+to exhibit a critical fixed point and the gauge redundancy of a tensor
+description. We overcome the obstacles with the help of a
+recently-developed tensor network technique and a carefully-designed
+tensor renormalization group transformation. The benchmark results of
+the scaling dimensions for the 2-dimensional Ising model from analyzing
+a fixed-point tensor are comparable with the existing method. The
+advantage of the tensor fixed-point analysis compared to the existing
+method is its potential applications on 3-dimensional systems. It also
+accomplishes an important step of renormalization group methods in
+tensor network language.  
+%
 \end{abstract}
 
 % insert suggested keywords - APS authors don't need to do this
@@ -324,7 +327,8 @@ take values $\pm 1$, and $K = J / k_B T$. In this paper, we measure
 temperature in units of $J / k_B $ so it becomes a dimensionless number.
 % Figure: mapping from spins on lattice to a tensor network
 \begin{figure}[htb]
-    \includegraphics[width=6.5cm]{./figs/spin2tensor}
+    % \includegraphics[width=6.5cm]{./figs/spin2tensor}
+    \tikzfig{spin2tensor}
     \caption{\label{fig:spin2tensor}[\textbf{Add descriptions}]}
 \end{figure}
 % Figure end
@@ -349,11 +353,12 @@ define such a Boltzmann weight as
     \sigma_l\sigma_i)}
     \nonumber\\ 
     &= 
-    \begin{minipage}{2.0truecm}
-      \centering
-      \includegraphics[width=2.0truecm,clip]{./figs/defAtensor}
-    \end{minipage}.
-\end{align}
+    \tikzfig{defAtensor}\text{ }.
+    %\begin{minipage}{2.0truecm}
+    %  \centering
+    %  \includegraphics[width=2.0truecm,clip]{./figs/defAtensor}
+    %\end{minipage}.
+    \end{align}
 %
 Each index of this tensor can take two values $\pm 1$ and we say the
 bound dimension of a leg of this tensor is $\chi = 2$. With this
@@ -376,11 +381,13 @@ partition function~\eqref{eq:2DIsingZ} now has a nice picturial
 description
 %
 \begin{align}\label{eq:tensorZ4by4}
-    Z_{4 \times 4} = 
-    \begin{minipage}{2.4truecm}
-      \centering
-      \includegraphics[width=2.3truecm,clip]{./figs/Z-TN}
-    \end{minipage}.
+    Z_{4 \times 4} =
+    \tikzfig{Z-TN}\text{  }.
+    %\begin{minipage}{2.4truecm}
+    %  \centering
+    %  \includegraphics[width=2.3truecm,clip]{./figs/Z-TN}
+    %\tikzfig{Z-TN}
+    %  \end{minipage}.
 \end{align}
 %
 Eq.~\eqref{eq:tensorZ4by4} above provides a tensor network representation of
@@ -416,15 +423,17 @@ between them and group every two legs in the same side. Call the new
 tensor $A_c$,
 %
 \begin{align}\label{eq:exactBlock}
-    \begin{minipage}{2.0truecm}
-      \centering
-      \includegraphics[width=1.7truecm,clip]{./figs/Ac-thickleg}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %  \centering
+    %  \includegraphics[width=1.7truecm,clip]{./figs/Ac-thickleg}
+    %\end{minipage}
+    \tikzfig{Ac-thickleg}
     \defeq
-    \begin{minipage}{2.0truecm}
-      \centering
-      \includegraphics[width=2.0truecm,clip]{./figs/block4As}
-    \end{minipage}.
+    \tikzfig{block4As}\text{ }.
+    %\begin{minipage}{2.0truecm}
+    %  \centering
+    %  \includegraphics[width=2.0truecm,clip]{./figs/block4As}
+    %\end{minipage}.
 \end{align}
 %
 Then, the partition function can be fully described by the new tensor
@@ -432,15 +441,17 @@ $A_c$ after the above coarse graining process
 %
 \begin{align}\label{eq:ZunderRG}
     Z_{4 \times 4} = 
-    \begin{minipage}{2.4truecm}
-      \centering
-      \includegraphics[width=2.3truecm,clip]{./figs/Z-TN}
-    \end{minipage}
+    %\begin{minipage}{2.4truecm}
+    %  \centering
+    %  \includegraphics[width=2.3truecm,clip]{./figs/Z-TN}
+    %\end{minipage}
+    \tikzfig{Z-TN}
     \rgeq
-    \begin{minipage}{2.6truecm}
-      \centering
-      \includegraphics[width=2.6truecm,clip]{./figs/Z-underRG}
-    \end{minipage}.
+    \tikzfig{Z-underRG}.
+    %\begin{minipage}{2.6truecm}
+    %  \centering
+    %  \includegraphics[width=2.6truecm,clip]{./figs/Z-underRG}
+    %\end{minipage}.
 \end{align}
 %
 It is also enlightening to put the original spin variables back into the
@@ -450,8 +461,10 @@ together, we only keep spin variables, tensors and black solid squares
 in Fig.~\ref{fig:spin2tensor}. The big picture for the above coarse
 graining process is shown schematically in Fig.~\ref{fig:rgschem} below.
 %
+% RG directly in both tensor and original spin decimation language
 \begin{figure}[h]
-    \includegraphics[width=8.5cm]{./figs/rgschem}
+    %\includegraphics[width=8.5cm]{./figs/rgschem}
+    \tikzfig{rgschem}
     \caption{\label{fig:rgschem}[\textbf{Add descriptions}]}
 \end{figure}
 %
@@ -463,15 +476,17 @@ equation is then defined as a mapping from the old tensor $A$ to the new
 tensor $A_c$ after coarse graining,
 %
 \begin{align}\label{eq:RGeqExact}
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/Aold}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/Aold}
+    %\end{minipage}
+    \tikzfig{Aold}
     \xrightarrow{\text{RG}}
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/Ac-thickleg}
-    \end{minipage}. 
+    \tikzfig{Ac-thickleg}\text{ }.
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/Ac-thickleg}
+    %\end{minipage}. 
 \end{align}
 %
 %
@@ -522,15 +537,17 @@ assumed to be $\chi$, and we hope this patch of two $A$ tensors after
 projection gives a good approximation to the original patch,
 %
 \begin{align}\label{eq:hotrgProjTrun}
-    \begin{minipage}{2.8truecm}
-        \centering
-        \includegraphics[width=2.6truecm,clip]{./figs/twoAProj}
-    \end{minipage}
+    %\begin{minipage}{2.8truecm}
+    %    \centering
+    %    \includegraphics[width=2.6truecm,clip]{./figs/twoAProj}
+    %\end{minipage}
+    \tikzfig{twoAProj}
     \approx
-    \begin{minipage}{1.6truecm}
-        \centering
-        \includegraphics[width=1.4truecm,clip]{./figs/twoA}
-    \end{minipage}.
+    \tikzfig{twoA}\text{ }.
+    %\begin{minipage}{1.6truecm}
+    %    \centering
+    %    \includegraphics[width=1.4truecm,clip]{./figs/twoA}
+    %\end{minipage}.
 \end{align}
 %
 Here, $w$ is an isometric tensor and $w^{\dagger}$ its hermitian
@@ -560,30 +577,34 @@ the partition function in Eq.~\eqref{eq:tensorZ4by4} to get
 \begin{align}\label{eq:Zapproxy}
     Z_{4 \times 4}
     &\textapprox{\eqref{eq:hotrgProjTrun}}
-    \begin{minipage}{3.2truecm}
-        \centering
-        \includegraphics[width=3.0truecm,clip]{./figs/Z-approy}
-    \end{minipage} \nonumber\\
+    %\begin{minipage}{3.2truecm}
+    %    \centering
+    %    \includegraphics[width=3.0truecm,clip]{./figs/Z-approy}
+    %\end{minipage} \nonumber\\
+    \tikzfig{Z-approy} \nonumber\\
     &=
-    \begin{minipage}{3.5truecm}
-        \centering
-        \includegraphics[width=3.3truecm,clip]{./figs/Z-contry}
-    \end{minipage},
+    \tikzfig{Z-contry}\text{  },
+    %\begin{minipage}{3.5truecm}
+    %    \centering
+    %    \includegraphics[width=3.3truecm,clip]{./figs/Z-contry}
+    %\end{minipage},
 \end{align}
 %
 where in the second step, we contract two $A$ tensors and two isometric
 tensors $w, w^{\dagger}$ to get a new tensor $A'$,
 %
 \begin{align}\label{def:Apycontr}
-    \begin{minipage}{2.0truecm}
-      \centering
-      \includegraphics[width=1.8truecm,clip]{./figs/Ap-ycontr}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %  \centering
+    %  \includegraphics[width=1.8truecm,clip]{./figs/Ap-ycontr}
+    %\end{minipage}
+    \tikzfig{Ap-ycontr}
     \defeq
-    \begin{minipage}{2.0truecm}
-      \centering
-      \includegraphics[width=1.8truecm,clip]{./figs/twoAcoarse}
-    \end{minipage}.
+    \tikzfig{twoAcoarse}\text{ }.
+    %\begin{minipage}{2.0truecm}
+    %  \centering
+    %  \includegraphics[width=1.8truecm,clip]{./figs/twoAcoarse}
+    %\end{minipage}.
 \end{align}
 %
 Notice in the approximatino step in Eq.~\eqref{eq:Zapproxy}, we can move
@@ -597,15 +618,17 @@ side using another isometry $v$, we will get a coarse graining $A'
 \rightarrow A_c$ in the horizontal direction,
 %
 \begin{align}\label{def:Achotrg}
-    \begin{minipage}{2.0truecm}
-      \centering
-      \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %  \centering
+    %  \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
+    %\end{minipage}
+    \tikzfig{Ac-hotrg}
     \defeq
-    \begin{minipage}{2.0truecm}
-      \centering
-      \includegraphics[width=1.8truecm,clip]{./figs/twoApcoarse}
-    \end{minipage}.
+    \tikzfig{twoApcoarse}\text{  }.
+    %\begin{minipage}{2.0truecm}
+    %  \centering
+    %  \includegraphics[width=1.8truecm,clip]{./figs/twoApcoarse}
+    %\end{minipage}.
 \end{align}
 %
 Equation~\eqref{def:Apycontr} and~\eqref{def:Achotrg} combined together
@@ -613,27 +636,31 @@ defines an RG transformation
 %
 \begin{subequations}\label{def:RGeqHOTRG}
     \begin{align}\label{def:RGeqHOTRGschem}
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/Aold}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/Aold}
+    %\end{minipage}
+    \tikzfig{Aold}
     \xrightarrow{\text{HOTRG}}
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    \end{minipage},
+    \tikzfig{Ac-hotrg}\text{ },
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
+    %\end{minipage},
     \end{align}
 or explicitly as
     \begin{align}\label{def:RGeqHOTRGepl}
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
+    %\end{minipage}
+    \tikzfig{Ac-hotrg}
     = 
-    \begin{minipage}{4.0truecm}
-        \centering
-        \includegraphics[width=3.8truecm,clip]{./figs/rgEq4HOTRG}
-    \end{minipage}.
+    \tikzfig{rgEq4HOTRG}\text{ }.
+    %\begin{minipage}{4.0truecm}
+    %    \centering
+    %    \includegraphics[width=3.8truecm,clip]{./figs/rgEq4HOTRG}
+    %\end{minipage}.
     \end{align}
 \end{subequations}
 %
@@ -651,15 +678,17 @@ four legs as the other group and treat it as a matrix $M$,
 %
 \begin{align}\label{def:M-AA}
     M = 
-    \begin{minipage}{1.6truecm}
-        \centering
-        \includegraphics[width=1.4truecm,clip]{./figs/M-AA}
-    \end{minipage}
+    %\begin{minipage}{1.6truecm}
+    %    \centering
+    %    \includegraphics[width=1.4truecm,clip]{./figs/M-AA}
+    %\end{minipage}
+    \tikzfig{M-AA}
     \defeq
-    \begin{minipage}{1.6truecm}
-        \centering
-        \includegraphics[width=1.4truecm,clip]{./figs/twoA2M}
-    \end{minipage}.
+    \tikzfig{twoA2M}\text{ }.
+    %\begin{minipage}{1.6truecm}
+    %    \centering
+    %    \includegraphics[width=1.4truecm,clip]{./figs/twoA2M}
+    %\end{minipage}.
 \end{align}
 %
 The square of the approximation error $\epsilon$ of
@@ -682,10 +711,11 @@ as
 %
     \begin{align}\label{eq:approxerrPic}
     \epsilon^2 = \text{Const.} - 
-    \begin{minipage}{4.2truecm}
-        \centering
-        \includegraphics[width=4.0truecm,clip]{./figs/wMMw}
-    \end{minipage}.
+    \tikzfig{wMMw}\text{ }.
+    %\begin{minipage}{4.2truecm}
+    %    \centering
+    %    \includegraphics[width=4.0truecm,clip]{./figs/wMMw}
+    %\end{minipage}.
     \end{align}
 \end{subequations}
 %
@@ -779,7 +809,8 @@ matrices $C$. A tensor with the structure of $A^{\text{CDL}}$ is called
 a CDL tensor.
 %
 \begin{figure}[h]
-    \includegraphics[width=7.5cm]{./figs/ariseCDL}
+    %\includegraphics[width=7.5cm]{./figs/ariseCDL}
+    \tikzfig{ariseCDL}
     \caption{\label{fig:ariseCDL}[\textbf{Add descriptions}]}
 \end{figure}
 %
@@ -791,15 +822,17 @@ hand side of Eq.~\eqref{def:Apycontr}, the output tensor is propotional
 to $A^{\text{CDL}}$,
 %
 \begin{align}\label{eq:cdlHOTRG}
-    \begin{minipage}{4.0truecm}
-        \centering
-        \includegraphics[width=3.8truecm,clip]{./figs/cdlHOTRG}
-    \end{minipage}
+    %\begin{minipage}{4.0truecm}
+    %    \centering
+    %    \includegraphics[width=3.8truecm,clip]{./figs/cdlHOTRG}
+    %\end{minipage}
+    \tikzfig{cdlHOTRG}
     \propto
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/singleCDL}
-    \end{minipage}.
+    \tikzfig{singleCDL}\text{ }.
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/singleCDL}
+    %\end{minipage}.
 \end{align}
 %
 Equation~\eqref{eq:cdlHOTRG} shows that although HOTRG can detect and
@@ -817,7 +850,8 @@ points turn into two fixed lines and the critical fixed point
 disappears.
 %
 \begin{figure}[h]
-    \includegraphics[width=8.6cm]{./figs/tensorRGflowSchem}
+    %\includegraphics[width=8.6cm]{./figs/tensorRGflowSchem}
+    \tikzfig{tensorRGflowSchem}
     \caption{\label{fig:tensorRGflow}[\textbf{Add descriptions}]}
 \end{figure}
 %
@@ -875,7 +909,8 @@ the procedure on other three legs and filter out tehe local correlations
 inside this plaquette completely.
 %
 \begin{figure}[h]
-    \includegraphics[width=7.5cm]{./figs/gilt}
+    %\includegraphics[width=7.5cm]{./figs/gilt}
+    \tikzfig{gilt}
     \caption{\label{fig:gilt}[\textbf{Add descriptions}]}
 \end{figure}
 %
@@ -894,15 +929,17 @@ Eq.~\eqref{def:Apycontr} except we apply halves of $Q$ matrices on $A$
 tensors before applying the isometry $w$,
 %
 \begin{align}\label{def:ApycontrGilt}
-    \begin{minipage}{2.0truecm}
-      \centering
-      \includegraphics[width=1.8truecm,clip]{./figs/Ap-ycontr}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %  \centering
+    %  \includegraphics[width=1.8truecm,clip]{./figs/Ap-ycontr}
+    %\end{minipage}
+    \tikzfig{Ap-ycontr}
     \defeq
-    \begin{minipage}{4.0truecm}
-      \centering
-      \includegraphics[width=3.8truecm,clip]{./figs/twoAgiltcoarse}
-    \end{minipage},
+    \tikzfig{twoAgiltcoarse}\text{ },
+    %\begin{minipage}{4.0truecm}
+    %  \centering
+    %  \includegraphics[width=3.8truecm,clip]{./figs/twoAgiltcoarse}
+    %\end{minipage},
 \end{align}
 %
 where $Q_{Bl}$ and $Q_{Br}$ are two matrices obtained by splitting a
@@ -913,15 +950,17 @@ similar Gilt truncations and HOTRG corse graining process in the
 horizontal direction to have
 %
 \begin{align}\label{def:ApxcontrGilt}
-    \begin{minipage}{2.0truecm}
-      \centering
-      \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %  \centering
+    %  \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
+    %\end{minipage}
+    \tikzfig{Ac-hotrg}
     \defeq
-    \begin{minipage}{4.0truecm}
-      \centering
-      \includegraphics[width=3.8truecm,clip]{./figs/twoApgiltcoarse}
-    \end{minipage}.
+    \tikzfig{twoApgiltcoarse}\text{ }.
+    %\begin{minipage}{4.0truecm}
+    %  \centering
+    %  \includegraphics[width=3.8truecm,clip]{./figs/twoApgiltcoarse}
+    %\end{minipage}.
 \end{align}
 %
 Equation~\eqref{def:ApycontrGilt} and~\eqref{def:ApxcontrGilt} together
@@ -929,29 +968,33 @@ defines the RG equation of Gilt-HOTRG
 %
 \begin{subequations}\label{def:RGeqGiltHOTRG}
     \begin{align}\label{def:RGeqGiltHOTRGschem}
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/Aold}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/Aold}
+    %\end{minipage}
+    \tikzfig{Aold}
     &\xrightarrow{\text{Gilt-HOTRG}}
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    \end{minipage}
+    \tikzfig{Ac-hotrg}
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
+    %\end{minipage}
     \text{ or}\nonumber\\
     &A_c = \mathcal{T}\left(A\right). 
     \end{align}
 or explicitly as
     \begin{align}\label{def:RGeqGiltHOTRGepl}
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
+    %\end{minipage}
+    \tikzfig{Ac-hotrg}
     = 
-    \begin{minipage}{4.8truecm}
-        \centering
-        \includegraphics[width=4.6truecm,clip]{./figs/rgEq4GiltHOTRG}
-    \end{minipage}.
+    \scalebox{0.8}{\tikzfig{rgEq4GiltHOTRG}}\text{ }.
+    %\begin{minipage}{4.8truecm}
+    %    \centering
+    %    \includegraphics[width=4.6truecm,clip]{./figs/rgEq4GiltHOTRG}
+    %\end{minipage}.
     \end{align}
 \end{subequations}
 %
@@ -961,15 +1004,18 @@ to a single number (see Appendix~\ref{appd:cdlHOTRG} for detailed
 calculations)
 %
 \begin{align}\label{eq:CDL2number}
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/singleCDL}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/singleCDL}
+    %\end{minipage}
+    \tikzfig{singleCDL}
     \xrightarrow{\text{Gilt-HOTRG}}
-    \left(\begin{minipage}{1.8truecm}
-        \centering
-        \includegraphics[width=1.6truecm,clip]{./figs/CDLnumber}
-    \end{minipage}
+    \left(
+        %\begin{minipage}{1.8truecm}
+        %\centering
+        %\includegraphics[width=1.6truecm,clip]{./figs/CDLnumber}
+        %\end{minipage}
+        \tikzfig{CDLnumber}
     \right)^4.
 \end{align}
 %
@@ -1160,15 +1206,17 @@ following gauge transformation
     \end{align}
 or pictorially as
     \begin{align}\label{def:gaugeTransPic}
-    \begin{minipage}{2.0truecm}
-    \centering
-    \includegraphics[width=1.8truecm,clip]{./figs/Atilde}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %\centering
+    %\includegraphics[width=1.8truecm,clip]{./figs/Atilde}
+    %\end{minipage}
+    \tikzfig{Atilde}
     =
-    \begin{minipage}{3.0truecm}
-      \centering
-      \includegraphics[width=2.8truecm,clip]{./figs/AsimilarTrans}
-    \end{minipage},
+    \tikzfig{AsimilarTrans}\text{ },
+    %\begin{minipage}{3.0truecm}
+    %  \centering
+    %  \includegraphics[width=2.8truecm,clip]{./figs/AsimilarTrans}
+    %\end{minipage},
     \end{align}
 \end{subequations}
 %
@@ -1383,20 +1431,23 @@ terms that are first order in $\delta A$ to get $\delta A_c$,
 %
 \begin{widetext}
     \begin{align}\label{eq:respMatGiltHOTRG}
-    \begin{minipage}{2.0truecm}
-    \centering
-    \includegraphics[width=1.8truecm,clip]{./figs/deltaAc}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %\centering
+    %\includegraphics[width=1.8truecm,clip]{./figs/deltaAc}
+    %\end{minipage}
+    \tikzfig{deltaAc}
     &=
-    \begin{minipage}{5.0truecm}
-    \centering
-    \includegraphics[width=4.8truecm,clip]{./figs/deltaA1}
-    \end{minipage}
+    %\begin{minipage}{5.0truecm}
+    %\centering
+    %\includegraphics[width=4.8truecm,clip]{./figs/deltaA1}
+    %\end{minipage}
+    \scalebox{0.8}{\tikzfig{deltaA1}}
     +
-    \begin{minipage}{5.0truecm}
-    \centering
-    \includegraphics[width=4.8truecm,clip]{./figs/deltaA2}
-    \end{minipage} %\nonumber\\
+    \scalebox{0.8}{\tikzfig{deltaA2}}
+    %\begin{minipage}{5.0truecm}
+    %\centering
+    %\includegraphics[width=4.8truecm,clip]{./figs/deltaA2}
+    %\end{minipage} %\nonumber\\
 %    &+
 %    \begin{minipage}{5.0truecm}
 %    \centering
@@ -1407,7 +1458,7 @@ terms that are first order in $\delta A$ to get $\delta A_c$,
 %    \centering
 %    \includegraphics[width=4.8truecm,clip]{./figs/deltaA4}
 %    \end{minipage}
-    + \text{ two more terms}.
+    + \text{ two similar terms}.
     \end{align}
 \end{widetext}
 %
@@ -1463,7 +1514,8 @@ and it is realized by summing over all the even numbered spins and then
 renumber the remaining odd numbered spins. 
 %
 \begin{figure}[h]
-    \includegraphics[width=7.5cm]{./figs/Ising1D-decimation}
+    %\includegraphics[width=7.5cm]{./figs/Ising1D-decimation}
+    \scalebox{0.98}{\tikzfig{Ising1D-decimation}}
     \caption{\label{fig:Ising1D-decimation}[\textbf{Add descriptions}]}
 \end{figure}
 %
@@ -1753,15 +1805,17 @@ estimated critical temperature $T_c^{[30]}$, we plot the singular values
 of tensors $\mathcal{A}^{(n)}$ defined as
 %
 \begin{align}\label{def:Asvd}
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/Aold}
-    \end{minipage}
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/Aold}
+    %\end{minipage}
+    \tikzfig{Aold}
     \svdeq
-    \begin{minipage}{2.0truecm}
-        \centering
-        \includegraphics[width=1.8truecm,clip]{./figs/Asvd}
-    \end{minipage}.
+    \tikzfig{Asvd}\text{ }.
+    %\begin{minipage}{2.0truecm}
+    %    \centering
+    %    \includegraphics[width=1.8truecm,clip]{./figs/Asvd}
+    %\end{minipage}.
 \end{align}
 %
 The flow of singular values in Fig.~\ref{fig:flowA}(a) indicates that we

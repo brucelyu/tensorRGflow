@@ -1,0 +1,6 @@
+% tensorFig.tikzdefs file, match tensorFig.tikzstyles file
+
+\usepackage{amsmath}
+\usetikzlibrary{patterns}
+\newcommand{\xrarrow}[1]{\xrightarrow{#1}}
+\newcommand{\defeqfig}{\stackrel{\text{def}}{=}}

@@ -1,0 +1,285 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=greenS] (21) at (-2.25, 2.25) {};
+		\node [style=greenS] (22) at (-0.75, 2.25) {};
+		\node [style=greenS] (23) at (-2.25, 0.75) {};
+		\node [style=greenS] (24) at (-0.75, 0.75) {};
+		\node [style=none] (81) at (-1.875, 2.25) {};
+		\node [style=none] (82) at (-1.875, 0.75) {};
+		\node [style=none] (83) at (-1.125, 2.25) {};
+		\node [style=none] (84) at (-1.125, 0.75) {};
+		\node [style=none] (85) at (-1.625, 1.5) {};
+		\node [style=none] (86) at (-1.375, 1.5) {};
+		\node [style=greenS] (88) at (0.75, 2.25) {};
+		\node [style=greenS] (90) at (0.75, 0.75) {};
+		\node [style=none] (91) at (-0.375, 2.25) {};
+		\node [style=none] (92) at (-0.375, 0.75) {};
+		\node [style=none] (93) at (0.375, 2.25) {};
+		\node [style=none] (94) at (0.375, 0.75) {};
+		\node [style=none] (95) at (-0.125, 1.5) {};
+		\node [style=none] (96) at (0.125, 1.5) {};
+		\node [style=greenS] (98) at (2.25, 2.25) {};
+		\node [style=greenS] (100) at (2.25, 0.75) {};
+		\node [style=none] (101) at (1.125, 2.25) {};
+		\node [style=none] (102) at (1.125, 0.75) {};
+		\node [style=none] (103) at (1.875, 2.25) {};
+		\node [style=none] (104) at (1.875, 0.75) {};
+		\node [style=none] (105) at (1.375, 1.5) {};
+		\node [style=none] (106) at (1.625, 1.5) {};
+		\node [style=none] (107) at (-2.625, 0.75) {};
+		\node [style=none] (108) at (-2.625, 2.25) {};
+		\node [style=none] (109) at (-2.875, 1.5) {};
+		\node [style=none] (110) at (-3.125, 1.5) {};
+		\node [style=none] (111) at (2.625, 2.25) {};
+		\node [style=none] (112) at (2.625, 0.75) {};
+		\node [style=none] (113) at (2.875, 1.5) {};
+		\node [style=none] (114) at (3.125, 1.5) {};
+		\node [style=greenS] (115) at (-2.25, -0.75) {};
+		\node [style=greenS] (116) at (-0.75, -0.75) {};
+		\node [style=greenS] (117) at (-2.25, -2.25) {};
+		\node [style=greenS] (118) at (-0.75, -2.25) {};
+		\node [style=none] (119) at (-1.875, -0.75) {};
+		\node [style=none] (120) at (-1.875, -2.25) {};
+		\node [style=none] (121) at (-1.125, -0.75) {};
+		\node [style=none] (122) at (-1.125, -2.25) {};
+		\node [style=none] (123) at (-1.625, -1.5) {};
+		\node [style=none] (124) at (-1.375, -1.5) {};
+		\node [style=greenS] (125) at (0.75, -0.75) {};
+		\node [style=greenS] (126) at (0.75, -2.25) {};
+		\node [style=none] (127) at (-0.375, -0.75) {};
+		\node [style=none] (128) at (-0.375, -2.25) {};
+		\node [style=none] (129) at (0.375, -0.75) {};
+		\node [style=none] (130) at (0.375, -2.25) {};
+		\node [style=none] (131) at (-0.125, -1.5) {};
+		\node [style=none] (132) at (0.125, -1.5) {};
+		\node [style=greenS] (133) at (2.25, -0.75) {};
+		\node [style=greenS] (134) at (2.25, -2.25) {};
+		\node [style=none] (135) at (1.125, -0.75) {};
+		\node [style=none] (136) at (1.125, -2.25) {};
+		\node [style=none] (137) at (1.875, -0.75) {};
+		\node [style=none] (138) at (1.875, -2.25) {};
+		\node [style=none] (139) at (1.375, -1.5) {};
+		\node [style=none] (140) at (1.625, -1.5) {};
+		\node [style=none] (141) at (-2.625, -2.25) {};
+		\node [style=none] (142) at (-2.625, -0.75) {};
+		\node [style=none] (143) at (-2.875, -1.5) {};
+		\node [style=none] (144) at (-3.125, -1.5) {};
+		\node [style=none] (145) at (2.625, -0.75) {};
+		\node [style=none] (146) at (2.625, -2.25) {};
+		\node [style=none] (147) at (2.875, -1.5) {};
+		\node [style=none] (148) at (3.125, -1.5) {};
+		\node [style=none] (149) at (-2.25, 2.75) {};
+		\node [style=none] (150) at (-0.75, 2.75) {};
+		\node [style=none] (151) at (0.75, 2.75) {};
+		\node [style=none] (152) at (2.25, 2.75) {};
+		\node [style=none] (153) at (-2.25, -2.75) {};
+		\node [style=none] (154) at (-0.75, -2.75) {};
+		\node [style=none] (155) at (0.75, -2.75) {};
+		\node [style=none] (156) at (2.25, -2.75) {};
+		\node [style=none] (157) at (-1.25, 2.5) {};
+		\node [style=none] (158) at (-0.25, 2.5) {};
+		\node [style=none] (159) at (-0.25, 0.25) {};
+		\node [style=none] (160) at (-1.25, 0.25) {};
+		\node [style=none] (161) at (-2.325, -0.25) {};
+		\node [style=none] (162) at (-2.175, -0.25) {};
+		\node [style=none] (163) at (-0.825, -0.25) {};
+		\node [style=none] (164) at (-0.675, -0.25) {};
+		\node [style=none] (165) at (0.675, -0.25) {};
+		\node [style=none] (166) at (0.825, -0.25) {};
+		\node [style=none] (167) at (2.175, -0.25) {};
+		\node [style=none] (168) at (2.325, -0.25) {};
+		\node [style=none] (169) at (-2.325, 0.25) {};
+		\node [style=none] (170) at (-2.175, 0.25) {};
+		\node [style=none] (171) at (-1.5, 0.25) {};
+		\node [style=none] (172) at (0, 0.25) {};
+		\node [style=none] (173) at (0.675, 0.25) {};
+		\node [style=none] (174) at (0.825, 0.25) {};
+		\node [style=none] (175) at (2.175, 0.25) {};
+		\node [style=none] (176) at (2.325, 0.25) {};
+		\node [style=none] (177) at (-3.5, 2.5) {};
+		\node [style=none] (178) at (-3.5, -2.5) {};
+		\node [style=none] (179) at (3.5, 2.5) {};
+		\node [style=none] (180) at (3.5, -2.5) {};
+		\node [style=none] (181) at (-1.5, 2.75) {};
+		\node [style=none] (182) at (-1.575, 1.975) {};
+		\node [style=none] (183) at (-1.6, 0.975) {};
+		\node [style=none] (184) at (-1.6, 0.325) {};
+		\node [style=none] (185) at (-1.525, -1.35) {};
+		\node [style=none] (186) at (-1.575, -0.35) {};
+		\node [style=none] (187) at (-1.525, -1.675) {};
+		\node [style=none] (188) at (-1.5, -2.75) {};
+		\node [style=none] (189) at (1.5, 2.75) {};
+		\node [style=none] (190) at (1.5, 1.6) {};
+		\node [style=none] (191) at (1.5, 1.4) {};
+		\node [style=none] (192) at (1.5, 0.325) {};
+		\node [style=none] (193) at (1.5, -0.325) {};
+		\node [style=none] (194) at (1.5, -1.4) {};
+		\node [style=none] (195) at (1.5, -1.6) {};
+		\node [style=none] (196) at (1.5, -2.75) {};
+		\node [style=none] (197) at (0, 3.25) {$A$};
+		\node [style=none] (198) at (0.025, 3) {};
+		\node [style=none] (199) at (0.6, 2.475) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (21) to (81.center);
+		\draw [style=greenMidLine] (23) to (82.center);
+		\draw [style=greenMidLine] (83.center) to (22);
+		\draw [style=greenMidLine] (84.center) to (24);
+		\draw [style=blackMidLine] (82.center)
+			 to (85.center)
+			 to (81.center)
+			 to cycle;
+		\draw [style=blackMidLine] (84.center)
+			 to (86.center)
+			 to (83.center)
+			 to cycle;
+		\draw [style=blackMidLine] (85.center) to (86.center);
+		\draw [style=greenMidLine] (93.center) to (88);
+		\draw [style=greenMidLine] (94.center) to (90);
+		\draw [style=blackMidLine] (92.center)
+			 to (95.center)
+			 to (91.center)
+			 to cycle;
+		\draw [style=blackMidLine] (94.center)
+			 to (96.center)
+			 to (93.center)
+			 to cycle;
+		\draw [style=blackMidLine] (95.center) to (96.center);
+		\draw [style=greenMidLine] (22) to (91.center);
+		\draw [style=greenMidLine] (24) to (92.center);
+		\draw [style=greenMidLine] (103.center) to (98);
+		\draw [style=greenMidLine] (104.center) to (100);
+		\draw [style=blackMidLine] (102.center)
+			 to (105.center)
+			 to (101.center)
+			 to cycle;
+		\draw [style=blackMidLine] (104.center)
+			 to (106.center)
+			 to (103.center)
+			 to cycle;
+		\draw [style=blackMidLine] (105.center) to (106.center);
+		\draw [style=greenMidLine] (88) to (101.center);
+		\draw [style=greenMidLine] (90) to (102.center);
+		\draw [style=blackMidLine] (108.center)
+			 to (109.center)
+			 to (107.center)
+			 to cycle;
+		\draw [style=blackMidLine] (109.center) to (110.center);
+		\draw [style=blackMidLine] (111.center)
+			 to (112.center)
+			 to (113.center)
+			 to cycle;
+		\draw [style=blackMidLine] (113.center) to (114.center);
+		\draw [style=greenMidLine] (98) to (111.center);
+		\draw [style=greenMidLine] (100) to (112.center);
+		\draw [style=greenMidLine] (21) to (108.center);
+		\draw [style=greenMidLine] (23) to (107.center);
+		\draw [style=greenMidLine] (115) to (119.center);
+		\draw [style=greenMidLine] (117) to (120.center);
+		\draw [style=greenMidLine] (121.center) to (116);
+		\draw [style=greenMidLine] (122.center) to (118);
+		\draw [style=blackMidLine] (120.center)
+			 to (123.center)
+			 to (119.center)
+			 to cycle;
+		\draw [style=blackMidLine] (122.center)
+			 to (124.center)
+			 to (121.center)
+			 to cycle;
+		\draw [style=blackMidLine] (123.center) to (124.center);
+		\draw [style=greenMidLine] (129.center) to (125);
+		\draw [style=greenMidLine] (130.center) to (126);
+		\draw [style=blackMidLine] (131.center)
+			 to (127.center)
+			 to (128.center)
+			 to cycle;
+		\draw [style=blackMidLine] (132.center)
+			 to (129.center)
+			 to (130.center)
+			 to cycle;
+		\draw [style=blackMidLine] (131.center) to (132.center);
+		\draw [style=greenMidLine] (116) to (127.center);
+		\draw [style=greenMidLine] (118) to (128.center);
+		\draw [style=greenMidLine] (137.center) to (133);
+		\draw [style=greenMidLine] (138.center) to (134);
+		\draw [style=blackMidLine] (136.center)
+			 to (139.center)
+			 to (135.center)
+			 to cycle;
+		\draw [style=blackMidLine] (138.center)
+			 to (140.center)
+			 to (137.center)
+			 to cycle;
+		\draw [style=blackMidLine] (139.center) to (140.center);
+		\draw [style=greenMidLine] (125) to (135.center);
+		\draw [style=greenMidLine] (126) to (136.center);
+		\draw [style=blackMidLine] (141.center)
+			 to (142.center)
+			 to (143.center)
+			 to cycle;
+		\draw [style=blackMidLine] (143.center) to (144.center);
+		\draw [style=blackMidLine] (145.center)
+			 to (146.center)
+			 to (147.center)
+			 to cycle;
+		\draw [style=blackMidLine] (147.center) to (148.center);
+		\draw [style=greenMidLine] (133) to (145.center);
+		\draw [style=greenMidLine] (134) to (146.center);
+		\draw [style=greenMidLine] (115) to (142.center);
+		\draw [style=greenMidLine] (117) to (141.center);
+		\draw [style=greenMidLine] (23) to (115);
+		\draw [style=greenMidLine] (24) to (116);
+		\draw [style=greenMidLine] (125) to (90);
+		\draw [style=greenMidLine] (100) to (133);
+		\draw [style=greenMidLine] (21) to (23);
+		\draw [style=greenMidLine] (22) to (24);
+		\draw [style=greenMidLine] (88) to (90);
+		\draw [style=greenMidLine] (98) to (100);
+		\draw [style=greenMidLine] (115) to (117);
+		\draw [style=greenMidLine] (116) to (118);
+		\draw [style=greenMidLine] (125) to (126);
+		\draw [style=greenMidLine] (133) to (134);
+		\draw [style=greenMidLine] (21) to (149.center);
+		\draw [style=greenMidLine] (22) to (150.center);
+		\draw [style=greenMidLine] (88) to (151.center);
+		\draw [style=greenMidLine] (98) to (152.center);
+		\draw [style=greenMidLine] (117) to (153.center);
+		\draw [style=greenMidLine] (118) to (154.center);
+		\draw [style=greenMidLine] (126) to (155.center);
+		\draw [style=greenMidLine] (134) to (156.center);
+		\draw [style=blueMidLine] (159.center)
+			 to [bend left=45, looseness=0.75] (160.center)
+			 to [bend left, looseness=0.75] (157.center)
+			 to [bend left=60, looseness=0.75] (158.center)
+			 to [bend left=45, looseness=0.50] cycle;
+		\draw [style=blackMidPureLine, in=180, out=180, looseness=1.50] (144.center) to (161.center);
+		\draw [style=blackMidPureLine] (162.center) to (163.center);
+		\draw [style=blackMidPureLine] (164.center) to (165.center);
+		\draw [style=blackMidPureLine] (166.center) to (167.center);
+		\draw [style=blackMidPureLine, in=0, out=0, looseness=1.50] (168.center) to (148.center);
+		\draw [style=blackMidPureLine, in=180, out=180, looseness=1.50] (110.center) to (169.center);
+		\draw [style=blackMidPureLine] (170.center) to (171.center);
+		\draw [style=blackMidPureLine] (172.center) to (173.center);
+		\draw [style=blackMidPureLine] (174.center) to (175.center);
+		\draw [style=blackMidPureLine, in=0, out=0, looseness=1.50] (114.center) to (176.center);
+		\draw [style=greenMidLine, in=90, out=90] (177.center) to (149.center);
+		\draw [style=greenMidLine, bend right, looseness=0.25] (177.center) to (178.center);
+		\draw [style=greenMidLine, in=-90, out=-90, looseness=1.75] (178.center) to (153.center);
+		\draw [style=greenMidLine, in=90, out=90] (152.center) to (179.center);
+		\draw [style=greenMidLine, bend left, looseness=0.25] (179.center) to (180.center);
+		\draw [style=greenMidLine, in=-90, out=-90, looseness=1.25] (180.center) to (156.center);
+		\draw [style=greenMidLine, in=90, out=90] (181.center) to (150.center);
+		\draw [style=greenMidLine] (181.center) to (182.center);
+		\draw [style=greenMidLine] (183.center) to (184.center);
+		\draw [style=greenMidLine] (186.center) to (185.center);
+		\draw [style=greenMidLine] (187.center) to (188.center);
+		\draw [style=greenMidLine, in=-90, out=-90, looseness=1.25] (188.center) to (154.center);
+		\draw [style=greenMidLine, in=-90, out=-90, looseness=1.50] (155.center) to (196.center);
+		\draw [style=greenMidLine] (196.center) to (195.center);
+		\draw [style=greenMidLine] (194.center) to (193.center);
+		\draw [style=greenMidLine] (192.center) to (191.center);
+		\draw [style=greenMidLine] (190.center) to (189.center);
+		\draw [style=greenMidLine, in=90, out=90] (151.center) to (189.center);
+		\draw [style=blackArrow] (198.center) to (199.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

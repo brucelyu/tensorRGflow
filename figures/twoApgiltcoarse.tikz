@@ -1,0 +1,69 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (1, 0) {$A'$};
+		\node [style=green] (1) at (-1, 0) {$A'$};
+		\node [style=none] (2) at (1, 2.475) {};
+		\node [style=none] (3) at (3, 0) {};
+		\node [style=none] (4) at (-1, 2.5) {};
+		\node [style=none] (5) at (-3, 0) {};
+		\node [style=none] (6) at (1.25, 2.5) {};
+		\node [style=none] (7) at (-1.25, 2.5) {};
+		\node [style=none] (8) at (0, -3) {};
+		\node [style=none] (9) at (1.25, -2.5) {};
+		\node [style=none] (10) at (-1.25, -2.5) {};
+		\node [style=none] (11) at (0, 3) {};
+		\node [style=none] (12) at (1, -2.5) {};
+		\node [style=none] (13) at (-1, -2.5) {};
+		\node [style=none] (14) at (0.75, -3.175) {$v$};
+		\node [style=none] (15) at (0.725, 3.3) {$v^{\dagger}$};
+		\node [style=none] (16) at (0, 3.75) {};
+		\node [style=none] (17) at (0, -3.75) {};
+		\node [style=Qdpr] (18) at (-1, -1.75) {};
+		\node [style=Qdpl] (19) at (-1, 1.75) {};
+		\node [style=cdlMat] (20) at (-2, 0.6) {};
+		\node [style=cdlMat] (21) at (-2, -0.625) {};
+		\node [style=none] (24) at (-1.25, 1.425) {};
+		\node [style=none] (25) at (-1.25, -1.425) {};
+		\node [style=Qupr] (26) at (1, -1.75) {};
+		\node [style=Qupl] (27) at (1, 1.75) {};
+		\node [style=cdlMat] (29) at (2, 0.6) {};
+		\node [style=cdlMat] (30) at (2, -0.625) {};
+		\node [style=none] (33) at (1.25, 1.425) {};
+		\node [style=none] (34) at (1.25, -1.425) {};
+		\node [style=none] (35) at (2, 2) {$Q'_{Au}$};
+		\node [style=none] (36) at (2, -2) {$Q'_{Ad}$};
+		\node [style=none] (37) at (-2.15, 1.75) {$Q'_{Bu}$};
+		\node [style=none] (38) at (-2.1, -1.75) {$Q'_{Bd}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (0) to (1);
+		\draw [style=blackMidLine] (9.center)
+			 to (10.center)
+			 to (8.center)
+			 to cycle;
+		\draw [style=blackMidLine] (6.center)
+			 to (7.center)
+			 to (11.center)
+			 to cycle;
+		\draw [style=blackMidLine] (16.center) to (11.center);
+		\draw [style=blackMidLine] (8.center) to (17.center);
+		\draw [style=greenMidLine] (1) to (18);
+		\draw [style=greenMidLine] (19) to (1);
+		\draw [style=cdlMatLeg, in=-105, out=15, looseness=1.25] (20) to (24.center);
+		\draw [style=cdlMatLeg, in=105, out=-15] (21) to (25.center);
+		\draw [style=greenMidLine] (4.center) to (19);
+		\draw [style=greenMidLine] (18) to (13.center);
+		\draw [style=greenMidLine] (27) to (0);
+		\draw [style=greenMidLine] (2.center) to (27);
+		\draw [style=greenMidLine] (0) to (26);
+		\draw [style=greenMidLine] (26) to (12.center);
+		\draw [style=cdlMatLeg, in=-75, out=165, looseness=1.25] (29) to (33.center);
+		\draw [style=cdlMatLeg, in=75, out=-165] (30) to (34.center);
+		\draw [style=blackMidPureLine] (1) to (5.center);
+		\draw [style=blackMidPureLine] (0) to (3.center);
+		\draw [style=cdlMatLeg] (20) to (1);
+		\draw [style=cdlMatLeg] (21) to (1);
+		\draw [style=cdlMatLeg] (29) to (0);
+		\draw [style=cdlMatLeg] (0) to (30);
+	\end{pgfonlayer}
+\end{tikzpicture}

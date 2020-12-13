@@ -1,7 +1,7 @@
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
 		\node [style=green] (0) at (-2.9, 1) {$\delta A$};
-		\node [style=green] (1) at (-2.9, -1) {$A$};
+		\node [style=green] (1) at (-2.9, -1) {$A^*$};
 		\node [style=none] (2) at (-5.15, 1) {};
 		\node [style=none] (3) at (-5.15, -1) {};
 		\node [style=none] (4) at (-5.15, 1.25) {};
@@ -27,8 +27,8 @@
 		\node [style=none] (26) at (-2.4, 2.75) {};
 		\node [style=none] (27) at (-4.2, 1.25) {};
 		\node [style=none] (28) at (-1.6, 1.25) {};
-		\node [style=green] (33) at (2.9, 1) {$A$};
-		\node [style=green] (34) at (2.9, -1) {$A$};
+		\node [style=green] (33) at (2.9, 1) {$A^*$};
+		\node [style=green] (34) at (2.9, -1) {$A^*$};
 		\node [style=none] (35) at (0.65, 1) {};
 		\node [style=none] (36) at (0.65, -1) {};
 		\node [style=none] (37) at (0.65, 1.25) {};

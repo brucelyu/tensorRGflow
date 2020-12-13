@@ -105,6 +105,10 @@
 		\node [style=none] (111) at (0, -6.5) {absorption};
 		\node [style=none] (112) at (3.575, -6.2) {$Q_r$};
 		\node [style=none] (113) at (4.5, -6.2) {$Q_l$};
+		\node [style=none] (114) at (-4.75, 0.75) {$C$};
+		\node [style=none] (115) at (-3.25, 0.75) {$C$};
+		\node [style=none] (116) at (-4.75, -0.75) {$C$};
+		\node [style=none] (117) at (-3.25, -0.75) {$C$};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw [style=greenMidLine] (0) to (2);

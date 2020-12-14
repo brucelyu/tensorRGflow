@@ -1,4 +1,6 @@
 .DS_Store
+*.pyc
+out/
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -12,6 +14,7 @@
 *.cb
 *.cb2
 .*.lb
+
 
 ## Intermediate documents:
 *.dvi

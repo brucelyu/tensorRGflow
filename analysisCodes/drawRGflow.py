@@ -12,10 +12,15 @@ import pickle as pkl
 import matplotlib.pyplot as plt
 import os
 from scipy.stats import entropy
+import numpy as np
 
-marker = itertools.cycle(('.', 'v', '^','<','>','1','2','3','4',
+# Plot font size
+middleSize = 12
+plt.rc('font', size=middleSize)
+
+marker = itertools.cycle(('.', 'x', '*','<','>','1','2','3','4',
                           's','p','*','h','H','+','x','D','d','|','_'))
-lines =  itertools.cycle(('-','-.'))
+lines =  itertools.cycle(('-','--'))
 colors = itertools.cycle(('b','g'))
 
 parser = argparse.ArgumentParser(
@@ -40,12 +45,15 @@ parser.add_argument("--Ngilt", dest = "Ngilt", type = int,
 parser.add_argument("--legcut", dest = "legcut", type = int,
                     help = "number of leg to cut in gilt_hotrgplaq",
                     choices = [2,4], default = 4)
+parser.add_argument("--isDiffAcc", help = "whether to draw flow at different T near Tc",
+                        action = "store_true")
 
 
 # read from argument parser
 args = parser.parse_args()
 chi = args.chi
 isGilt = args.isGilt
+isDiffAcc = args.isDiffAcc
 gilteps = args.gilteps
 scheme = args.scheme
 Ngilt = args.Ngilt
@@ -54,10 +62,8 @@ legcut = args.legcut
 # generate file name
 # input and output file name
 if scheme == "hotrg":
-    if isGilt:
-        figdir = "gilt_hotrg_flow"
-    else:
-        figdir = "hotrgflow"
+    figdir = "hotrg"
+    chieps = "chi{:02d}".format(chi)
 elif scheme == "trg":
     if isGilt:
         figdir = "gilt_trg_flow"
@@ -65,8 +71,8 @@ elif scheme == "trg":
         figdir = "trgflow"
 elif scheme == "Gilt-HOTRG":
     figdir = "gilt_hotrg{:d}{:d}_flow".format(Ngilt, legcut)
+    chieps = "eps{:.0e}_chi{:02d}".format(gilteps, chi)
 # read Tc if exists
-chieps = "eps{:.0e}_chi{:02d}".format(gilteps, chi)
 savedirectory = "../out/" + figdir +  "/" + chieps
 relTc = 1.0
 Tcfile = savedirectory + "/Tc.pkl"
@@ -76,7 +82,7 @@ if not os.path.exists(Tcfile):
 else:
     with open(Tcfile,"rb") as f:
         Tlow, Thi = pkl.load(f)
-    relTc = 0.5 * (Tlow + Thi)
+    relTc = 1.0 * Tlow
     Tcerr = abs(Thi - Tlow) / (Tlow + Thi)
     outacc = int("{:e}".format(Tcerr)[-2:])
     print("Read the estimated Tc = {Tcval:.{acc}f}".format(Tcval = relTc,
@@ -85,16 +91,15 @@ else:
 
 
 # Plot the data file
-# AnormFile = "../out/" + figdir +"/Anormflow_eps{:.0e}_chi{:02d}.pkl".format(gilteps, chi)
+
 singValFile = savedirectory + "/flowAtTc_fixSign.pkl"
 
-# if os.path.exists(AnormFile):
-#     with open(AnormFile,"rb") as f:
-#         datadic = pkl.load(f)
+
 if os.path.exists(singValFile):
     if scheme == "hotrg" or scheme == "trg":
-        with open(singValFile, "rb") as f:
-            sarr, Adifflist = pkl.load(f)
+        pass
+        # with open(singValFile, "rb") as f:
+        #     sarr, Adifflist = pkl.load(f)
     elif scheme =="Gilt-HOTRG":
         # read singular values flow and Adiff
         with open(singValFile, "rb") as f:
@@ -104,51 +109,63 @@ if os.path.exists(singValFile):
         with open(Tsdata, "rb") as f:
             Anorm = pkl.load(f)[0]
         
-
-# plt.figure()
-# for acc in datadic.keys():
-#     AnormL, AnormH = datadic[acc]
-#     tempMarker = next(marker)
-#     plt.plot(AnormL[1:],'b' + tempMarker + '-', 
-#              label = r"lower by $10^{{-{0:d}}}$".format(acc))
-#     plt.plot(AnormH[1:],'g' + tempMarker + '-.',
-#              label = r"higher by $10^{{-{0:d}}}$".format(acc))
-# plt.legend()
-# plt.xlabel("RG step")
-# plt.ylabel("$|A|$")
-# plt.savefig(os.path.splitext(AnormFile)[0]+ ".png", dpi = 300)
-
-plt.figure()
-for k in range(sarr.shape[1]):
-    plt.plot(sarr[:,k],"go-",alpha = 0.5)
-    plt.title("Flow of spectrum $T = {:.10f}T_c, \chi = {:d}$".format(relTc,chi))
-    plt.xlabel("RG step")
-    plt.ylabel("Singluar values")
-plt.savefig(savedirectory + 
-            "/flow_sing_fixSign.png", dpi = 300)
-
-enteps = 1e-10
-entro = entropy(sarr > 1e-8, axis = 1, base = 2)
-plt.figure()
-plt.plot(entro, "kx--", alpha = 0.6)
-plt.title("Flow of entropy of singular value spectrum")
-plt.xlabel("RG step")
-plt.ylabel("Entropy")
-plt.savefig(savedirectory + "/flow_singSpectr_fixSign.png", dpi = 300)
-
-
-plt.figure()
-plt.title("$\chi = ${:d}".format(chi))
-plt.plot(Anorm[1:],"kx--",label="Tc = {:.10f}".format(relTc))
-plt.yscale("log")
-plt.legend()
-plt.xlabel("RG step")
-plt.ylabel("$|A|$")
-plt.savefig(savedirectory + "/AnormFlow.png", dpi=300)
-
-if scheme == "hotrg" or "trg" or "Gilt-HOTRG-imp":
+if isDiffAcc:
+    datadicFile = savedirectory + "/flowDiffAcc.pkl"
+    with open(datadicFile,"rb") as f:
+        datadic = pkl.load(f)
     plt.figure()
-    plt.plot(Adifflist, "ko--", alpha = 0.6)
+    for acc in datadic.keys():
+        AnormL, AnormH = datadic[acc]
+        tempMarker = next(marker)
+        plt.plot(AnormL[1:],'b' + tempMarker + '-', alpha = 0.6,
+                  label = r"$-10^{{-{0:d}}}$".format(acc))
+        plt.plot(AnormH[1:],'k' + tempMarker + '--', alpha = 0.6,
+                  label = r"$+10^{{-{0:d}}}$".format(acc))
+    plt.yscale("log")
+    plt.legend()
+    plt.xlabel("RG step $n$")
+    plt.xticks(np.arange(0,len(AnormL[1:]),5), np.arange(1, len(AnormL[1:])+1,5))
+    plt.ylabel("$\Vert A^{(n)}\Vert$")
+    plt.minorticks_off()
+    # plt.yticks([0.2, 1],[r"$2\times 10^{-1}$",
+    #                         r"$10^0$"],rotation=45)
+   
+    plt.savefig(savedirectory + "/AnormFlowDiffAcc.png", bbox_inches = 'tight', 
+                dpi = 300)
+
+
+if scheme == "Gilt-HOTRG":
+    plt.figure()
+    for k in range(sarr.shape[1]):
+        plt.plot(sarr[:,k],"go-",alpha = 0.5)
+        plt.title("Flow of spectrum $T = {:.10f}T_c, \chi = {:d}$".format(relTc,chi))
+        plt.xlabel("RG step")
+        plt.ylabel("Singluar values")
+    plt.savefig(savedirectory + 
+                "/flow_sing_fixSign.png", dpi = 300)
+    
+    enteps = 1e-10
+    entro = entropy(sarr > 1e-8, axis = 1, base = 2)
+    plt.figure()
+    plt.plot(entro, "kx--", alpha = 0.6)
+    plt.title("Flow of entropy of singular value spectrum")
+    plt.xlabel("RG step")
+    plt.ylabel("Entropy")
+    plt.savefig(savedirectory + "/flow_singSpectr_fixSign.png", dpi = 300)
+    
+    
+    plt.figure()
+    plt.title("$\chi = ${:d}".format(chi))
+    plt.plot(Anorm[1:],"kx--",label="Tc = {:.10f}".format(relTc))
+    plt.yscale("log")
+    plt.legend()
+    plt.xlabel("RG step")
+    plt.ylabel("$|A|$")
+    plt.savefig(savedirectory + "/AnormFlow.png", dpi=300)
+    
+    
+    plt.figure()
+    plt.plot(Adifflist[:31], "ko--", alpha = 0.6)
     plt.yscale("log")
     plt.xlabel("RG step")
     plt.ylabel("$|A'-A|$")

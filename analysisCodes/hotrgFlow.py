@@ -9,7 +9,7 @@ the tensor, and 3) norm of the difference of the two tensors in adjacent RG step
 @author: brucelyu
 """
 
-from HOTRG import get_spectrum_A, normFlowHOTRG
+from HOTRG import normFlowHOTRG
 import numpy as np
 import argparse
 import os
@@ -73,12 +73,13 @@ print("Running Time =", current_time)
 
 # input and output file name
 if scheme == "hotrg":
-    figdir = "hotrgflow"
+    figdir = "hotrg"
+    chieps = "chi{:02d}".format(chi)
 elif scheme == "Gilt-HOTRG":
     figdir = "gilt_hotrg{:d}{:d}_flow".format(Ngilt, legcut)
+    chieps = "eps{:.0e}_chi{:02d}".format(gilteps, chi)
 
 
-chieps = "eps{:.0e}_chi{:02d}".format(gilteps, chi)
 savedirectory = "../out/" + figdir +  "/" + chieps
 # read Tc if exists
 relTc = 1.0
@@ -89,7 +90,7 @@ if not os.path.exists(Tcfile):
 else:
     with open(Tcfile,"rb") as f:
         Tlow, Thi = pkl.load(f)
-    relTc = 0.5 * (Tlow + Thi)
+    relTc = Tlow * 1
     Tcerr = abs(Thi - Tlow) / (Tlow + Thi)
     outacc = int("{:e}".format(Tcerr)[-2:])
     print("Read the estimated Tc = {Tcval:.{acc}f}".format(Tcval = relTc,
@@ -97,69 +98,84 @@ else:
     print("Related error of the estimate is {:.1e}".format(Tcerr))
 
 
-print("Step 2: Start to generate data of the flow of singular spectrum of A...")
+print("Step 2: Start to generate data of the flow of the tensor A...")
 # Generate data of 2) singular value spectrum of the tensor
 singValFile = savedirectory + "/flowAtTc_fixSign.pkl"
 if scheme == "hotrg":
-    pass
-    # appg, A, Anorm, Ruvslist, isometrylist, dMslist, Adifflist = mainHOTRG(relTc, 
-    #                         allchi, iter_max, 
-    #                         isGilt=isGilt, isSym = True, calcg = False,
-    #                         gilt_eps = gilteps, return_iso_Ruvs = True,
-    #                         isfixGauge = True, isAdiff = True, 
-    #                         isDisp = verbose)
+    # generate flow of |A| at different temperature near Tc
+    devTc = [3,6,8]
+    datadic ={}
+    for acc in devTc:
+        Tdevhi = relTc + 10**(-acc)
+        Tdevlow = relTc - 10**(-acc)
+        AnormH = normFlowHOTRG(Tdevhi,[chi,chi], iter_max, isDisp = False, 
+                         isGilt = False, isSym = False,
+                         gilt_eps = gilteps, cg_eps = cgeps,
+                         N_gilt = Ngilt, legcut = legcut,
+                         stableStep = stablek)[0]
+        AnormL = normFlowHOTRG(Tdevlow,[chi,chi], iter_max, isDisp = False, 
+                         isGilt = False, isSym = False,
+                         gilt_eps = gilteps, cg_eps = cgeps,
+                         N_gilt = Ngilt, legcut = legcut,
+                         stableStep = stablek)[0]
+        datadic[acc] = [AnormL, AnormH]
+        datadicFile = savedirectory + "/flowDiffAcc.pkl"
+        with open(datadicFile,"wb") as f:
+            pkl.dump(datadic, f)
 elif scheme == "Gilt-HOTRG":
+    # Generate the flow of |A| at the estimated Tc
     savedir = "./data/" + figdir +  "/" + chieps
     # create the directory if not exists
     if not os.path.exists(savedir):
         os.makedirs(savedir)
-    Anorm, slist, Adifflist = normFlowHOTRG(relTc,allchi, iter_max, isDisp = False, 
+    print("At T = Tc")
+    Anorm, slist, Adifflist = normFlowHOTRG(relTc,allchi, iter_max, isDisp = verbose, 
                               isGilt = True, isSym = True, isfixGauge = True,
                               gilt_eps = gilteps, cg_eps = cgeps,
                               return_sing = True,
                               N_gilt = Ngilt, legcut = legcut,
                               stableStep = stablek, saveData = [True, savedir])
+    
+    # generate flow of |A| at different temperature near Tc
+    devTc = [3,6,10]
+    datadic ={}
+    for acc in devTc:
+        Tdevhi = Thi + 10**(-acc)
+        Tdevlow = Tlow - 10**(-acc)
+        print("At T = Tc + 10^-{:d}".format(acc))
+        AnormH = normFlowHOTRG(Tdevhi,[chi,chi], iter_max, isDisp = verbose, 
+                         isGilt = True, isSym = True,
+                         gilt_eps = gilteps, cg_eps = cgeps,
+                         N_gilt = Ngilt, legcut = legcut,
+                         stableStep = stablek)[0]
+        print("At T = Tc - 10^-{:d}".format(acc))
+        AnormL = normFlowHOTRG(Tdevlow,[chi,chi], iter_max, isDisp = verbose, 
+                         isGilt = True, isSym = True,
+                         gilt_eps = gilteps, cg_eps = cgeps,
+                         N_gilt = Ngilt, legcut = legcut,
+                         stableStep = stablek)[0]
+        datadic[acc] = [AnormL, AnormH]
+    datadicFile = savedirectory + "/flowDiffAcc.pkl"
+    with open(datadicFile,"wb") as f:
+        pkl.dump(datadic, f)
 
 
 
-# if scheme != "Gilt-HOTRG":
-#     slist = []
-#     for myA in A:
-#         if scheme == "hotrg":
-#             slist.append(get_spectrum_A(myA))
-#         elif scheme == "trg":
-#             slist.append(get_spectrum_A(myA, leftgrp = [0,1], rightgrp = [2,3]))
-
-
-
-
-Nsing = max([len(inner) for inner in slist])
-for i in range(len(slist)):
-    temp = [slist[i][j] if j < len(slist[i]) else 0 for j in range(Nsing)]
-    slist[i] = temp
-sarr = np.array(slist)
 if scheme == "hotrg" or scheme == "trg":
-    with open(singValFile, "wb") as f:
-        pkl.dump([sarr, Adifflist], f)
+    pass
+    # with open(singValFile, "wb") as f:
+    #     pkl.dump([sarr, Adifflist], f)
 elif scheme =="Gilt-HOTRG":
+    Nsing = max([len(inner) for inner in slist])
+    for i in range(len(slist)):
+        temp = [slist[i][j] if j < len(slist[i]) else 0 for j in range(Nsing)]
+        slist[i] = temp
+    sarr = np.array(slist)
     with open(singValFile, "wb") as f:
         pkl.dump([sarr, Adifflist], f)
 print("Step 2 finished! ")
 
 
-# print("Step 3: Save the data of renormalized tensors and their norms...")
-# savedata = "./data/" + figdir +  "/" + chieps + "/As_fixSign.pkl"
-# # create the directory if not exists
-# if not os.path.exists("./data/" + figdir +  "/" + chieps):
-#     os.makedirs("./data/" + figdir +  "/" + chieps)
-    
-# if scheme == "hotrg":
-#     with open(savedata, "wb") as f:
-#         pkl.dump([A, Anorm, Ruvslist, isometrylist, dMslist], f)
-# elif scheme == "trg":
-#     with open(savedata, "wb") as f:
-#         pkl.dump([A, Anorm], f)
 
-# print("Step 3 finished! ")
 
         

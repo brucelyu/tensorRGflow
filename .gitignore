@@ -1,6 +1,7 @@
 .DS_Store
 *.pyc
 out/
+analysisCodes/data/
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

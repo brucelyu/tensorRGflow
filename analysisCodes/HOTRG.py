@@ -690,7 +690,7 @@ def normFlowHOTRG(relT, allchi, iterN = 12, isDisp = True, isfixGauge = False,
 
 
 
-def diffRGver2(A, Anorm, isom, RABs, RABsh, scaleN = 20,
+def diffGiltHOTRG(A, Anorm, isom, RABs, RABsh, scaleN = 20,
                isom_corr = False):
     """
     Similar as diffRGnew, but designed for Gilt-HOTRG-imp version

@@ -32,7 +32,7 @@ parser.add_argument("--gilteps", dest = "gilteps", type = float,
                         default = 1e-7)
 parser.add_argument("--scheme", dest = "scheme", type = str, 
                     help = "RG scheme to use",
-                    choices = ["trg", "hotrg", "Gilt-HOTRG-imp"],
+                    choices = ["trg", "hotrg", "Gilt-HOTRG"],
                     default = "hotrg")
 parser.add_argument("--Ngilt", dest = "Ngilt", type = int,
                     help = "How many times do we perform Gilt in oneHOTRG",
@@ -63,8 +63,8 @@ elif scheme == "trg":
         figdir = "gilt_trg_flow"
     else:
         figdir = "trgflow"
-elif scheme == "Gilt-HOTRG-imp":
-    figdir = "gilt_hotrg_imp{:d}{:d}_flow".format(Ngilt, legcut)
+elif scheme == "Gilt-HOTRG":
+    figdir = "gilt_hotrg{:d}{:d}_flow".format(Ngilt, legcut)
 # read Tc if exists
 chieps = "eps{:.0e}_chi{:02d}".format(gilteps, chi)
 savedirectory = "../out/" + figdir +  "/" + chieps
@@ -95,7 +95,7 @@ if os.path.exists(singValFile):
     if scheme == "hotrg" or scheme == "trg":
         with open(singValFile, "rb") as f:
             sarr, Adifflist = pkl.load(f)
-    elif scheme =="Gilt-HOTRG-imp":
+    elif scheme =="Gilt-HOTRG":
         # read singular values flow and Adiff
         with open(singValFile, "rb") as f:
             sarr, Adifflist = pkl.load(f)

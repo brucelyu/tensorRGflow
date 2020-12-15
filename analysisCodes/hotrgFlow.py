@@ -27,8 +27,6 @@ parser.add_argument("--chi", dest = "chi", type = int,
 parser.add_argument("--maxiter", dest = "maxiter", type = int,
                    help = "maximal HOTRG iteration (default: 50)",
                    default = 50)
-parser.add_argument("--isGilt", help = "whether to use Gilts",
-                        action = "store_true")
 parser.add_argument("--gilteps", dest = "gilteps", type = float,
                         help = "a number smaller than which we think the" +
                         "singluar values for the environment spectrum is zero" +
@@ -38,13 +36,13 @@ parser.add_argument("--verbose", help = "whether to print information",
                         action = "store_true")
 parser.add_argument("--scheme", dest = "scheme", type = str, 
                     help = "RG scheme to use",
-                    choices = ["trg", "hotrg", "Gilt-HOTRG-imp"],
-                    default = "hotrg")
+                    choices = ["hotrg", "Gilt-HOTRG"],
+                    default = "Gilt-HOTRG")
 parser.add_argument("--cgeps", dest = "cgeps", type = float,
                         help = "a number smaller than which we think the" +
                         "singluar values for the environment in RG spectrum is zero" +
-                        "(default: 1e-6)",
-                        default = 1e-6)
+                        "(default: 1e-10)",
+                        default = 1e-10)
 parser.add_argument("--Ngilt", dest = "Ngilt", type = int,
                     help = "How many times do we perform Gilt in oneHOTRG",
                     choices = [1,2], default = 1)
@@ -53,14 +51,13 @@ parser.add_argument("--legcut", dest = "legcut", type = int,
                     choices = [2,4], default = 4)
 parser.add_argument("--stbk", dest = "stbk", type = int,
                     help = "A int after which we will try to stabilize the gilt process",
-                    default = 8)
+                    default = 1000)
 
 
 # read from argument parser
 args = parser.parse_args()
 chi = args.chi
 iter_max = args.maxiter
-isGilt = args.isGilt
 gilteps = args.gilteps
 verbose = args.verbose
 allchi = [chi,chi]
@@ -76,17 +73,10 @@ print("Running Time =", current_time)
 
 # input and output file name
 if scheme == "hotrg":
-    if isGilt:
-        figdir = "gilt_hotrg_flow"
-    else:
-        figdir = "hotrgflow"
-elif scheme == "trg":
-    if isGilt:
-        figdir = "gilt_trg_flow"
-    else:
-        figdir = "trgflow"
-elif scheme == "Gilt-HOTRG-imp":
-    figdir = "gilt_hotrg_imp{:d}{:d}_flow".format(Ngilt, legcut)
+    figdir = "hotrgflow"
+elif scheme == "Gilt-HOTRG":
+    figdir = "gilt_hotrg{:d}{:d}_flow".format(Ngilt, legcut)
+
 
 chieps = "eps{:.0e}_chi{:02d}".format(gilteps, chi)
 savedirectory = "../out/" + figdir +  "/" + chieps
@@ -111,17 +101,14 @@ print("Step 2: Start to generate data of the flow of singular spectrum of A...")
 # Generate data of 2) singular value spectrum of the tensor
 singValFile = savedirectory + "/flowAtTc_fixSign.pkl"
 if scheme == "hotrg":
-    appg, A, Anorm, Ruvslist, isometrylist, dMslist, Adifflist = mainHOTRG(relTc, 
-                            allchi, iter_max, 
-                            isGilt=isGilt, isSym = True, calcg = False,
-                            gilt_eps = gilteps, return_iso_Ruvs = True,
-                            isfixGauge = True, isAdiff = True, 
-                            isDisp = verbose)
-elif scheme == "trg":
-    A, Anorm, Adifflist = mainTRG_Gilt(relTc, chi, iter_max, verbose = verbose, 
-                       isGilt = isGilt, isSym = True, fixsign = True,
-                       gilt_eps = gilteps)
-elif scheme == "Gilt-HOTRG-imp":
+    pass
+    # appg, A, Anorm, Ruvslist, isometrylist, dMslist, Adifflist = mainHOTRG(relTc, 
+    #                         allchi, iter_max, 
+    #                         isGilt=isGilt, isSym = True, calcg = False,
+    #                         gilt_eps = gilteps, return_iso_Ruvs = True,
+    #                         isfixGauge = True, isAdiff = True, 
+    #                         isDisp = verbose)
+elif scheme == "Gilt-HOTRG":
     savedir = "./data/" + figdir +  "/" + chieps
     # create the directory if not exists
     if not os.path.exists(savedir):
@@ -129,19 +116,19 @@ elif scheme == "Gilt-HOTRG-imp":
     Anorm, slist, Adifflist = normFlowHOTRG(relTc,allchi, iter_max, isDisp = False, 
                               isGilt = True, isSym = True, isfixGauge = True,
                               gilt_eps = gilteps, cg_eps = cgeps,
-                              return_sing = True, rgver = scheme,
+                              return_sing = True,
                               N_gilt = Ngilt, legcut = legcut,
                               stableStep = stablek, saveData = [True, savedir])
 
 
 
-if scheme != "Gilt-HOTRG-imp":
-    slist = []
-    for myA in A:
-        if scheme == "hotrg":
-            slist.append(get_spectrum_A(myA))
-        elif scheme == "trg":
-            slist.append(get_spectrum_A(myA, leftgrp = [0,1], rightgrp = [2,3]))
+# if scheme != "Gilt-HOTRG":
+#     slist = []
+#     for myA in A:
+#         if scheme == "hotrg":
+#             slist.append(get_spectrum_A(myA))
+#         elif scheme == "trg":
+#             slist.append(get_spectrum_A(myA, leftgrp = [0,1], rightgrp = [2,3]))
 
 
 
@@ -154,27 +141,25 @@ sarr = np.array(slist)
 if scheme == "hotrg" or scheme == "trg":
     with open(singValFile, "wb") as f:
         pkl.dump([sarr, Adifflist], f)
-elif scheme =="Gilt-HOTRG-imp":
+elif scheme =="Gilt-HOTRG":
     with open(singValFile, "wb") as f:
         pkl.dump([sarr, Adifflist], f)
 print("Step 2 finished! ")
 
 
-print("Step 3: Save the data of renormalized tensors and their norms...")
-savedata = "./data/" + figdir +  "/" + chieps + "/As_fixSign.pkl"
-# create the directory if not exists
-if not os.path.exists("./data/" + figdir +  "/" + chieps):
-    os.makedirs("./data/" + figdir +  "/" + chieps)
+# print("Step 3: Save the data of renormalized tensors and their norms...")
+# savedata = "./data/" + figdir +  "/" + chieps + "/As_fixSign.pkl"
+# # create the directory if not exists
+# if not os.path.exists("./data/" + figdir +  "/" + chieps):
+#     os.makedirs("./data/" + figdir +  "/" + chieps)
     
-if scheme == "hotrg":
-    with open(savedata, "wb") as f:
-        pkl.dump([A, Anorm, Ruvslist, isometrylist, dMslist], f)
-elif scheme == "trg":
-    with open(savedata, "wb") as f:
-        pkl.dump([A, Anorm], f)
-# elif scheme == "Gilt-HOTRG-imp":
+# if scheme == "hotrg":
 #     with open(savedata, "wb") as f:
-#         pkl.dump([A, Anorm, isomlist, RABslist], f)
-print("Step 3 finished! ")
+#         pkl.dump([A, Anorm, Ruvslist, isometrylist, dMslist], f)
+# elif scheme == "trg":
+#     with open(savedata, "wb") as f:
+#         pkl.dump([A, Anorm], f)
+
+# print("Step 3 finished! ")
 
         

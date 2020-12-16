@@ -17,7 +17,7 @@
 		\node [style=none] (14) at (0.25, -2) {};
 		\node [style=none] (15) at (0.5, 1) {$U$};
 		\node [style=none] (16) at (1.5, -1) {$V^{\dagger}$};
-		\node [style=none] (17) at (-0.5, -0.5) {$s$};
+		\node [style=none] (17) at (-0.5, -0.5) {$s^{(n)}$};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw [style=blackMidLine] (2.center)

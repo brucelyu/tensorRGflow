@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (0, 0) {$\mathcal{A}^{(n)}$};
+		\node [style=none] (1) at (1.75, 0) {};
+		\node [style=none] (2) at (0, 1.75) {};
+		\node [style=none] (3) at (-1.75, 0) {};
+		\node [style=none] (4) at (0, -1.75) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (0) to (1.center);
+		\draw [style=greenMidLine] (0) to (2.center);
+		\draw [style=greenMidLine] (0) to (3.center);
+		\draw [style=greenMidLine] (0) to (4.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

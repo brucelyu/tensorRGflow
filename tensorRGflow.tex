@@ -1707,17 +1707,17 @@ results fit together nicely!
 
 
 \subsection{The Ising Model in 2D\label{benchmark:2DIsing}}
-There is no exact RG transformation for Ising model in 2D, so we will
-use Gilt-HOTRG developed in Sec.~\ref{gilt-hotrg} to generate an RG flow
+There is no exact RG transformation for the Ising model in 2D, so we will
+use the Gilt-HOTRG developed in Sec.~\ref{gilt-hotrg} to generate an RG flow
 in tensor space. The partition function is given in
 Eq.~\eqref{eq:2DIsingZ} and we translate the partition function into
 a tensor network in Fig.~\ref{fig:spin2tensor}. Let us denote the
 initial tensor in Eq.~\eqref{def:tensorA} as $A^{(0)}$. To prevent a
-rapid grow of magnitude of the tensor during the RG transformation, we
+rapid grow of the magnitude of the tensor during the RG transformation, we
 pull out the Frobenius norm of the tensor, $A^{(0)} = \Vert
 A^{(0)}\Vert \mathcal{A}^{(0)}$, to define a normalized tensor
 $\mathcal{A}^{(0)}$. The normalized tensor $\mathcal{A}^{(0)}$ will be
-fed into the RG equation of Gilt-HOTRG in Eq.~\eqref{def:RGeqGiltHOTRG}
+fed into the RG equation of the Gilt-HOTRG in Eq.~\eqref{def:RGeqGiltHOTRG}
 and we denote the output coarse-grained tensor as $A^{(1)}$, from which
 the norm $\Vert A^{(1)}\Vert$ is pulled out and the normalized tensor
 $\mathcal{A}^{(1)}$ is defined the same way as the previous step. The
@@ -1727,55 +1727,78 @@ be conveniently visualized by examining the evolution of the norms
 $\Vert A^{(n)}\Vert$ as the RG step $n$ increases.
 %%
 \begin{figure}[htb]
-    \includegraphics[width=7.5cm]{./figs/flowAnorm}
-    \caption{\label{fig:flowAnorm}[\textbf{Add descriptions}]}
+    % \includegraphics[width=7.5cm]{./figs/flowAnorm}
+    \includegraphics[width=\columnwidth]{./figures/AnormFlow-a.pdf}
+    \includegraphics[width=\columnwidth]{./figures/AnormFlow-b.pdf}
+    \caption{\label{fig:flowAnorm}The RG flows of the tensor norms $\Vert
+    A^{(n)} \Vert$ at temperatures near the estimated critical
+temperature $T_c^{[\chi]}$. Different markers represent different
+deviations $| \Delta T| $ from $T_c^{[\chi]}$. Blue solid lines are for
+$\Delta T<0$ and black dashed lines for $\Delta T>0$. (a) For the
+Gilt-HOTRG with $\chi = 30,\epsilon_{\text{gilt}} = 6\times 10^{-6}$,
+two trivial fixed points are isolated and the critical fixed point can
+be reached. It corresponds to the schematic RG flows in
+Fig.~\ref{fig:tensorRGflow}(a). (b) For the HOTRG with $\chi = 12$, we
+have fixed lines and there is no exhibition of a critical fixed point.
+It corresponds to the schematic RG flows in
+Fig.~\ref{fig:tensorRGflow}(b).}
 \end{figure}
 %
 
-The flow of the norms $\Vert A^{(n)} \Vert$ indicates Gilt-HOTRG is
-capable of generating a correct RG flow of 2D Ising model in tensor
+The RG flows of the norms $\Vert A^{(n)} \Vert$ indicate the Gilt-HOTRG is
+capable of generating a correct RG flow for the 2D Ising model in tensor
 space shown schematically in Fig.~\ref{fig:tensorRGflow}(a). For example,
-for bond dimension $\chi = 30$ and the hyper-parameter for Gilt process
+for bond dimension $\chi = 30$ and the hyper-parameter for the Gilt process
 $\epsilon_{\text{gilt}} = 6\times 10^{-6}$, Fig.~\ref{fig:flowAnorm}(a)
-shows several RG flows of the tensor norms at different temperature. For
-a fixed bond dimension $\chi$, there is an estimated critical
+shows several RG flows of the tensor norms $\Vert A^{(n)} \Vert$ at
+different temperatures. For a given bond dimension $\chi$, there is an
+estimated critical
 temperature $T_c^{[\chi]}$ at which the tensor
-hits the critical surface and flows towards the critical fixed-point
-tensor $(A^{[\chi]})^*_{\text{cr}}$. $T_c^{[\chi]}$ can be determined
-using the bisection method, and for $\chi = 30$ the estimation error is
-of order $\sim 10^{-6}$. At temperatures off by $\Delta T = \pm 10^{-3}$
-from $T_c^{[30]}$, the tensor flows to the high temperature and the
-low temperature trivial fixed-point tensors respectively before it comes
+hits the critical surface and will flow to the critical fixed-point
+tensor $(A^{[\chi]})^*_{\text{cr}}$. The $T_c^{[\chi]}$ can be determined
+using the bisection method, and for $\chi = 30$ the difference between
+the estimated value $T_c^{[30]}$and the exact $T_c$, $|T_c^{[30]} - T_c|
+/ T_c$, is of order $10^{-6}$. At temperatures off by $\Delta T = \pm 10^{-3}$
+from $T_c^{[30]}$, the tensor flows to the high- and
+low-temperature trivial fixed-point tensors respectively before it comes
 near to $(A^{[30]})^*_{\text{cr}}$. As $|\Delta T|$ becomes smaller to
-order of $10^{-8}$, the tensor will stay in the vicinity of the critical
-fixed-point tensor for a while and then flow away to the two trivial
-fixed-point tensors. If $|\Delta T|$ becomes smaller further, the tensor
+order of $10^{-6}$, the tensor will stay in the vicinity of the critical
+fixed-point tensor $(A^{[30]})^*_{\text{cr}}$ for a while and then flow
+away to one of the two trivial fixed-point tensors. If $|\Delta T|$
+becomes smaller further to $10^{-10}$, the tensor
 will stay longer near $(A^{[30]})^*_{\text{cr}}$. By comparison, the
-RG flow of $\Vert A^{(n)}\Vert$ generated by HOTRG with the same bond
-dimension is displayed in Fig.~\ref{fig:flowAnorm}(b). The RG flow shows
-that the RG equation in Eq.~\eqref{def:RGeqHOTRG} cannot exhibit a
+RG flow of $\Vert A^{(n)}\Vert$ generated by the HOTRG with bond
+dimension $\chi = 12$ is displayed in Fig.~\ref{fig:flowAnorm}(b). The RG
+flow shows that the RG equation in Eq.~\eqref{def:RGeqHOTRG} cannot
+exhibit a
 critical fixed-point tensor or produce isolated trivial fixed-point
-tensors. It is interesting to mention that the RG flow generated by TRG
-has a similar behavior~\cite{Berker2008} to HOTRG for bond dimensions
-$\chi > 10$.
+tensors. It is interesting to mention that the RG flow generated by the
+TRG has a similar behavior~\cite{Berker2008} for bond
+dimensions $\chi > 10$.
 %%
 \begin{figure}[htb]
-    \includegraphics[width=7.5cm]{./figs/flowA}
-    \caption{\label{fig:flowA}[\textbf{Add descriptions}]}
+    %\includegraphics[width=7.5cm]{./figs/flowA}
+    \includegraphics[width=\columnwidth]{./figures/flowA-singVal.pdf}
+    \includegraphics[width=\columnwidth]{./figures/flowA-diff.pdf}
+    \caption{\label{fig:flowA}The RG flows of (a) singular values defined in
+        Eq.~\eqref{def:Asvd} and (b) the difference between the normalized
+tensors $\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)} \Vert$, both at
+temperature $T_c^{[30]}$ for the Gilt-HOTRG with $\chi = 30,
+\epsilon_{\text{gilt}} = 6\times 10^{-6}$.}
 \end{figure}
 %
 
 To make sure that the plateau in the RG flow of $\Vert A^{(n)} \Vert$
 gives a critical fixed-point tensor $(A^{[30]})^*_{\text{cr}}$ at the
 estimated critical temperature $T_c^{[30]}$, we plot the singular values
-of tensors $\mathcal{A}^{(n)}$ defined as
+$s^{(n)}$ of tensors $\mathcal{A}^{(n)}$ defined as
 %
 \begin{align}\label{def:Asvd}
     %\begin{minipage}{2.0truecm}
     %    \centering
     %    \includegraphics[width=1.8truecm,clip]{./figs/Aold}
     %\end{minipage}
-    \tikzfig{Aold}
+    \tikzfig{Acaln}
     \svdeq
     \tikzfig{Asvd}\text{ }.
     %\begin{minipage}{2.0truecm}
@@ -1784,29 +1807,31 @@ of tensors $\mathcal{A}^{(n)}$ defined as
     %\end{minipage}.
 \end{align}
 %
-The flow of singular values in Fig.~\ref{fig:flowA}(a) indicates that we
-indeed reach a non-trivial fixed-point tensor. The fixed-point tensor is
-manifestly fixed numerically after adding the sign fixing step in
-Gilt-HOTRG, which can be confirmed by checking the Frobenius norm of the
-difference between the normalized tensors at successive RG steps $\Vert
-\mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$, see
+The RG flow of the singular values in Fig.~\ref{fig:flowA}(a) indicates
+that we indeed reach a non-trivial fixed-point tensor. The fixed-point
+tensor is manifestly fixed numerically after adding the sign fixing step
+in the Gilt-HOTRG, which can be confirmed by plotting the Frobenius norm
+of the difference between the normalized tensors at successive RG steps
+$\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$, see
 Fig.~\ref{fig:flowA}(b). The norm of the difference starts to decay
 systematically at RG step $n = 14$, goes all the way down to the order
 $\sim 10^{-2}$ at $n = 23$ and then increases when the tensor begins to
 flow away from the critical fixed point.
 %%
 \begin{figure}[htb]
-    \includegraphics[width=8.5cm]{./figs/scDim}
-    \caption{\label{fig:scDim}[\textbf{Add descriptions}]}
+    %\includegraphics[width=8.5cm]{./figs/scDim}
+    \includegraphics[width=\columnwidth]{./figures/scDim.pdf}
+    \caption{\label{fig:scDim}The scaling dimensions of the 2D Ising
+    model by the response analysis of the Gilt-HOTRG with $\chi = 30,
+\epsilon_{\text{gilt}} = 6\times 10^{-6}$.}
 \end{figure}
 %
 \begin{table}[h]%[H] add [H] placement to break table across pages
-\caption{Scaling dimensions for relevant and marginal operators of 2D
-Ising model at criticality from response analysis of the RG equation
-of Gilt-HOTRG and from diagonalizing a
-transfer matrix \`a la Gu and Wen~\cite{GuWen2009}, both with $\chi =
-30, \epsilon_{\text{gilt}} = 6\times 10^{-6}$ at RG step $n =
-22$.\label{table:scDim}} 
+\caption{The scaling dimensions for the relevant and marginal operators
+    of the 2D Ising model at criticality from the response analysis of
+    the Gilt-HOTRG and from the transfer matrix method \`a la Gu and
+    Wen~\cite{GuWen2009}, both with $\chi = 30, \epsilon_{\text{gilt}} =
+    6\times 10^{-6}$ at RG step $n = 22$.\label{table:scDim}} 
 \begin{ruledtabular}
 \begin{tabular}{ c c c c c c c c c }
 Exact      & 0.125 & 1 & 1.125 & 1.125 & 2 & 2 & 2 & 2 \\
@@ -1821,7 +1846,7 @@ Exact      & 0.125 & 1 & 1.125 & 1.125 & 2 & 2 & 2 & 2 \\
 %
 
 We use the automatic differentiation implemented in
-JAX~\cite{jax2018github} to linearize the RG equation of Gilt-HOTRG in
+JAX~\cite{jax2018github} to linearize the RG equation of the Gilt-HOTRG in
 Eq.~\eqref{def:RGeqGiltHOTRG} and get the response matrix defined in
 Eq.~\eqref{eq:respMatGiltHOTRG} at RG steps $n = 14,15,\ldots, 28$, when the
 tensor is very close to the critical fixed-point tensor. The scaling
@@ -1830,16 +1855,16 @@ according to Eq.~\eqref{eq:lambda2x}. In Fig.~\ref{fig:scDim}, we show
 the first few scaling dimensions. The dashed lines are the exact
 values~\cite{DiFrancesco1997}. For $\chi = 30$, the response analysis in
 tensor space gives correct scaling dimensions up to $2.125$. The results from
-response analysis at $n = 14 \text{ and } 28$ is unreliable since $\Vert
-\mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$ is of order $\sim 1$ (see
+the response analysis at $n = 14 \text{ and } 28$ is unreliable since $\Vert
+\mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$ is of order $1$ (see
 Fig.~\ref{fig:flowA}(b)). The results for $n = 15,16,\ldots,27$
-indicates that the scaling dimensions from response analysis in tensor
+indicates that the scaling dimensions from the response analysis in tensor
 space are reliable as long as the values of $\Vert \mathcal{A}^{(n+1)} -
 \mathcal{A}^{(n)}\Vert$ have order of or smaller than $10^{-1}$. 
 %
 
 In Table~\ref{table:scDim}, we show the scaling dimensions for all
-relevant and marginal operators from at the RG step $n = 22$, compared with
+relevant and marginal operators at RG step $n = 22$, compared with
 the results obtained by Gu and Wen's method~\cite{GuWen2009}. Both
 methods have similar accuracy for scaling dimensions less or equal to
 $1.125$, but Gu and Wen's method cannot produce higher scaling
@@ -1848,42 +1873,42 @@ $2$ accurately, but the remaining two are overestimated and more close
 to $2.125$.
 %
 
-We end this section with a few remarks on the above calculation. 
+We end this section with a few remarks on the above calculations. 
 %
 
 Firstly we impose the $\mathbb{Z}_2$ symmetry of the
 tensors~\cite{Singh2010SymTen, Singh2011U1Ten} when generating the RG
 flow in tensor space. There are three reasons. Only if the
 $\mathbb{Z}_2$ symmetry of the tensor is imposed will the
-low-temperature fixed-point tensor be stable under RG.  Otherwise, it
-will flow to the high-temperature fixed point eventually due to the
-numerical errors, which will make the bisection search of the estimated
+low-temperature fixed-point tensor be stable under the RG.  Otherwise, it
+will flow to the high-temperature fixed point eventually due to
+numerical errors, which will make the bisection search for the estimated
 critical temperature $T_c^{[\chi]}$ less convenient. The second merit of
 symmetric tensors is that half of the gauge redundancy can be
 automatically fixed (see Sec.~\ref{RespAnaGiltHOTRG}), making the sign
-fixing procedure in Gilt-HOTRG easier. The third reason is to speed up
+fixing procedure in the Gilt-HOTRG easier. The third reason is to speed up
 the computations. However, we roll back to ordinary tensors when
 performing the response analysis, since the perturbations around the
 fixed-point tensor do not have to preserve $\mathbb{Z}_2$ symmetry (for
 example, the spin operator). 
 %
 
-The second remark is about the improvement of the results of response
+The second remark is about the improvement of the results of the response
 analysis as the bond dimension $\chi$ increases. There are two sources
 of approximation errors in the above computations. One comes from the
-truncations of CDL tensors during Gilt process that is necessary to
+truncations of the CDL tensors during the Gilt that is necessary to
 produce the critical fixed point. This error is controlled by the
-hyperparameter $\epsilon_{\text{gilt}}$. The other source is the leg
-squeezing step during HOTRG to prevent the grow of the bond dimension.
+hyper-parameter $\epsilon_{\text{gilt}}$. The other source is the leg
+squeezing step during the HOTRG to prevent the grow of the bond dimension.
 This error can be reduced by increasing the bond dimension $\chi$. In
-general, for a given $\chi$, $\epsilon_{\text{gilt}}$ should be as small
-as possible provided that Gilt-HOTRG can exhibit a critical fixed-point
+general, for a given $\chi$, the $\epsilon_{\text{gilt}}$ should be as small
+as possible provided that the Gilt-HOTRG can exhibit a critical fixed-point
 tensor. In practice, we tried $\chi = 10, 20, 30$, and
 $\epsilon_{\text{gilt}}$ goes down from $6\times 10^{-4}$ to
 $6\times10^{-5}$ and further to $6\times10^{-6}$.  The estimated scaling
 dimensions converge to the exact results in this process. However, as
-$\chi$ increases further, $\epsilon_{\text{gilt}}$ does not go down
-much. As a result, the estimation accuracy of scaling dimensions is
+$\chi$ increases further, the $\epsilon_{\text{gilt}}$ does not go down
+much. As a result, the estimation accuracy of the scaling dimensions is
 bounded by the approximation errors during Gilt. 
 %
 
@@ -1892,22 +1917,22 @@ of the fixed-point tensor. After reaching the critical fixed point, the
 RG from $n$-th step to $(n+1)$-th step is the mapping
 $\mathcal{A}^{*}\rightarrow A^{*} = \Vert A^{*} \Vert
 \mathcal{A}^{*}$. The shape of $\mathcal{A}^*$ is fixed but its
-magnitude is still changing under RG transformation. It has been shown
+magnitude is still changing under the RG transformation. It has been shown
 in Ref.~\cite{GuWen2009} that the fixed-point tensor with correct
 magnitude is simply given by $A^*_{\text{inv}} = \Vert A^* \Vert^{-1/3}
 \mathcal{A}^*$, and we will have $A^*_{\text{inv}}\rightarrow
-A^*_{\text{inv}}$ under RG transformation.
+A^*_{\text{inv}}$ under the RG transformation.
 %
 
 The final remark is that the Gilt-HOTRG can be replaced with
-TNR~\cite{tnr,tnralgo} with few changes of other procedures, since TNR
-is known to be capable of exhibiting critical fixed-point tensors with
-its RG equation similar to that of Gilt-HOTRG, and there is a method to
-fix the gauge redundancy~\cite{tnralgo}. Considering the unprecedented
-accuracy of TNR, the estimation of scaling dimensions might be much
-better. We develop the response analysis in tensor space using
-Gilt-HOTRG in this paper in order to prepare for the further
-applications on 3D systems.
+the TNR~\cite{tnr,tnralgo} with few changes of other procedures, because
+the TNR is known to be capable of exhibiting critical fixed-point
+tensors with its RG equation similar to that of Gilt-HOTRG, and there is
+a method to fix the gauge redundancy~\cite{tnralgo}. Considering the
+unprecedented accuracy of the TNR, the estimation of the scaling dimensions
+might be much better. We develop the response analysis in tensor space
+using the Gilt-HOTRG in this paper in order to prepare for the further
+applications to 3D systems.
 %
 
 
@@ -1945,7 +1970,13 @@ method for systems in 3D and higher.
 
 % If you have acknowledgments, this puts in the proper section head.
 \begin{acknowledgments}
-Put your acknowledgments here.
+We thank Satoshi Morita, Shumpei Iino, Takuhiro Ogino for fruitful
+discussions and insightful suggestions, and Glen Evenbly, Guifre Vidal
+for explanations regarding the TNR and other tensor network methods. We
+also thank Markus Hauru for clarifying the implementation of the Gilt.
+X.L.\ and R.X.\ are grateful to the support of the Global Science
+Graduate Course (GSGC) program of the University of Tokyo. N.K.\ is
+supported by
 
 \end{acknowledgments}
 
@@ -1958,6 +1989,7 @@ Put your acknowledgments here.
 
 \section{Gauge redundancy in the Gilt-HOTRG\label{appd:gaugeFix}}
 
+\section{Source Code}
 
 % Create the reference section using BibTeX:
 \bibliography{tensorRGflow}

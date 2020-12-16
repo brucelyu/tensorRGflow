@@ -13,6 +13,12 @@ import itertools
 import matplotlib.pyplot as plt
 import os
 
+
+# Plot font size
+middleSize = 14
+plt.rc('font', size=middleSize)
+
+
 marker = itertools.cycle(('o', 'x','.','*','x', '2','+', '3','4','x',
                           '.','*','x','>','+','x','D','d','|','_'))
 lines =  itertools.cycle(('-','--','-.',':'))
@@ -61,15 +67,19 @@ scDlist = np.array(scDlist)
 scDN = scDlist.shape[1]
 exactscD = [0, 0.125 ,1 , 1.125, 1.125, 2, 2, 2, 2, 2.125, 2.125, 2.125,
             3, 3, 3, 3, 3]
+exactscDdraw = [0, 0.125 ,1 , 1.125, 2, 2.125,3]
 plt.figure()
 for i in range(min(scDN,Ndrawn)):
     fmtsty = next(marker) + next(colors)
-    plt.plot(klist,scDlist[:,i],fmtsty, 
+    plt.plot(klist,scDlist[:,i],fmtsty, alpha = 0.7,
              label = "$x_i = ${:.3f}".format(exactscD[i]))
-    plt.hlines(exactscD[i],klist[0],klist[-1],colors = 'k',linestyles='dashed')
-    plt.title("$\chi = ${:d} and gilt $\epsilon = ${:.0e}".format(chi, gilteps))
-    plt.xlabel("RG step")
-    plt.ylabel("scaling dimensions")
+    plt.xlabel("RG step $n$")
+    plt.ylabel("Scaling dimensions")
     plt.ylim([-0.1,3.125])
-    #plt.legend()
-plt.savefig(os.path.splitext(scDFile)[0]+ ".png",dpi = 300)
+# Draw exact results
+for i in range(len(exactscDdraw)):
+    plt.hlines(exactscDdraw[i],klist[0],klist[-1], alpha = 0.4,
+               colors = 'k',linestyles='dashed')
+
+plt.savefig(os.path.splitext(scDFile)[0]+ ".pdf", bbox_inches = 'tight',
+            dpi = 300)

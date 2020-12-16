@@ -90,7 +90,7 @@ if not os.path.exists(Tcfile):
 else:
     with open(Tcfile,"rb") as f:
         Tlow, Thi = pkl.load(f)
-    relTc = Tlow * 1
+    relTc = Thi * 1
     Tcerr = abs(Thi - Tlow) / (Tlow + Thi)
     outacc = int("{:e}".format(Tcerr)[-2:])
     print("Read the estimated Tc = {Tcval:.{acc}f}".format(Tcval = relTc,

@@ -15,7 +15,7 @@ from scipy.stats import entropy
 import numpy as np
 
 # Plot font size
-middleSize = 12
+middleSize = 14
 plt.rc('font', size=middleSize)
 
 marker = itertools.cycle(('.', 'x', '*','<','>','1','2','3','4',
@@ -122,27 +122,53 @@ if isDiffAcc:
         plt.plot(AnormH[1:],'k' + tempMarker + '--', alpha = 0.6,
                   label = r"$+10^{{-{0:d}}}$".format(acc))
     plt.yscale("log")
-    plt.legend()
-    plt.xlabel("RG step $n$")
+    if scheme == "hotrg":
+        plt.legend(loc="best")
+        ax = plt.gca()
+        plt.text(0.02, 0.07, '(b) $\chi = 12$ HOTRG',
+                 horizontalalignment='left',
+                 verticalalignment='center',
+                 transform = ax.transAxes)
+        plt.xlabel("RG step $n$")
+    elif scheme == "Gilt-HOTRG":
+        plt.legend(loc="upper left")
+        ax = plt.gca()
+        plt.text(0.02, 0.10, '(a) $\chi = 30$\n Gilt-HOTRG',
+                 horizontalalignment='left',
+                 verticalalignment='center',
+                 transform = ax.transAxes)
     plt.xticks(np.arange(0,len(AnormL[1:]),5), np.arange(1, len(AnormL[1:])+1,5))
     plt.ylabel("$\Vert A^{(n)}\Vert$")
     plt.minorticks_off()
     # plt.yticks([0.2, 1],[r"$2\times 10^{-1}$",
     #                         r"$10^0$"],rotation=45)
    
-    plt.savefig(savedirectory + "/AnormFlowDiffAcc.png", bbox_inches = 'tight', 
+    plt.savefig(savedirectory + "/AnormFlowDiffAcc.pdf", bbox_inches = 'tight', 
                 dpi = 300)
 
 
 if scheme == "Gilt-HOTRG":
     plt.figure()
-    for k in range(sarr.shape[1]):
-        plt.plot(sarr[:,k],"go-",alpha = 0.5)
-        plt.title("Flow of spectrum $T = {:.10f}T_c, \chi = {:d}$".format(relTc,chi))
-        plt.xlabel("RG step")
-        plt.ylabel("Singluar values")
+    for k in range(min(sarr.shape[1],30)):
+        plt.plot(sarr[:36,k],"go-",alpha = 0.5)
+        # plt.title("Flow of spectrum $T = {:.10f}T_c, \chi = {:d}$".format(relTc,chi))
+        # plt.xlabel("RG step $n$")
+        plt.ylabel("Singluar value")
+    plt.annotate("",
+                 xy = (5,0.98),xytext = (10,0.93),
+                 arrowprops = {'arrowstyle':'->'})
+    plt.annotate("the largest singular value is normalized to $1$",
+                 xy = (10,0.93),xytext = (10,0.93),
+                 va = "center", ha="left",
+                 fontsize = 10)
+    ax = plt.gca()
+    plt.text(0.02, 0.50, '(a)',
+             horizontalalignment='left',
+             verticalalignment='center',
+             transform = ax.transAxes)
     plt.savefig(savedirectory + 
-                "/flow_sing_fixSign.png", dpi = 300)
+                "/flowA-singVal.pdf", bbox_inches = 'tight',
+                dpi = 300)
     
     enteps = 1e-10
     entro = entropy(sarr > 1e-8, axis = 1, base = 2)
@@ -155,8 +181,8 @@ if scheme == "Gilt-HOTRG":
     
     
     plt.figure()
-    plt.title("$\chi = ${:d}".format(chi))
-    plt.plot(Anorm[1:],"kx--",label="Tc = {:.10f}".format(relTc))
+    # plt.title("$\chi = ${:d}".format(chi))
+    plt.plot(Anorm[:],"kx--",label="Tc = {:.10f}".format(relTc))
     plt.yscale("log")
     plt.legend()
     plt.xlabel("RG step")
@@ -165,12 +191,20 @@ if scheme == "Gilt-HOTRG":
     
     
     plt.figure()
-    plt.plot(Adifflist[:31], "ko--", alpha = 0.6)
+    plt.plot(Adifflist[14:31], "ko--", alpha = 0.6)
     plt.yscale("log")
-    plt.xlabel("RG step")
-    plt.ylabel("$|A'-A|$")
+    plt.xticks(np.arange(0,len(Adifflist[14:31]),2), np.arange(14, len(Adifflist[14:31])+14,2))
+    plt.xlabel("RG step $n$")
+    plt.ylabel("$\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)} \Vert$")
+    plt.minorticks_off()
+    ax = plt.gca()
+    plt.text(0.02, 0.10, '(b)',
+             horizontalalignment='left',
+             verticalalignment='center',
+             transform = ax.transAxes)
     plt.savefig(savedirectory + 
-                "/Adiff_fixSign.png", dpi = 300)
+                "/flowA-diff.pdf", bbox_inches = 'tight',
+                dpi = 300)
 
 
 

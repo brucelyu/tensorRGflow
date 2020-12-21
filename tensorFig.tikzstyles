@@ -17,6 +17,7 @@
 \tikzstyle{cdlMnorm}=[fill={rgb,255: red,255; green,255; blue,200}, draw=black, shape=circle, tikzit category=cdl, inner sep=0pt, outer sep=0pt, minimum size=5pt]
 \tikzstyle{blackdoe}=[fill=black, draw=none, shape=circle, tikzit category=RGflow, inner sep=0pt, outer sep=0pt, minimum size=4pt]
 \tikzstyle{giltQu}=[fill=white, draw=black, shape=circle, tikzit category=cdl, minimum size=0.4cm, pattern=north west lines]
+\tikzstyle{giltQd}=[fill=white, draw=black, shape=circle, tikzit category=cdl, minimum size=0.4cm, pattern=north east lines]
 \tikzstyle{Qul}=[fill=white, draw=black, shape=semicircle, tikzit category=cdl, anchor=chord center, rotate=90, minimum width=0.4cm, outer sep=0pt, inner sep=0pt, pattern=north west lines]
 \tikzstyle{Qur}=[fill=white, draw=black, shape=semicircle, tikzit category=cdl, anchor=chord center, rotate=-90, minimum width=0.4cm, outer sep=0pt, inner sep=0pt, pattern=north west lines]
 \tikzstyle{Qdl}=[fill=white, draw=black, shape=semicircle, tikzit category=cdl, anchor=chord center, rotate=90, minimum width=0.4cm, outer sep=0pt, inner sep=0pt, pattern=north east lines]
@@ -25,6 +26,12 @@
 \tikzstyle{Qupr}=[fill=white, draw=black, shape=semicircle, tikzit category=cdl, anchor=chord center, rotate=0, minimum width=0.4cm, outer sep=0pt, inner sep=0pt, pattern=horizontal lines]
 \tikzstyle{Qdpl}=[fill=white, draw=black, shape=semicircle, tikzit category=cdl, anchor=chord center, rotate=180, minimum width=0.4cm, outer sep=0pt, inner sep=0pt, pattern=vertical lines]
 \tikzstyle{Qdpr}=[fill=white, draw=black, shape=semicircle, tikzit category=cdl, anchor=chord center, rotate=0, minimum width=0.4cm, outer sep=0pt, inner sep=0pt, pattern=vertical lines]
+\tikzstyle{cdlMbox}=[fill=magenta, draw=black, shape=rectangle, tikzit category=cdl, fill opacity=0.5, minimum width=0.75cm, minimum height=1cm]
+\tikzstyle{envS}=[fill={rgb,255: red,255; green,128; blue,0}, draw=black, shape=circle, tikzit category=tensor, inner sep=0pt, outer sep=0pt, minimum size=0.2cm]
+\tikzstyle{tvec}=[fill={rgb,255: red,191; green,191; blue,191}, draw=black, shape=circle, inner sep=0pt, outer sep=0pt, minimum size=0.2cm]
+\tikzstyle{haldHalfCir}=[fill=white, draw=white, shape=semicircle, anchor=chord center, rotate=90, minimum width=0.4cm, outer sep=0pt, inner sep=0pt]
+\tikzstyle{haldHalfCir2}=[fill=white, draw=white, shape=semicircle, anchor=chord center, rotate=-90, minimum width=0.4cm, outer sep=0pt, inner sep=0pt]
+
 
 % Edge styles
 \tikzstyle{blackMidLine}=[-, fill={rgb,255: red,191; green,191; blue,191}, draw=black, thick]

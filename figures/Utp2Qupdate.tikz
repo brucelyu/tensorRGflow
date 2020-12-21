@@ -1,0 +1,57 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (1.075, 0.45) {};
+		\node [style=none] (1) at (3.575, 0.45) {};
+		\node [style=none] (2) at (2.325, 1.55) {};
+		\node [style=none] (3) at (1.575, 0.45) {};
+		\node [style=none] (4) at (3.075, 0.45) {};
+		\node [style=none] (5) at (2.325, 0.95) {$U^{\dagger}$};
+		\node [style=tvec] (6) at (2.325, 2.45) {};
+		\node [style=none] (7) at (-0.125, -0.275) {};
+		\node [style=none] (8) at (1.075, 0.225) {};
+		\node [style=none] (9) at (1.075, -0.775) {};
+		\node [style=none] (10) at (0.5, -0.775) {};
+		\node [style=none] (11) at (0.5, 0.225) {};
+		\node [style=none] (12) at (0.2, -0.275) {};
+		\node [style=none] (13) at (1.075, -0.275) {};
+		\node [style=none] (14) at (1.625, -0.775) {$S_x$};
+		\node [style=none] (15) at (4.75, -0.275) {};
+		\node [style=none] (16) at (3.55, -0.775) {};
+		\node [style=none] (17) at (3.55, 0.225) {};
+		\node [style=none] (18) at (4.125, 0.225) {};
+		\node [style=none] (19) at (4.125, -0.775) {};
+		\node [style=none] (20) at (4.425, -0.275) {};
+		\node [style=none] (21) at (3.55, -0.275) {};
+		\node [style=none] (22) at (3.05, -0.75) {$S_x^T$};
+		\node [style=none] (23) at (1.75, 2.75) {$t'$};
+		\node [style=none] (24) at (1.575, -0.25) {};
+		\node [style=none] (25) at (3.075, -0.25) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=blackMidLine] (0.center)
+			 to (1.center)
+			 to [in=0, out=90] (2.center)
+			 to [in=90, out=180] cycle;
+		\draw [style=blackMidPureLine] (2.center) to (6);
+		\draw [style=simMat] (10.center)
+			 to (9.center)
+			 to (13.center)
+			 to (8.center)
+			 to (11.center)
+			 to [in=90, out=180, looseness=0.75] (12.center)
+			 to [in=180, out=-90, looseness=0.75] cycle;
+		\draw [style=greenMidLine] (12.center) to (7.center);
+		\draw [style=simMat] (17.center)
+			 to (21.center)
+			 to (16.center)
+			 to (19.center)
+			 to [in=-90, out=0, looseness=0.75] (20.center)
+			 to [in=0, out=90, looseness=0.75] (18.center)
+			 to cycle;
+		\draw [style=greenMidLine] (20.center) to (15.center);
+		\draw [style=greenMidLine] (3.center) to (24.center);
+		\draw [style=greenMidLine] (4.center) to (25.center);
+		\draw [style=greenMidLine] (24.center) to (13.center);
+		\draw [style=greenMidLine] (25.center) to (21.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

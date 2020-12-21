@@ -1,0 +1,34 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=Qur] (0) at (-1.45, 0) {};
+		\node [style=none] (1) at (-1.45, 1) {$\tilde{Q}_{Al}$};
+		\node [style=none] (2) at (-2, 0) {};
+		\node [style=none] (3) at (-0.45, 0) {};
+		\node [style=none] (4) at (0, 0) {$=$};
+		\node [style=Qur] (5) at (1, 0) {};
+		\node [style=none] (6) at (1, 1) {$Q_{Al}$};
+		\node [style=none] (7) at (3, -0.025) {};
+		\node [style=none] (8) at (2.05, -0.275) {};
+		\node [style=none] (9) at (2.05, 0.225) {};
+		\node [style=none] (10) at (2.375, 0.225) {};
+		\node [style=none] (11) at (2.375, -0.275) {};
+		\node [style=none] (12) at (2.675, -0.025) {};
+		\node [style=none] (13) at (2.05, -0.025) {};
+		\node [style=none] (14) at (2.8, 1) {$S_x^T$};
+		\node [style=none] (15) at (0.5, 0) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (0) to (2.center);
+		\draw [style=greenMidLine] (0) to (3.center);
+		\draw [style=simMat] (9.center)
+			 to (13.center)
+			 to (8.center)
+			 to (11.center)
+			 to [in=-90, out=0, looseness=0.75] (12.center)
+			 to [in=0, out=90, looseness=0.75] (10.center)
+			 to cycle;
+		\draw [style=greenMidLine] (12.center) to (7.center);
+		\draw [style=greenMidLine] (5) to (13.center);
+		\draw [style=greenMidLine] (5) to (15.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

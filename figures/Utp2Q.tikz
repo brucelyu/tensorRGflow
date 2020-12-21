@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-0.5, -0.35) {};
+		\node [style=none] (1) at (0.5, -0.35) {};
+		\node [style=none] (2) at (0, 0) {};
+		\node [style=none] (3) at (-0.3, -0.35) {};
+		\node [style=none] (4) at (0.3, -0.35) {};
+		\node [style=none] (5) at (-0.3, -0.7) {};
+		\node [style=none] (6) at (0.3, -0.7) {};
+		\node [style=tvec] (7) at (0, 0.65) {};
+		\node [style=none] (8) at (1.125, -0.1) {$U^{\dagger}$};
+		\node [style=none] (9) at (-0.575, 0.75) {$t'$};
+		\node [style=none] (10) at (-0.875, -0.7) {};
+		\node [style=none] (11) at (0.875, -0.7) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=blackMidLine] (1.center)
+			 to [in=0, out=90, looseness=0.75] (2.center)
+			 to [in=90, out=180, looseness=0.75] (0.center)
+			 to cycle;
+		\draw [style=greenMidLine] (4.center) to (6.center);
+		\draw [style=greenMidLine] (3.center) to (5.center);
+		\draw [style=blackMidPureLine] (2.center) to (7);
+		\draw [style=greenMidLine, in=-90, out=-15, looseness=0.75] (10.center) to (5.center);
+		\draw [style=greenMidLine, in=-165, out=-90, looseness=0.75] (6.center) to (11.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

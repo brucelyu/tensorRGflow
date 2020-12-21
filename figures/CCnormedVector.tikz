@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=cdlMnorm] (0) at (1, 0.75) {};
+		\node [style=none] (1) at (0, 0.9) {};
+		\node [style=cdlMnorm] (2) at (1, -0.75) {};
+		\node [style=none] (3) at (0, -0.9) {};
+		\node [style=none] (4) at (1.075, -0.6) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=cdlMatLeg, in=150, out=0, looseness=0.50] (1.center) to (0);
+		\draw [style=cdlMatLeg, in=-150, out=0, looseness=0.50] (3.center) to (2);
+		\draw [style=cdlMatLeg, in=75, out=-60, looseness=0.25] (0) to (4.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

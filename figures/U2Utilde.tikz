@@ -1,0 +1,52 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-1.25, 0.75) {};
+		\node [style=none] (1) at (1.25, 0.75) {};
+		\node [style=none] (2) at (0, -0.35) {};
+		\node [style=none] (3) at (-0.75, 0.75) {};
+		\node [style=none] (4) at (0.75, 0.75) {};
+		\node [style=none] (7) at (0, 0.25) {$U$};
+		\node [style=none] (8) at (0, -1.25) {};
+		\node [style=none] (9) at (-0.75, 2.45) {};
+		\node [style=none] (10) at (-1.25, 1.25) {};
+		\node [style=none] (11) at (-0.25, 1.25) {};
+		\node [style=none] (12) at (-0.25, 1.825) {};
+		\node [style=none] (13) at (-1.25, 1.825) {};
+		\node [style=none] (14) at (-0.75, 2.125) {};
+		\node [style=none] (15) at (-0.75, 1.25) {};
+		\node [style=none] (16) at (-1.825, 2) {$S_x^{T}$};
+		\node [style=none] (18) at (0.75, 2.45) {};
+		\node [style=none] (19) at (0.25, 1.25) {};
+		\node [style=none] (20) at (1.25, 1.25) {};
+		\node [style=none] (21) at (1.25, 1.825) {};
+		\node [style=none] (22) at (0.25, 1.825) {};
+		\node [style=none] (23) at (0.75, 2.125) {};
+		\node [style=none] (24) at (0.75, 1.25) {};
+		\node [style=none] (25) at (1.925, 2) {$S_x$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=blackMidLine] (0.center)
+			 to (1.center)
+			 to [in=0, out=-90] (2.center)
+			 to [in=-90, out=-180] cycle;
+		\draw [style=blackMidPureLine] (2.center) to (8.center);
+		\draw [style=simMat] (12.center)
+			 to (11.center)
+			 to (15.center)
+			 to (10.center)
+			 to (13.center)
+			 to [in=180, out=90, looseness=0.75] (14.center)
+			 to [in=90, out=0, looseness=0.75] cycle;
+		\draw [style=greenMidLine] (14.center) to (9.center);
+		\draw [style=simMat] (21.center)
+			 to (20.center)
+			 to (24.center)
+			 to (19.center)
+			 to (22.center)
+			 to [in=180, out=90, looseness=0.75] (23.center)
+			 to [in=90, out=0, looseness=0.75] cycle;
+		\draw [style=greenMidLine] (23.center) to (18.center);
+		\draw [style=greenMidLine] (3.center) to (15.center);
+		\draw [style=greenMidLine] (4.center) to (24.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

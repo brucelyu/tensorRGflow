@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=cdlMat] (0) at (-0.25, 0.25) {};
+		\node [style=cdlMat] (1) at (0.25, 0.25) {};
+		\node [style=cdlMat] (2) at (-0.25, -0.25) {};
+		\node [style=cdlMat] (3) at (0.25, -0.25) {};
+		\node [style=none] (4) at (-0.1, 1.5) {};
+		\node [style=none] (6) at (0.1, 1.5) {};
+		\node [style=cdlWhole] (10) at (0, 0) {};
+		\node [style=none] (22) at (-0.175, -1.6) {};
+		\node [style=none] (23) at (0.175, -1.6) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=cdlMatLeg, in=60, out=-90, looseness=0.50] (4.center) to (0);
+		\draw [style=cdlMatLeg, in=120, out=-90, looseness=0.50] (6.center) to (1);
+		\draw [style=cdlMatLeg, in=75, out=-60, looseness=0.25] (2) to (22.center);
+		\draw [style=cdlMatLeg, in=120, out=-120, looseness=0.25] (3) to (23.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

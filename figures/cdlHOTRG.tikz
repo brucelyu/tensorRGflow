@@ -64,24 +64,24 @@
 		\draw [style=cdlMatLeg, in=180, out=30, looseness=0.50] (16) to (24.center);
 		\draw [style=cdlMatLeg, in=75, out=-60, looseness=0.25] (2) to (26.center);
 		\draw [style=cdlMatLeg, in=120, out=-120, looseness=0.25] (3) to (28.center);
-		\draw [style=blackMidPureLine, in=105, out=-120, looseness=0.25] (29) to (33.center);
-		\draw [style=blackMidPureLine] (8.center) to (29);
-		\draw [style=blackMidPureLine] (31) to (18.center);
-		\draw [style=blackMidPureLine, in=60, out=-60, looseness=0.25] (34) to (38.center);
-		\draw [style=blackMidPureLine] (11.center) to (34);
-		\draw [style=blackMidPureLine] (20.center) to (36);
-		\draw [style=blackMidPureLine, in=60, out=-165, looseness=0.75] (5.center) to (41.center);
-		\draw [style=blackMidPureLine, in=0, out=-135, looseness=0.50] (41.center) to (39.center);
-		\draw [style=blackMidPureLine, in=150, out=0, looseness=0.50] (40.center) to (42.center);
-		\draw [style=blackMidPureLine, in=165, out=-45, looseness=0.75] (42.center) to (21.center);
-		\draw [style=blackMidPureLine] (43.center) to (39.center);
-		\draw [style=blackMidPureLine] (44.center) to (40.center);
-		\draw [style=blackMidPureLine, in=180, out=-45, looseness=0.50] (47.center) to (45.center);
-		\draw [style=blackMidPureLine, in=30, out=180, looseness=0.50] (46.center) to (48.center);
-		\draw [style=blackMidPureLine] (49.center) to (45.center);
-		\draw [style=blackMidPureLine] (50.center) to (46.center);
-		\draw [style=blackMidPureLine, in=135, out=-15, looseness=0.50] (7.center) to (47.center);
-		\draw [style=blackMidPureLine, in=-120, out=15, looseness=0.75] (24.center) to (48.center);
+		\draw [style=cdlMatLeg, in=105, out=-120, looseness=0.25] (29) to (33.center);
+		\draw [style=cdlMatLeg] (8.center) to (29);
+		\draw [style=cdlMatLeg] (31) to (18.center);
+		\draw [style=cdlMatLeg, in=60, out=-60, looseness=0.25] (34) to (38.center);
+		\draw [style=cdlMatLeg] (11.center) to (34);
+		\draw [style=cdlMatLeg] (20.center) to (36);
+		\draw [style=cdlMatLeg, in=60, out=-165, looseness=0.75] (5.center) to (41.center);
+		\draw [style=cdlMatLeg, in=0, out=-135, looseness=0.50] (41.center) to (39.center);
+		\draw [style=cdlMatLeg, in=150, out=0, looseness=0.50] (40.center) to (42.center);
+		\draw [style=cdlMatLeg, in=165, out=-45, looseness=0.75] (42.center) to (21.center);
+		\draw [style=cdlMatLeg] (43.center) to (39.center);
+		\draw [style=cdlMatLeg] (44.center) to (40.center);
+		\draw [style=cdlMatLeg, in=180, out=-45, looseness=0.50] (47.center) to (45.center);
+		\draw [style=cdlMatLeg, in=30, out=180, looseness=0.50] (46.center) to (48.center);
+		\draw [style=cdlMatLeg] (49.center) to (45.center);
+		\draw [style=cdlMatLeg] (50.center) to (46.center);
+		\draw [style=cdlMatLeg, in=135, out=-15, looseness=0.50] (7.center) to (47.center);
+		\draw [style=cdlMatLeg, in=-120, out=15, looseness=0.75] (24.center) to (48.center);
 		\draw [style=blackdashed] (52.center)
 			 to (53.center)
 			 to (51.center)

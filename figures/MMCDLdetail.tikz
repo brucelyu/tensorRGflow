@@ -1,0 +1,45 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=cdlMat] (0) at (-0.475, 1.25) {};
+		\node [style=cdlMat] (2) at (-0.475, 0.75) {};
+		\node [style=none] (4) at (-0.325, 2) {};
+		\node [style=none] (5) at (-1.475, 1.1) {};
+		\node [style=none] (8) at (-1.475, 0.9) {};
+		\node [style=cdlMat] (11) at (-0.475, -0.75) {};
+		\node [style=cdlMat] (13) at (-0.475, -1.25) {};
+		\node [style=none] (15) at (-1.475, -0.9) {};
+		\node [style=none] (17) at (-1.475, -1.1) {};
+		\node [style=none] (18) at (-0.325, -2) {};
+		\node [style=none] (22) at (-0.4, -0.6) {};
+		\node [style=cdlMat] (25) at (0.525, 1.25) {};
+		\node [style=cdlMat] (27) at (0.525, 0.75) {};
+		\node [style=none] (30) at (0.375, 2) {};
+		\node [style=none] (31) at (1.525, 1.1) {};
+		\node [style=none] (33) at (1.525, 0.9) {};
+		\node [style=cdlMat] (35) at (0.525, -0.75) {};
+		\node [style=cdlMat] (37) at (0.525, -1.25) {};
+		\node [style=none] (39) at (1.525, -0.9) {};
+		\node [style=none] (42) at (0.375, -2) {};
+		\node [style=none] (43) at (1.525, -1.1) {};
+		\node [style=none] (45) at (0.45, -0.6) {};
+		\node [style=none] (46) at (1, 1.75) {$C$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=cdlMatLeg, in=60, out=-90, looseness=0.50] (4.center) to (0);
+		\draw [style=cdlMatLeg, in=-150, out=0, looseness=0.50] (5.center) to (0);
+		\draw [style=cdlMatLeg, in=150, out=0, looseness=0.50] (8.center) to (2);
+		\draw [style=cdlMatLeg, in=-150, out=0, looseness=0.50] (15.center) to (11);
+		\draw [style=cdlMatLeg, in=150, out=0, looseness=0.50] (17.center) to (13);
+		\draw [style=cdlMatLeg, in=90, out=-60, looseness=0.50] (13) to (18.center);
+		\draw [style=cdlMatLeg, in=75, out=-60, looseness=0.25] (2) to (22.center);
+		\draw [style=cdlMatLeg, in=120, out=-90, looseness=0.50] (30.center) to (25);
+		\draw [style=cdlMatLeg, in=180, out=-30, looseness=0.50] (25) to (31.center);
+		\draw [style=cdlMatLeg, in=180, out=30, looseness=0.50] (27) to (33.center);
+		\draw [style=cdlMatLeg, in=180, out=-30, looseness=0.50] (35) to (39.center);
+		\draw [style=cdlMatLeg, in=90, out=-120, looseness=0.50] (37) to (42.center);
+		\draw [style=cdlMatLeg, in=180, out=30, looseness=0.50] (37) to (43.center);
+		\draw [style=cdlMatLeg, in=120, out=-120, looseness=0.25] (27) to (45.center);
+		\draw [style=cdlMatLeg] (4.center) to (30.center);
+		\draw [style=cdlMatLeg] (18.center) to (42.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,0 +1,42 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=giltQu] (2) at (0, 0) {};
+		\node [style=none] (3) at (0, 0.75) {$Q_A$};
+		\node [style=none] (4) at (-2, -0.025) {};
+		\node [style=none] (5) at (-1.05, 0.225) {};
+		\node [style=none] (6) at (-1.05, -0.275) {};
+		\node [style=none] (7) at (-1.375, -0.275) {};
+		\node [style=none] (8) at (-1.375, 0.225) {};
+		\node [style=none] (9) at (-1.675, -0.025) {};
+		\node [style=none] (10) at (-1.05, -0.025) {};
+		\node [style=none] (11) at (-1.5, 0.725) {$S_x$};
+		\node [style=none] (12) at (2, -0.025) {};
+		\node [style=none] (13) at (1.05, -0.275) {};
+		\node [style=none] (14) at (1.05, 0.225) {};
+		\node [style=none] (15) at (1.375, 0.225) {};
+		\node [style=none] (16) at (1.375, -0.275) {};
+		\node [style=none] (17) at (1.675, -0.025) {};
+		\node [style=none] (18) at (1.05, -0.025) {};
+		\node [style=none] (19) at (1.8, 0.75) {$S_x^T$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=simMat] (7.center)
+			 to (6.center)
+			 to (10.center)
+			 to (5.center)
+			 to (8.center)
+			 to [in=90, out=180, looseness=0.75] (9.center)
+			 to [in=180, out=-90, looseness=0.75] cycle;
+		\draw [style=greenMidLine] (9.center) to (4.center);
+		\draw [style=simMat] (14.center)
+			 to (18.center)
+			 to (13.center)
+			 to (16.center)
+			 to [in=-90, out=0, looseness=0.75] (17.center)
+			 to [in=0, out=90, looseness=0.75] (15.center)
+			 to cycle;
+		\draw [style=greenMidLine] (17.center) to (12.center);
+		\draw [style=greenMidLine] (2) to (18.center);
+		\draw [style=greenMidLine] (2) to (10.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

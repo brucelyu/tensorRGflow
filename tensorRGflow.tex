@@ -24,13 +24,29 @@
 %\documentclass[aps,prl,preprint,superscriptaddress]{revtex4-2}
 \documentclass[aps,prb,reprint,superscriptaddress]{revtex4-2}
 % Enable some packages (same as my 8.06x paper)
-\usepackage{blindtext} \usepackage{mathtools} \usepackage{graphicx}
-\usepackage{amsmath} \usepackage{amsfonts} \usepackage{amssymb}
-\usepackage{amstext} \usepackage[english]{babel} \usepackage{helvet}
-\usepackage{microtype} \usepackage[pdftex,hidelinks]{hyperref}
-% \usepackage[hidelinks]{hyperref}
-\usepackage{bbold} \usepackage{mathrsfs} \usepackage{makecell}
-\usepackage{tikzit} \input{tensorFig.tikzstyles}
+\usepackage{blindtext} 
+\usepackage{mathtools} 
+\usepackage{graphicx}
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+\usepackage{amssymb}
+\usepackage{amstext} 
+\usepackage[english]{babel} 
+\usepackage{helvet}
+\usepackage{microtype} 
+\usepackage[pdftex,hidelinks]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+    citecolor = blue,
+}
+\usepackage{bbold} 
+\usepackage{mathrsfs} 
+\usepackage{makecell}
+\usepackage{tikzit} 
+\input{tensorFig.tikzstyles}
 \input{tensorFig.tikzdefs}
 
 \DeclareMathOperator{\Tr}{Tr}
@@ -41,6 +57,7 @@
 \newcommand{\rgapprox}{\stackrel{\text{RG}}{\approx}}
 \newcommand{\ket}[1]{|#1\rangle} \newcommand{\bra}[1]{\langle#1|}
 \newcommand{\textapprox}[1]{\stackrel{\text{#1}}{\approx}}
+\newcommand{\texteq}[1]{\stackrel{\text{#1}}{=}}
 
 
 % You should use BibTeX and apsrev.bst for references Choosing a journal
@@ -432,7 +449,8 @@ below.
     \tikzfig{rgschem} \caption{\label{fig:rgschem}The block tensor
     transformation $A\rightarrow A_c$. Part of the spins shared by two
 tensors $A$ are summed over according to Eq.~\eqref{eq:exactBlock}. The
-black squares are larger after the decimation.} \end{figure}
+black squares are larger after the decimation.} 
+\end{figure}
 %
 The process is similar to the decimation in the conventional approaches.
 After the spin variables shared by two tensors are summed over, we are
@@ -1976,7 +1994,8 @@ for explanations regarding the TNR and other tensor network methods. We
 also thank Markus Hauru for clarifying the implementation of the Gilt.
 X.L.\ and R.X.\ are grateful to the support of the Global Science
 Graduate Course (GSGC) program of the University of Tokyo. N.K.\ is
-supported by
+supported by [\textbf{fill in here}]
+% TODO
 
 \end{acknowledgments}
 
@@ -1984,12 +2003,312 @@ supported by
 % only one appendix.
 \appendix
 \section{Optimization forms of eigenvalue problems\label{appd:opteig}}
+In Sec.~\ref{hotrg}, it is claimed that the optimization problem in
+Eq.~\eqref{eq:approxerrAll} can be converted into an eigenvalue problem.
+This is a well-known result. We will provide a short proof here to make
+this paper self-contained. 
+%
+
+Given a Hermitian positive semi-definite matrix $H$, find the optimal
+matrix $w$ such that $\Tr{(w^{\dagger} H w)}$ is maximized, provided that
+the matrix $w$ satisfies $w^{\dagger}w = \mathbb{1}$. This constraint
+means that $(w^{\dagger}w)_{ij} = \sum_{\alpha} w^*_{\alpha i} w_{\alpha
+j}$ is $0$ for $i\neq j$ and is $1$ for $i = j$. The first condition
+says that the column vectors of $w$ are orthogonal to each other, and the
+second says that they are normalized. We first impose the normalization
+constraint and construct the Lagrangian,
+%
+\begin{align}\label{eq:langMult}
+    \mathcal{L} = \sum_{\alpha \beta i} H_{\alpha\beta} w^*_{\alpha i}
+    w_{\beta i} - \sum_i \lambda _i \left(\sum_{\alpha}w^*_{\alpha i}
+        w_{\alpha i} - 1\right),
+\end{align}
+%
+where $\lambda_i$ are the Lagrange multipliers. Set the derivative of
+$\mathcal{L}$ with respect to $w^*_{\alpha i}$ to zero, we get the
+following eigenvalue problem for $H$,
+%
+\begin{align}\label{eq:eigenProblem}
+    \sum_{\beta} H_{\alpha\beta} w_{\beta i} = \lambda_i w_{\alpha i},
+\end{align}
+%
+which means the columns of $w$ are the eigenvectors of $H$. Then, the
+quantity that we want to maximize becomes $\Tr{(w^{\dagger}Hw)} = \sum_i
+\lambda_i$. Finally, we impose the orthogonality condition of $w$, so
+the columns of $w$ should be the linearly independent eigenvectors of
+$H$ corresponding to the first several largest eigenvalues. This
+completes our proof.
+%
 
 \section{CDL tensors, HOTRG, and Gilt-HOTRG\label{appd:cdlHOTRG}}
+In this appendix, we first explain why the CDL tensors $A^{\text{CDL}}$
+form a class of fixed points for the HOTRG, as is claimed in
+Eq.~\eqref{eq:cdlHOTRG}. We then move on to show how to determine the
+$Q_{Al},Q_{Ar},Q_{Bl}, Q_{Br}$ matrices for the Gilt-HOTRG coarse
+graining in the vertical direction shown in
+Eq.~\eqref{def:ApycontrGilt}. Finally, the details of how the Gilt-HOTRG
+simplify the $A^{\text{CDL}}$ to a single number (see
+Eq.~\eqref{eq:CDL2number}) are explained.
+%
+
+The definition of $A^{\text{CDL}}$ is given in Fig.~\ref{fig:ariseCDL}.
+The corner matrix $C$ can be assumed to be symmetric considering its
+physical origin. It can be further put into its diagonal form. In order
+to find the isometric tensor in Eq.~\eqref{eq:cdlHOTRG}, we refer to
+Eqs.~\eqref{def:Apycontr}, \eqref{def:M-AA} and \eqref{eq:approxerrPic},
+which says the isometry is a collection of the eigenvectors of
+%
+\begin{align}\label{eq:MMdaggerCDL}
+    \tikzfig{MMCDL} \propto \tikzfig{MMCDLdetail}\text{  }.
+\end{align}
+%
+Let us say $C$ is a $\sqrt{\chi}\times\sqrt{\chi}$ matrix, so $M
+M^{\dagger}$ is a $\chi^2 \times \chi^2$ matrix.
+Equation~\eqref{eq:MMdaggerCDL} shows the rank of $M M^{\dagger}$ is
+$\chi$. The eigenvectors of this $M M^{\dagger}$ is easy to write down.
+Since $C$ is already in its diagonal form, we do nothing about the two
+outer matrices, $\scalebox{0.8}{\tikzfig{MMCDLouter1}}$ and
+$\scalebox{0.8}{\tikzfig{MMCDLouter2}}$. The inner matrix,
+$\scalebox{0.8}{\tikzfig{MMCDLinner}}$,
+is the outer product of two $\chi$-dimensional vectors, both constructed
+from two $C$ matrices, so
+the inner matrix has rank $1$. The only eigenvector of the inner matrix
+with non-zero eigenvalues is the vector in the outer product, properly
+normalized,
+%
+\begin{align}\label{def:innerMeigvec}
+    \tikzfig{CCnormedVector} \defeq \tikzfig{CCvector}\text{ } \bigg/
+    \sqrt{\tikzfig{CCnormSquare}}\text{ }.
+\end{align}
+%
+Therefore, the isometry $w$ for the HOTRG coarse graining of two
+$A^{\text{CDL}}$ tenors in the verticle direction is
+%
+\begin{align}\label{eq:wforACDL}
+    \tikzfig{w4CDL}\text{ },
+\end{align}
+%
+which is what we use in Eq.~\eqref{eq:cdlHOTRG}.
+%
+
+Next, we introduce how to determine the  $Q_{Al},Q_{Ar}$,$Q_{Bl},Q_{Br}$
+matrices in Eq.~\eqref{def:ApycontrGilt}.  The idea of the Gilt is to
+insert a low-rank matrix into a bond to detect and truncate the legs of
+$C$ matrices, which is shown in Fig.~\ref{fig:gilt}. The low-rand matrix
+$Q$ is determined by examining the environment $E$ of the bond and
+performing the singular value decomposition,
+%
+\begin{align}\label{eq:bondEnvSVD}
+    E \defeq \tikzfig{bondEnviro} \svdeq \tikzfig{bondEnvSVD}\text{ }, 
+\end{align}
+%
+where we refrain from drawing the $C$ matrices in the plaquette to make
+the figure clearer. The environment $E$ of the bond should be thought of
+as a linear map from the vector space of all the legs with ingoing
+arrows to that of all the legs with outgoing arrows. We can use the
+tensor $U$ and the diagonal matrix $s$ in Eq.~\eqref{eq:bondEnvSVD} to
+construct the low-rank matrix $Q$. To this end, we first define a vector
+$t$ by contracting two ingoing legs of the tensor $U$,
+%
+\begin{align}\label{def:tfromU}
+    \tikzfig{tvec} \defeq \tikzfig{Ucontract}.
+\end{align}
+%
+Then, we perform a soft truncation of the vector $t$ according to
+%
+\begin{align}\label{eq:tpfromt}
+    t'_i = t_i \frac{s_i^2}{s_i^2 + \epsilon_{\text{gilt}}^2},
+\end{align}
+%
+where $s_i$ are the singular values and
+$\epsilon_{\text{gilt}}$ is the hyper-parameter of the Gilt.
+Equation~\eqref{eq:tpfromt} says that the components of the vector $t$
+will be set to very small values if the corresponding singular values
+$s_i$ are much smaller than $\epsilon_{\text{gilt}}$. The justification
+for the truncation in Eq.~\eqref{eq:tpfromt} can be found in
+Ref.~\cite{gilts}. The low-rank matrix $Q$ is constructed from the
+tensor $U^{\dagger}$ and the truncated vector $t'$ as
+%
+\begin{align}\label{def:QfromUtp}
+    \tikzfig{Qmat} \defeq \tikzfig{Utp2Q}\text{ }.
+\end{align}
+%
+It is proved in Ref.~\cite{gilts} that the matrix $Q$ determined in this
+way is able to filter out the loop of four $C$ matrices shown in
+Fig.~\ref{fig:gilt}. 
+%
+
+In Fig.~\ref{fig:gilt4hotrg}, we show where to insert the low-rank
+matrices. The two $A$ tensors will be coarse grained vertically, but we
+have shown in the previous discussion that the isometric tensor $w$ in
+the HOTRG can only project out the inner $C$ matrices (not drawn in
+Fig.~\ref{fig:gilt4hotrg}), but can do nothing
+about the four outer $C$ matrices (drawn explicitly in
+Fig.~\ref{fig:gilt4hotrg}). The Gilt should be applied to filter
+out these four outer $C$ matrices before the HOTRG coarse graining. 
+To this end, we apply the Gilt to the plaquettes where the loops
+representing local correlations are drawn explicitly in
+Fig.~\ref{fig:gilt4hotrg} and insert two low-rank matrices $Q_A,Q_B$
+into the upper and lower bonds for each plaquette. The legs of the
+unwanted $C$ matrices will be truncated after the splitting of $Q_A, Q_B
+$. Finally, we apply the ordinary HOTRG coarse graining to the local
+patch of tensors in the dashed circle to get
+Eq.~\eqref{def:ApycontrGilt}.
+%
+\begin{widetext}
+\begin{center}
+ \begin{figure}[htb]
+    \tikzfig{gilt4hotrg} 
+    \caption{\label{fig:gilt4hotrg}The plaquettes and bonds where the
+    Gilt is applied to for the subsequent HOTRG coarse graining.} 
+\end{figure}
+\end{center}
+\end{widetext}
+%
+
+Finally, we show how the $A^{\text{CDL}}$ transforms under the
+Gilt-HOTRG. After the Gilt scheme described in
+Fig.~\ref{fig:gilt4hotrg}, the local patch of two $A^{\text{CDL}}$
+tensors lose four outer horizontal legs of the $C$ matrices; the
+subsequent HOTRG will choose the vector in Eq.~\eqref{def:innerMeigvec}
+as the isometry $w$ and will project out the four inner $C$ matrices,
+%
+\begin{align}\label{eq:twoACDLunderGilt}
+    \tikzfig{twoACDL}
+    \xrightarrow[\text{Fig.}~\ref{fig:gilt4hotrg}]{\text{Gilt in}}
+    c_1\times \tikzfig{twoACDLgilt}
+    \xrightarrow[\text{HOTRG}]{\text{vertical}}
+    c_2 \times \tikzfig{twoACDLgilthotrg}\text{ },
+\end{align}
+%
+where $c_1, c_2$ are some overall multiplication constants. We see that
+after half of the Gilt-HOTRG in the vertical direction, the bond
+dimensions of the two horizontal legs of $A^{\text{CDL}}$ are
+truncated to $\chi = 1$. It is easy to see that after the second half
+Gilt-HOTRG, the vertical legs will be cut away. This shows that the full
+Gilt-HOTRG will map $A^{\text{CDL}}$ to a single number $c$. The number
+$c$ can be determined by noticing the free energy represented by the
+tensor network will stay unchanged after the coarse graining since every
+step of the Gilt-HOTRG applied to the $A^{\text{CDL}}$ is exact in
+principle.  The number of the tensors in the tensor network after the
+coarse graining will become one fourth of the previous. The number of
+the loops, each consisting of four $C$ matrices, is the same as that of
+the tensors.  As a result, to produce the same free energy, $c$ should
+be the loop raised to the fourth power. This completes the proof of
+Eq.~\eqref{eq:CDL2number} in the main text.
+%
 
 \section{Gauge redundancy in the Gilt-HOTRG\label{appd:gaugeFix}}
+Equation~\eqref{eq:HOTRGgaugefix} in Sec.~\ref{RespAnaGiltHOTRG} claims
+that any two tensors $A, \tilde{A}$ in the same equivalence class will
+be mapped to the same tensor after the Gilt-HOTRG with a sign fixing
+procedure. 
+%
+
+We focus on the equivalence relation defined as
+%
+\begin{align}\label{eq:simorth}
+    \tikzfig{Atilde} = \tikzfig{AsimOrth},
+\end{align}
+%
+where $S_x,S_y$ are orthogonal matrices. It suffices to discuss the
+first half of the Gilt-HOTRG coarse graining defined in
+Eq.~\eqref{def:ApycontrGilt}. We want to show if $\tilde{A}$ is fed into
+the right hand side of Eq.~\eqref{def:ApycontrGilt}, the $\tilde{A}'$ we
+obtain in the left hand is related with the original $A'$ by
+%
+\begin{align}\label{eq:Ap2Aptilde}
+    \tikzfig{Aptilde} = \tikzfig{ApsimOrth},
+\end{align}
+which means that the gauge redundancy in the horizontal legs will be
+fixed during the first half of the Gilt-HOTRG in the vertical direction.
+It follows immediately that the full Gilt-HOTRG will fixed the gauge.
+%
+
+Let us first figure out the correct
+$\tilde{Q}_A,\tilde{Q}_B$ matrices in Fig.~\ref{fig:gilt4hotrg}. The
+environment in Eq.~\eqref{eq:bondEnvSVD} is multiplied by several
+orthogonal matrices, which will not change the singular values, so
+$\tilde{s}_i=s_i$. It is easy to check that the tensor $U$ in the
+singular value decomposition becomes
+%
+\begin{align}\label{eq:Utilde}
+    \tikzfig{Utilde} = \tikzfig{U2Utilde}.
+\end{align}
+%
+The vector $\tilde{t}$ is thus the same as the original $t$ by its
+definition in Eq.~\eqref{def:tfromU}, which further gives $\tilde{t}'_i=
+t'_i$ since the tilde version of the right hand side of
+Eq.~\eqref{eq:tpfromt} is the same as the original version. Finally,
+equation~\eqref{def:QfromUtp} gives
+%
+\begin{align}\label{eq:QAtilde}
+    \tikzfig{QAtildeMat} \texteq{\eqref{def:QfromUtp}}
+    \tikzfig{Utp2QAtilde} &= \tikzfig{Utp2Qupdate} \nonumber\\ 
+                          &= \tikzfig{QAMatUU}.  
+\end{align}
+%
+Equation~\eqref{eq:QAtilde} means that the low rank matrix $Q_A$
+transforms in a nice way when we perform a gauge transformation of the
+tensor $A$ defined in Eq.~\eqref{eq:simorth}. If the singular values of
+$Q_A$ \textit{does not have degeneracies}, after splitting of $Q_A$,
+we have $Q_{Ar},Q_{Al}$ transform like
+%
+\begin{align}\label{eq:QpieceTrans}
+    \tikzfig{QArTransf} \text{ and } \tikzfig{QAlTransf}\text{ }. 
+\end{align}
+% 
+The $S_x,S_x^T$ matrices that $Q_{Ar},Q_{Al}$ pick up will cancel those
+acting on the $A$ tensor when $\tilde{Q}_{Ar},\tilde{Q}_{Al}$ are
+contracted with the $\tilde{A}$ tensor in Eq.~\eqref{eq:simorth}.
+The same argument works for $Q_B$. It indicates all the $S_x,S_x^T$
+matrices acting on the four horizontal legs of the local patch in
+Eq.~\eqref{def:ApycontrGilt} will be canceled by the low-rank matrices
+used in the Gilt process. The above analysis shows that during the
+first half of the Gilt-HOTRG, the gauge in the horizontal legs will be
+fixed since the Gilt favors the bases chosen by the singular value
+decompositions of $Q_A, Q_B$.
+%
+
+However, there is one more twist. In practice, we observe that the
+low-rank matrices are projection operators, which are highly
+degenerated. As a result, the gauge redundancy in the degenerate
+subspace will leak out, which will be seen by the subsequent HOTRG
+process. Luckily, the HOTRG has the similar feature as the Gilt process.
+It favors bases where the positive semi-definite matrix $M M^{\dagger}$
+in Eq.~\eqref{eq:approxerrPic} is diagonal. It is straightforward to see
+that the isometry $w$ will pick up the suitable $S_x,S_x^T$ matrices to
+cancel out the gauge transformation leaking out from the Gilt process.
+There are still concerns about whether degeneracies occur in eigenvalues
+of $M M\dagger$. Our result in Fig.~\ref{fig:flowA}(b) shows, a posteriori,
+that this potential degeneracies do not cause any problem for the 2D
+Ising model at criticality.
+%
+
+The last step is to fix the sign ambiguities. For real matrices, the
+normalized eigenvectors are unique up to sign ambiguities, indicating
+that after a full Gilt-HOTRG coarse graining, $\tilde{A}_c$ and $A_c$
+are equal up to sign ambiguities,
+%
+\begin{align}\label{eq:signAmbi}
+    \left(\tilde{A}_c \right)_{ijkl} =
+    \left(A_c\right)_{ijkl}(d_x)_i (d_y)_j (d_x)_k (d_x)_l, 
+\end{align}
+%
+where $d_x,d_y$ are vectors with components $\pm 1$ and they can be
+determined by comparing the sign of the components of $\tilde{A}_c$ and
+$A_c$. For $\mathbb{Z}_2$ symmetric tensors, we perform the
+aforementioned sign fixing in each sector of the tensor. The detailed
+implementation can be found in the source code of this paper.
+%
+
+
 
 \section{Source Code}
+The source code of this paper can be found at
+\href{https://github.com/brucelyu/tensorRGflow}{github.com/brucelyu/tensorRGflow}.
+It can be used to reproduce all the results in
+Sec.~\ref{benchmark:2DIsing} for the Ising model in 2D.
 
 % Create the reference section using BibTeX:
 \bibliography{tensorRGflow}

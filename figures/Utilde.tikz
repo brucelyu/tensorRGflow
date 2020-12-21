@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (18) at (-1.25, 0.5) {};
+		\node [style=none] (19) at (1.25, 0.5) {};
+		\node [style=none] (20) at (0, -0.6) {};
+		\node [style=none] (21) at (-0.75, 0.5) {};
+		\node [style=none] (22) at (0.75, 0.5) {};
+		\node [style=none] (23) at (0, 0) {$\tilde{U}$};
+		\node [style=none] (24) at (0, -1.5) {};
+		\node [style=none] (27) at (-0.75, 1.25) {};
+		\node [style=none] (30) at (0.75, 1.25) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=blackMidLine] (18.center)
+			 to (19.center)
+			 to [in=0, out=-90] (20.center)
+			 to [in=-90, out=-180] cycle;
+		\draw [style=blackMidPureLine] (20.center) to (24.center);
+		\draw [style=greenMidLine] (21.center) to (27.center);
+		\draw [style=greenMidLine] (22.center) to (30.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

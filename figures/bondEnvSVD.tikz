@@ -1,0 +1,82 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-1, 0.75) {};
+		\node [style=none] (1) at (-1, -1.35) {};
+		\node [style=none] (2) at (1, -1.35) {};
+		\node [style=none] (3) at (1, 0.75) {};
+		\node [style=none] (4) at (-0.5, 0.75) {};
+		\node [style=none] (5) at (0.5, 0.75) {};
+		\node [style=none] (6) at (-0.5, -0.425) {};
+		\node [style=none] (7) at (0.5, -0.425) {};
+		\node [style=none] (8) at (-0.5, 1.5) {};
+		\node [style=none] (9) at (0.5, 1.5) {};
+		\node [style=none] (10) at (0, 1.15) {};
+		\node [style=envS] (11) at (0, 0.25) {};
+		\node [style=none] (12) at (-0.25, 1.5) {};
+		\node [style=none] (13) at (0.25, 1.5) {};
+		\node [style=none] (14) at (-0.25, 2) {};
+		\node [style=none] (15) at (0.25, 2) {};
+		\node [style=none] (16) at (0, -0.675) {};
+		\node [style=none] (17) at (-1.5, 0.75) {};
+		\node [style=none] (18) at (-1.5, -1) {};
+		\node [style=none] (19) at (-1.075, -1) {};
+		\node [style=none] (20) at (1.5, 0.75) {};
+		\node [style=none] (21) at (1.5, -1) {};
+		\node [style=none] (22) at (1.075, -1) {};
+		\node [style=none] (23) at (-1, -1.7) {};
+		\node [style=none] (24) at (1, -1.7) {};
+		\node [style=none] (25) at (-0.75, 0.925) {};
+		\node [style=none] (26) at (-0.75, 1.25) {};
+		\node [style=none] (27) at (0.75, 0.925) {};
+		\node [style=none] (28) at (0.75, 1.25) {};
+		\node [style=none] (29) at (-0.25, 1.75) {};
+		\node [style=none] (30) at (0.25, 1.75) {};
+		\node [style=none] (31) at (-1.25, 0.75) {};
+		\node [style=none] (32) at (-1.25, -1) {};
+		\node [style=none] (33) at (1.25, -1) {};
+		\node [style=none] (34) at (1.25, 0.75) {};
+		\node [style=none] (37) at (0.575, -0.975) {$V^{\dagger}$};
+		\node [style=none] (38) at (1, 1.75) {$U$};
+		\node [style=none] (39) at (1.5, 0) {$s$};
+		\node [style=none] (40) at (0.25, 0.25) {};
+		\node [style=none] (41) at (1.25, 0) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=blackMidLine] (7.center)
+			 to [bend left=90, looseness=0.75] (6.center)
+			 to (4.center)
+			 to [bend right=90] (0.center)
+			 to [in=135, out=-90, looseness=0.25] (1.center)
+			 to [bend right=45, looseness=0.25] (2.center)
+			 to [in=-90, out=45, looseness=0.25] (3.center)
+			 to [bend right=90] (5.center)
+			 to cycle;
+		\draw [style=blackMidLine] (9.center)
+			 to [in=0, out=-90, looseness=0.75] (10.center)
+			 to [in=-90, out=-180, looseness=0.75] (8.center)
+			 to cycle;
+		\draw [style=greenMidLine] (13.center) to (15.center);
+		\draw [style=greenMidLine] (12.center) to (14.center);
+		\draw [style=greenMidLine] (17.center) to (0.center);
+		\draw [style=greenMidLine] (18.center) to (19.center);
+		\draw [style=greenMidLine] (3.center) to (20.center);
+		\draw [style=greenMidLine] (22.center) to (21.center);
+		\draw [style=greenMidLine] (1.center) to (23.center);
+		\draw [style=greenMidLine] (2.center) to (24.center);
+		\draw [style=greenMidLine] (25.center) to (26.center);
+		\draw [style=greenMidLine] (27.center) to (28.center);
+		\draw [style=greenArr] (14.center) to (29.center);
+		\draw [style=greenArr] (15.center) to (30.center);
+		\draw [style=greenArr] (31.center) to (17.center);
+		\draw [style=greenArr] (32.center) to (18.center);
+		\draw [style=greenArr] (1.center) to (23.center);
+		\draw [style=greenArr] (2.center) to (24.center);
+		\draw [style=greenArr] (33.center) to (21.center);
+		\draw [style=greenArr] (34.center) to (20.center);
+		\draw [style=greenArr] (25.center) to (26.center);
+		\draw [style=greenArr] (27.center) to (28.center);
+		\draw [style=blackArrow] (41.center) to (40.center);
+		\draw [style=blackMidPureLine] (10.center) to (11);
+		\draw [style=blackMidPureLine] (11) to (16.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

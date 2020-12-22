@@ -1,6 +1,6 @@
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
-		\node [style=cdlMbox] (0) at (-1.25, 0) {$M$};
+		\node [style=cdlMbox] (0) at (-1.25, 0) {};
 		\node [style=none] (1) at (-2.75, 0.75) {};
 		\node [style=none] (2) at (-2.75, -0.75) {};
 		\node [style=none] (3) at (-2, 0.75) {};
@@ -13,7 +13,7 @@
 		\node [style=none] (10) at (-0.9, -1.5) {};
 		\node [style=none] (11) at (0, 1.5) {};
 		\node [style=none] (12) at (0, -1.5) {};
-		\node [style=cdlMbox] (14) at (1.25, 0) {$M^{\dagger}$};
+		\node [style=cdlMbox] (14) at (1.25, 0) {};
 		\node [style=none] (15) at (2.75, 0.75) {};
 		\node [style=none] (16) at (2.75, -0.75) {};
 		\node [style=none] (17) at (2, 0.75) {};
@@ -58,6 +58,8 @@
 		\node [style=none] (56) at (1.25, -1) {};
 		\node [style=none] (57) at (1.15, -1.75) {};
 		\node [style=none] (58) at (0, -1.75) {};
+		\node [style=none] (59) at (-1.25, 0) {$M$};
+		\node [style=none] (60) at (1.325, 0) {$M^{\dagger}$};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw [style=cdlMatLeg] (1.center) to (3.center);

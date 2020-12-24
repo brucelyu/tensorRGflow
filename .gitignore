@@ -3,6 +3,7 @@
 out/
 analysisCodes/data/
 reviseSuggestion/
+preSlides/
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

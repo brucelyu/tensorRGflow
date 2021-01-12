@@ -32,6 +32,8 @@ parser.add_argument("--gilteps", dest = "gilteps", type = float,
                         "singluar values for the environment spectrum is zero" +
                         "(default: 1e-7)",
                         default = 1e-7)
+parser.add_argument("--nosignfix", help = "whether to not fix sign",
+                        action = "store_true")
 parser.add_argument("--verbose", help = "whether to print information",
                         action = "store_true")
 parser.add_argument("--scheme", dest = "scheme", type = str, 
@@ -66,6 +68,7 @@ cgeps = args.cgeps
 Ngilt = args.Ngilt
 legcut = args.legcut
 stablek = args.stbk
+fixSign = not args.nosignfix
 # Print out the time when the script is executed
 now = datetime.now()
 current_time = now.strftime("%Y-%m-%d. %H:%M:%S")
@@ -76,7 +79,10 @@ if scheme == "hotrg":
     figdir = "hotrg"
     chieps = "chi{:02d}".format(chi)
 elif scheme == "Gilt-HOTRG":
-    figdir = "gilt_hotrg{:d}{:d}_flow".format(Ngilt, legcut)
+    if fixSign:
+        figdir = "gilt_hotrg{:d}{:d}_flow".format(Ngilt, legcut)
+    else:
+        figdir = "gilt_hotrg{:d}{:d}_nosignfix".format(Ngilt, legcut)
     chieps = "eps{:.0e}_chi{:02d}".format(gilteps, chi)
 
 
@@ -130,34 +136,34 @@ elif scheme == "Gilt-HOTRG":
         os.makedirs(savedir)
     print("At T = Tc")
     Anorm, slist, Adifflist = normFlowHOTRG(relTc,allchi, iter_max, isDisp = verbose, 
-                              isGilt = True, isSym = True, isfixGauge = True,
+                              isGilt = True, isSym = True, isfixGauge = fixSign,
                               gilt_eps = gilteps, cg_eps = cgeps,
                               return_sing = True,
                               N_gilt = Ngilt, legcut = legcut,
                               stableStep = stablek, saveData = [True, savedir])
     
-    # generate flow of |A| at different temperature near Tc
-    devTc = [3,6,10]
-    datadic ={}
-    for acc in devTc:
-        Tdevhi = Thi + 10**(-acc)
-        Tdevlow = Tlow - 10**(-acc)
-        print("At T = Tc + 10^-{:d}".format(acc))
-        AnormH = normFlowHOTRG(Tdevhi,[chi,chi], iter_max, isDisp = verbose, 
-                         isGilt = True, isSym = True,
-                         gilt_eps = gilteps, cg_eps = cgeps,
-                         N_gilt = Ngilt, legcut = legcut,
-                         stableStep = stablek)[0]
-        print("At T = Tc - 10^-{:d}".format(acc))
-        AnormL = normFlowHOTRG(Tdevlow,[chi,chi], iter_max, isDisp = verbose, 
-                         isGilt = True, isSym = True,
-                         gilt_eps = gilteps, cg_eps = cgeps,
-                         N_gilt = Ngilt, legcut = legcut,
-                         stableStep = stablek)[0]
-        datadic[acc] = [AnormL, AnormH]
-    datadicFile = savedirectory + "/flowDiffAcc.pkl"
-    with open(datadicFile,"wb") as f:
-        pkl.dump(datadic, f)
+    # # generate flow of |A| at different temperature near Tc
+    # devTc = [3,6,10]
+    # datadic ={}
+    # for acc in devTc:
+    #     Tdevhi = Thi + 10**(-acc)
+    #     Tdevlow = Tlow - 10**(-acc)
+    #     print("At T = Tc + 10^-{:d}".format(acc))
+    #     AnormH = normFlowHOTRG(Tdevhi,[chi,chi], iter_max, isDisp = verbose, 
+    #                      isGilt = True, isSym = True,
+    #                      gilt_eps = gilteps, cg_eps = cgeps,
+    #                      N_gilt = Ngilt, legcut = legcut,
+    #                      stableStep = stablek)[0]
+    #     print("At T = Tc - 10^-{:d}".format(acc))
+    #     AnormL = normFlowHOTRG(Tdevlow,[chi,chi], iter_max, isDisp = verbose, 
+    #                      isGilt = True, isSym = True,
+    #                      gilt_eps = gilteps, cg_eps = cgeps,
+    #                      N_gilt = Ngilt, legcut = legcut,
+    #                      stableStep = stablek)[0]
+    #     datadic[acc] = [AnormL, AnormH]
+    # datadicFile = savedirectory + "/flowDiffAcc.pkl"
+    # with open(datadicFile,"wb") as f:
+    #     pkl.dump(datadic, f)
 
 
 

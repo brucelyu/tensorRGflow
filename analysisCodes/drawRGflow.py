@@ -35,6 +35,8 @@ parser.add_argument("--gilteps", dest = "gilteps", type = float,
                         "singluar values for the environment spectrum is zero" +
                         "(default: 1e-7)",
                         default = 1e-7)
+parser.add_argument("--nosignfix", help = "whether to not fix sign",
+                        action = "store_true")
 parser.add_argument("--scheme", dest = "scheme", type = str, 
                     help = "RG scheme to use",
                     choices = ["trg", "hotrg", "Gilt-HOTRG"],
@@ -58,6 +60,7 @@ gilteps = args.gilteps
 scheme = args.scheme
 Ngilt = args.Ngilt
 legcut = args.legcut
+fixSign = not args.nosignfix
 
 # generate file name
 # input and output file name
@@ -70,7 +73,10 @@ elif scheme == "trg":
     else:
         figdir = "trgflow"
 elif scheme == "Gilt-HOTRG":
-    figdir = "gilt_hotrg{:d}{:d}_flow".format(Ngilt, legcut)
+    if fixSign:
+        figdir = "gilt_hotrg{:d}{:d}_flow".format(Ngilt, legcut)
+    else:
+        figdir = "gilt_hotrg{:d}{:d}_nosignfix".format(Ngilt, legcut)
     chieps = "eps{:.0e}_chi{:02d}".format(gilteps, chi)
 # read Tc if exists
 savedirectory = "../out/" + figdir +  "/" + chieps

@@ -725,8 +725,8 @@ For two real tensors $A, \tilde{A}$ that are related by the gauge transformation
     \left(A_c\right)_{ijkl}(d_x)_i (d_y)_j (d_x)_k (d_y)_l, 
 \end{align}
 %
-where $d_x,d_y$ are vectors with components $\pm 1$ and can be determined by comparing the sign of the components of $\tilde{A}_c$ and $A_c$.
-After this sign fixing, the Gilt-HOTRG ensures
+where $d_x,d_y$ are vectors with components $\pm 1$. 
+Imagine that we manage to fix the sign ambiguities, then the Gilt-HOTRG ensures
 %
 \begin{align}\label{eq:HOTRGgaugefix}
     \mathcal{T}(A) = \mathcal{T}(\tilde{A}).
@@ -745,7 +745,7 @@ For a fixed-point tensor, equation~\eqref{eq:HOTRGgaugefix} indicates that we ca
 \end{align}
 %
 
-Let us prove the property of the tensor RG equation of the Gilt-HOTRG in Eq.~\eqref{eq:HOTRGgaugefix}.
+Let us prove the property of the tensor RG equation of the Gilt-HOTRG in Eq.~\eqref{eq:signAmbi} and explain how the sign is fixed to have Eq.~\eqref{eq:HOTRGgaugefix}.
 We focus on the equivalence relation defined as
 %
 \begin{align}\label{eq:simorth}
@@ -757,15 +757,15 @@ We focus on the equivalence relation defined as
 where $S_x,S_y$ are orthogonal matrices. 
 It suffices to discuss the first half of the Gilt-HOTRG coarse graining defined in
 Eq.~\eqref{def:ApycontrGilt}. 
-We want to show that if $\tilde{A}$ is fed into the right hand side of Eq.~\eqref{def:ApycontrGilt}, the $\tilde{A}'$ we obtain in the left hand is related with the original $A'$ by (after sign fixing)
+We want to show that if $\tilde{A}$ is fed into the right hand side of Eq.~\eqref{def:ApycontrGilt}, the $\tilde{A}'$ we obtain in the left hand is related with the original $A'$ by 
 %
 \begin{align}\label{eq:Ap2Aptilde}
     \tikzfig{Aptilde} 
     = 
     \scalebox{0.8}{\tikzfig{ApsimOrth}},
 \end{align}
-which means that the gauge redundancy in the horizontal legs will be fixed during the first half of the Gilt-HOTRG in the vertical direction.
-It follows immediately that the full Gilt-HOTRG will fixed the gauge.
+which means that the gauge redundancy in the horizontal legs will be fixed with only sign ambiguities left during the first half of the Gilt-HOTRG in the vertical direction.
+It follows immediately that the full Gilt-HOTRG will give Eq.~\eqref{eq:signAmbi}.
 %
 
 Let us first figure out the correct $\tilde{Q}_A,\tilde{Q}_B$ matrices in Fig.~\ref{fig:gilt4hotrg}. 
@@ -786,7 +786,7 @@ Finally, equation~\eqref{def:QfromUtp} gives
 \end{align}
 %
 Equation~\eqref{eq:QAtilde} means that the low rank matrix $Q_A$ transforms in a nice way when we perform a gauge transformation of the tensor $A$ defined in Eq.~\eqref{eq:simorth}. 
-If the singular values of $Q_A$ \textit{does not have degeneracies}, after splitting of $Q_A$, we have $Q_{Ar},Q_{Al}$ transform like
+If the singular values of $Q_A$ \textit{does not have degeneracies}, after splitting of $Q_A$, we have $Q_{Ar},Q_{Al}$ transform like (the sign ambiguities coming from singular value decomposition of $Q_A$ and $\tilde{Q}_A$ would kick in and contribute to $d_x$ in Eq.~\eqref{eq:Ap2Aptilde}, but they are not drawn explicitly in the equation below)
 %
 \begin{align}\label{eq:QpieceTrans}
     \tikzfig{QArTransf} \text{ and } \tikzfig{QAlTransf}\text{ }. 
@@ -795,16 +795,31 @@ If the singular values of $Q_A$ \textit{does not have degeneracies}, after split
 The $S_x,S_x^T$ matrices that $Q_{Ar},Q_{Al}$ pick up will cancel those acting on the $A$ tensor when $\tilde{Q}_{Ar},\tilde{Q}_{Al}$ are contracted with the $\tilde{A}$ tensor in Eq.~\eqref{eq:simorth}.
 The same argument works for $Q_B$. 
 Equation~\eqref{eq:QpieceTrans} indicates that all the $S_x,S_x^T$ matrices acting on the four horizontal legs of the local patch in Eq.~\eqref{def:ApycontrGilt} will be canceled by the low-rank matrices used in the Gilt process. 
-The above analysis shows that during the first half of the Gilt-HOTRG, the gauge in the horizontal legs will be fixed since the Gilt favors the bases chosen by the singular value decompositions of $Q_A, Q_B$.
+The above analysis shows that during the first half of the Gilt-HOTRG, the gauge in the horizontal legs will be fixed with only sign ambiguities left, since the Gilt favors the bases chosen by the singular value decompositions of $Q_A, Q_B$.
 %
 
 However, there is one more twist. In practice, we observe that the low-rank matrices are projection operators, which are highly degenerated. 
 As a result, the gauge redundancy in the degenerate subspace will leak out, which will be seen by the subsequent HOTRG process. 
 Luckily, the HOTRG has a similar feature as the Gilt process.
-It favors bases where the positive semi-definite matrix $M M^{\dagger}$ (see the definition of matrix $M$ in Eq.~\eqref{def:M-AA}) is diagonal. 
+It favors bases where the positive semi-definite matrix $M M^{\dagger}$ (see the definition of matrix $M$ in Eq.~\eqref{def:M-AA}) is diagonal (the sign ambiguites coming from eigenvalue decomposition of $M M^{\dagger}$ would similarly kick in here and contribute to $d_x$ in Eq.~\eqref{eq:Ap2Aptilde}). 
 It is straightforward to see that the isometry $w$ will pick up the suitable $S_x,S_x^T$ matrices to cancel out the gauge transformation leaking out from the Gilt process.
 There are still concerns about whether degeneracies occur in eigenvalues of $M M^{\dagger}$. 
 Our result in Fig.~\ref{fig:flowA}(b) shows, a posteriori, that this potential degeneracies do not cause any problem for the 2D Ising model at criticality.
+%
+
+The sign ambiguities $d_x,d_y$ in Eq.~\eqref{eq:signAmbi} can be determined by comparing the sign of the components of $\tilde{A}_c$ and $A_c$.
+For example, upon making sure $(\tilde{A}_c)_{1111}$ and $(A_c)_{1111}$ are both positive, set $j = k = l = 1$ in Eq.~\eqref{eq:signAmbi} to have
+%
+\begin{align}\label{eq:finddx}
+    (\tilde{A}_c)_{i111} =
+    (A_c)_{i111}(d_x)_i. 
+\end{align}
+%
+The relative sign of $(\tilde{A}_c)_{i111}$ and $(A_c)_{i111}$ determines $(d_x)_i$.
+However, this sign fixing method breaks down if both $(\tilde{A}_c)_{i111}$ and $(A_c)_{i111}$ vanishes, which occurs as long as there is symmetry.
+This is the reason why we first fix part of the gauge by exploiting the global internal symmetry of the physical model.
+Then, we can apply Eq.~\eqref{eq:finddx} in each degenerate sectors of the tensor.
+The detailed implementation of the sign fixing procedure for $\mathbb{Z}_2$ symmetric tensors can be found in the source code of this paper (see Appendix~\ref{append:sc}).
 %
 
 We still have one last question to answer: why can we restrict invertible matrices $S_x, S_y$ to be orthogonal? 
@@ -1075,9 +1090,10 @@ Recall the order convention in Eq.~\eqref{def:orderConvention}, we see the corre
 %%%
 \begin{figure}[tb]
     \includegraphics[width=\columnwidth]{./figures/flowA-singVal.pdf}
-    \includegraphics[width=\columnwidth]{./figures/flowA-diff.pdf}
+    %\includegraphics[width=\columnwidth]{./figures/flowA-diff.pdf}
+    \includegraphics[width=\columnwidth]{./figures/flowA-diff-compare.pdf}
     \caption{\label{fig:flowA}
-        The RG flows of (a) singular values defined in Eq.~\eqref{def:Asvd} and (b) the difference between the normalized tensors $\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)} \Vert$, both at temperature $T_c^{[30]}$ for the Gilt-HOTRG with $\chi = 30, \epsilon_{\text{gilt}} = 6\times 10^{-6}$.
+        The RG flows of (a) singular values defined in Eq.~\eqref{def:Asvd} and (b) the difference between the normalized tensors, $\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)} \Vert$ with sign fixing and (c) without, all at temperature $T_c^{[30]}$ for the Gilt-HOTRG with $\chi = 30, \epsilon_{\text{gilt}} = 6\times 10^{-6}$.
     }
 \end{figure}
 %
@@ -1111,9 +1127,9 @@ To make sure that the plateau in the RG flow of $\Vert A^{(n)} \Vert$ gives a cr
 \end{align}
 %
 The RG flow of the singular values in Fig.~\ref{fig:flowA}(a) indicates that we indeed reach a non-trivial fixed-point tensor. 
-The fixed-point tensor is manifestly fixed numerically after adding the sign fixing step in the Gilt-HOTRG, which can be confirmed by plotting the Frobenius norm of the difference between the normalized tensors at successive RG steps
-$\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$, see Fig.~\ref{fig:flowA}(b). 
+The fixed-point tensor is manifestly fixed numerically after adding the sign fixing step in the Gilt-HOTRG, which can be confirmed by plotting the Frobenius norm of the difference between the normalized tensors at successive RG steps $\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$, see Fig.~\ref{fig:flowA}(b). 
 The norm of the difference starts to decay systematically at RG step $n = 14$, goes all the way down to the order $\sim 10^{-2}$ at $n = 23$ and then increases when the tensor begins to flow away from the critical fixed point.
+By comparison, we show the RG flow of $\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$ without sign fixing in Fig.~\ref{fig:flowA}(c); the sign ambiguities in Eq.~\eqref{eq:signAmbi} prevent us from achieving a manifestly-fixed-point tensor, except at RG step $n = 22$, where the tensor happens to have all signs correct by accident.
 %%
 \begin{figure}[tb]
     \includegraphics[width=\columnwidth]{./figures/scDim.pdf}
@@ -1153,6 +1169,8 @@ The results for $n = 15,16,\ldots,27$ indicates that the scaling dimensions from
 In Table~\ref{table:scDim}, we show the scaling dimensions for all relevant and marginal operators at RG step $n = 22$, compared with the results obtained by Gu and Wen's method~\cite{GuWen2009}. 
 Both methods have similar accuracy for scaling dimensions less or equal to $1.125$, but Gu and Wen's method cannot produce higher scaling dimensions. 
 Our method can give two out of total four scaling dimension $2$ accurately, but the remaining two are overestimated and more close to $2.125$.
+It is worth mentioning that we only use a single fixed-point tensor to construct the transfer matrix in Gu and Wen's method.
+If we use two or more copies of the fixed-point tensor to construct a larger transfer matrix, Gu and Wen's method is expected to produce higher scaling dimensions correctly~\cite{looptnr}.
 %
 
 We end this section with a few remarks on the above calculations. 
@@ -1182,9 +1200,10 @@ The third remark is about the overall multiplication constant in front of the fi
 After reaching the critical fixed point, the RG from $n$-th step to $(n+1)$-th step is the mapping $\mathcal{A}^{*}\rightarrow A^{*} = \Vert A^{*} \Vert \mathcal{A}^{*}$. 
 The shape of $\mathcal{A}^*$ is fixed but its magnitude is still changing under the RG transformation. 
 It has been shown in Ref.~\cite{GuWen2009} that the fixed-point tensor with correct magnitude is simply given by $A^*_{\text{inv}} = \Vert A^* \Vert^{-1/3} \mathcal{A}^*$, and we will have $A^*_{\text{inv}}\rightarrow A^*_{\text{inv}}$ under the RG transformation.
+Our numerical results have confirmed this statement.
 %
 
-The final remark is that the problem of local correlations could be removed by other methods other than Gilt.
+The final remark is that the problem of local correlations could be removed by other methods~\cite{GuWen2009,tnr,tnralgo,tnrplus,looptnr,harada2018,fet,tns,tensor-ring} other than Gilt.
 For example, the TNR~\cite{tnr,tnralgo} is known to be capable of exhibiting critical fixed-point tensors with its RG equation similar to that of the Gilt-HOTRG, and there is a method to fix its gauge~\cite{tnralgo}. 
 Considering the unprecedented accuracy of the TNR, the estimation of the scaling dimensions might be much better.
 We develop the canonical RG prescription in tensor space using the Gilt-HOTRG in this paper in order to prepare for the further applications to 3D systems.
@@ -1210,7 +1229,7 @@ This work is financially supported by MEXT Grant-in-Aid for Scientific Research 
 % Specify following sections are appendices. Use \appendix* if there
 % only one appendix.
 \appendix
-\section{Source Code}
+\section{Source Code\label{append:sc}}
 The source code of this paper can be found at
 \href{https://github.com/brucelyu/tensorRGflow}{github.com/brucelyu/tensorRGflow}.
 It can be used to reproduce all the results in

@@ -137,13 +137,12 @@
 		\draw [style=blackMidPureLine] (15.center) to (16.center);
 		\draw [style=blackMidPureLine] (21.center) to (22.center);
 		\draw [style=blackMidPureLine] (19.center) to (20.center);
-		\draw [style=blueMidLine] (7.center)
-			 to [in=-180, out=-30, looseness=0.50] (23.center)
-			 to [in=-165, out=15, looseness=0.75] (24.center)
-			 to [in=225, out=15, looseness=0.75] (25.center)
-			 to [in=-120, out=45, looseness=0.75] (26.center)
-			 to [in=-90, out=45, looseness=0.50] (27.center)
-			 to [bend right=15, looseness=0.50] (8.center);
+		\draw [style=blueMidSolid, in=-180, out=-30, looseness=0.50] (7.center) to (23.center);
+		\draw [style=blueMidSolid, in=-165, out=15, looseness=0.75] (23.center) to (24.center);
+		\draw [style=blueMidSolid, in=225, out=15, looseness=0.75] (24.center) to (25);
+		\draw [style=blueMidSolid, in=-120, out=45, looseness=0.75] (25) to (26.center);
+		\draw [style=blueMidSolid, in=-90, out=45, looseness=0.50] (26.center) to (27.center);
+		\draw [style=blueMidSolid, bend right=15, looseness=0.50] (27.center) to (8.center);
 		\draw [style=greenMidLine, in=-15, out=180, looseness=0.50] (28.center) to (7.center);
 		\draw [style=greenMidLine, in=0, out=-165, looseness=0.50] (29.center) to (7.center);
 		\draw [style=greenArr, in=0, out=90] (23.center) to (28.center);
@@ -165,13 +164,12 @@
 		\draw [style=blackMidPureLine, in=-75, out=150, looseness=0.75] (44.center) to (45.center);
 		\draw [style=blackArrMid, in=-30, out=165, looseness=0.50] (43.center) to (44.center);
 		\draw [style=blackArrMid, in=-15, out=120, looseness=0.75] (46.center) to (47.center);
-		\draw [style=blueMidLine] (49.center)
-			 to [in=180, out=-30, looseness=0.50] (50.center)
-			 to [in=-165, out=-15, looseness=0.50] (51.center)
-			 to [in=195, out=15, looseness=0.75] (43.center)
-			 to [in=-120, out=15, looseness=0.75] (52.center)
-			 to [in=-90, out=60] (53.center)
-			 to [in=-45, out=90, looseness=0.75] (54.center);
+		\draw [style=blueMidSolid, in=180, out=-30, looseness=0.50] (49.center) to (50.center);
+		\draw [style=blueMidSolid, in=-165, out=-15, looseness=0.50] (50.center) to (51.center);
+		\draw [style=blueMidSolid, in=-150, out=15, looseness=0.75] (51.center) to (43.center);
+		\draw [style=blueMidSolid, in=-120, out=15, looseness=0.75] (43.center) to (52.center);
+		\draw [style=blueMidSolid, in=-90, out=60] (52.center) to (53.center);
+		\draw [style=blueMidSolid, in=-45, out=90, looseness=0.75] (53.center) to (54.center);
 		\draw [style=blackMidPureLine] (58.center) to (57.center);
 		\draw [style=blackMidPureLine] (56.center) to (55.center);
 		\draw [style=blackMidPureLine] (62.center) to (61.center);

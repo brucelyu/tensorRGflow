@@ -49,6 +49,7 @@
 \input{tensorFig.tikzstyles}
 \input{tensorFig.tikzdefs}
 
+
 \DeclareMathOperator{\Tr}{Tr}
 % Some new commands
 \newcommand{\rgeq}{\stackrel{\text{RG}}{=}}
@@ -58,7 +59,7 @@
 \newcommand{\ket}[1]{|#1\rangle} \newcommand{\bra}[1]{\langle#1|}
 \newcommand{\textapprox}[1]{\stackrel{\text{#1}}{\approx}}
 \newcommand{\texteq}[1]{\stackrel{\text{#1}}{=}}
-
+\newcommand{\tTr}{\mathrm{tTr}}
 
 % You should use BibTeX and apsrev.bst for references Choosing a journal
 % automatically selects the correct APS BibTeX style file (bst file), so
@@ -108,29 +109,14 @@ Kashiwa, Chiba 277-8581, Japan} \author{RuQing G. Xu}
 
 \date{\today}
 
-\begin{abstract} We show a way to analyze a renormalization group fixed
-    point in tensor network language. Compared with previous real-space
-    renormalization group schemes, the approximations in the newer
-    tensor renormalization group methods can be improved systematically
-    by including more interactions. Thus, the newer methods can produce
-    accurate free energy.  However, little progress has been made on the
-    fixed-point analysis in tensor space due to two obstacles in the
-    tensor methods: their failure to exhibit a critical fixed point and
-    the gauge redundancy of a tensor description. We overcome the
-    obstacles with the help of a recently-developed tensor network
-    technique and a carefully-designed tensor renormalization group
-    transformation. The benchmark results of the scaling dimensions for
-    the 2-dimensional Ising model from analyzing its fixed-point tensor
-    are comparable with the existing method. The advantage of the tensor
-    fixed-point analysis compared to the existing method is its
-    potential applications to 3-dimensional systems. It also
-    accomplishes an important step of renormalization group methods in
-    tensor network language.  
-%
+\begin{abstract} 
+    We show a way to analyze a renormalization group (RG) fixed point in tensor space: write down the tensor RG equation, linearize it around the fixed-point tensor, and diagonalize the resulting linearized RG equation to obtain scaling dimensions. 
+    The tensor RG methods have had a great success in producing accurate free energy compared with the conventional real-space RG schemes.
+    However, little progress has been made on the fixed-point analysis in tensor space since Levin and Nave proposed the first realization of the tensor RG methods.
+    We extend the success of the tensor methods further to extraction of scaling dimensions through analyzing a fixed-point tensor.
+    This approach is benchmarked in the context of the Ising models in 1D and 2D.
+    It accomplishes, for the first time, the canonical RG prescription for the tensor RG methods.
 \end{abstract}
-
-% insert suggested keywords - APS authors don't need to do this
-%\keywords{}
 
 %\maketitle must follow title, authors, abstract, and keywords
 \maketitle
@@ -138,615 +124,307 @@ Kashiwa, Chiba 277-8581, Japan} \author{RuQing G. Xu}
 % body of paper here - Use proper section commands References should be
 % done using the \cite, \ref, and \label commands
 \section{Introduction\label{intro}}
-% Put \label in argument of \section for cross-referencing
-%\section{\label{}} Insert subsection and subsubsection \subsection{}
-%\subsubsection{}
-The renormalization group (RG) is a powerful technique to study physical
-systems where fluctuations in all scales of length are
-important~\cite{wilsonNobel}. In statistical mechanics, the most famous
-example is critical phenomena.  The main idea behind the RG is to study
-how a physical system changes as we go from one length scale to another.
-In conventional approaches, the goal is usually to find a mapping from
-the Hamiltonian of the old length scale to that of the new length scale
-such that the partition function is unchanged~\cite{nonlinearRG}. The
-mapping is known as an RG equation. In principle, the exact RG equation
-is a transformation from an infinite dimensional space to another
-infinite dimensional space~\cite{wilsonNobel,wilson1970a}. In order to
-perform a practical calculation, approximations are necessary. In the
-early stages of the development of the RG, schemes for approximations
-include the $\epsilon$ expansion~\cite{wilson1972}, the $1/n$
-expansion~\cite{largeNexp} and the spin block
-methods~\cite{kadanoff1966,kadanoff1975,migdal,kadanoff1976,niemeijer1973}.
-They all have their own strengths and limitations. The $\epsilon$
-expansion works better if $\epsilon$ takes a small value such as $1$.
-The $1/n$ expansion is similar, but for relative large values of $n$.
-The potential moving trick for the spin block methods is simple but
-there is no systematic way to improve the
-approximation~\cite{kardar2007}.
+The renormalization group (RG) is a powerful technique to study physical systems where fluctuations in all scales of length are important~\cite{wilsonNobel}; the most famous example in statistical mechanics is critical phenomena.
+The main idea behind the RG is to study how a physical system changes as we go from one length scale to another.
+Conventional RG schemes, such as $\epsilon$-expansion~\cite{wilson1972} and block-spin methods~\cite{kadanoff1966,kadanoff1975,migdal,kadanoff1976,niemeijer1973}, aim at a map from the Hamiltonian of the short length scale to that of the longer one, such that the partition function is unchanged~\cite{nonlinearRG}.
+The map is known as an RG equation. 
+A well-behaved RG equation exhibits fixed points, each corresponding to a conformal field theory (CFT)~\cite{polchinski1988,nakayama2015}.
+A critical system is described by a fixed point.
+By linearizing the RG equation around a critical fixed point, universal properties like scaling dimensions of the critical system can be extracted.
+However, the conventional RG schemes in Hamiltonian space lack generality and, in some cases, a systematic way to improve their results.
 %
 
-Recently, ideas from quantum information have stimulated a novel type of
-the RG methods. Instead of finding a mapping from an old Hamiltonian to
-a new one, this new type of the RG methods seeks a mapping from a tensor
-encapsulating Boltzmann weight of local configurations at a short length
-scale to a new tensor at a longer length scale. The first realization of
-this new paradigm is the tensor renormalization group (TRG) proposed by
-Levin and Nave in 2007~\cite{trg}. It is designed for classical
-statistical lattice models in 2D.  The TRG has excellent performance in
-calculations of free energy. The approximations are controlled by an
-integer called a bond dimension, often denoted as $\chi$. Larger the
-value of $\chi$, more time the computation takes, better the
-approximations become and more accurate the estimation of free energy
-is. Later, people realized that even better approximations can be
-achieved by considering a larger
-environment~\cite{SRGa,SRGb,hotrg,morita2020global}. With the help of
-these TRG-type techniques, we can easily calculate the free energy of,
-for example, the Ising model in 2D, with the error of the order
-$10^{-7}$ within a few minutes in a desktop computer. The accuracy
-improves exponentially as $\chi$ increases, while the computation cost
-only grows polynomially. Later, generalizations of the TRG that are also
-applicable for 3D systems were found~\cite{hotrg,atrg,triadtrg}, the
-earliest of which is the higher-order tensor renormalization group
-(HOTRG)~\cite{hotrg} proposed in 2012.
+Recently, ideas from quantum information have stimulated a novel type of RG methods in tensor space.
+They are versatile numerical RG schemes whose approximations are controlled by an integer, $\chi$, called bond dimension.
+The RG equation is a map from a tensor encapsulating the Boltzmann weights of local configurations at a short length scale to a new tensor at a longer length scale.
+The first realization of this new paradigm is the tensor renormalization group (TRG)~\cite{trg}, followed by many variations~\cite{SRGa,SRGb,hotrg,atrg, triadtrg,morita2020global}.
+These TRG-type techniques have excellent performance in calculations of free energy. 
+For example, the higher-order tensor renormalization group (HOTRG)~\cite{hotrg} estimates the free energy of the 2D Ising model with error of order $10^{-7}$ within a few minutes in a desktop computer.
+The estimation error decreases exponentially as $\chi$ increases, while the computational cost only grows polynomially.
 %
 
-With all of their success in calculating free energy, however, the
-TRG-type techniques are lack of one nice feature of the conventional RG
-approaches. The RG equation in the old approaches usually gives fixed
-points. It is now understood that different fixed points correspond to
-different conformal field theories
-(CFTs)~\cite{polchinski1988,nakayama2015}. By studying the RG equation
-linearized around a fixed point, scaling dimensions of the local
-operators in the corresponding CFT can be extracted directly. The
-critical exponents are then calculated using these scaling dimensions
-and can be compared with experimental data. However, in the new TRG-type
-calculations, the aforementioned fixed-point analysis is more subtle and
-difficult~\cite{kadanoff2014}.  Instead, some of the critical exponents
-can be calculated by obtaining free energy first and then taking
-derivatives of the free energy with respect to various parameters like
-temperature and external magnetic field~\cite{hotrg,
-Berker2008,xiang2019adtrg}. 
+With all of their success in calculations of free energy, however, the TRG-type techniques encounter obstacles in the fixed-point analysis. 
+Early attempts~\cite{Berker2008,aoki2009,meurice2013,kadanoff2014} show that if the bond dimension $\chi$ of the TRG is larger than 8, the tensor will \textit{never} flow to the critical fixed point of the 2D Ising model; this restricts $\chi \leq 8$ for the fixed-point analysis in tensor space.
+For $\chi = 2, 3, 4$, either using the TRG or the HOTRG, the estimated scaling dimension of the energy density operator is similar to the old potential moving tricks~\cite{Berker2008,aoki2009,meurice2013}, and that of the spin operator is more than a factor of 2 larger than the exact value~\cite{kadanoff2014}. 
 %
 
-Several attempts were made to carry out the fixed-point analysis in the
-new TRG-type calculations. In 2008, just one year after Levin and Nave
-proposed the TRG, Hinczewski and Berker~\cite{Berker2008} first analyzed
-the tensor RG flows generated by the TRG. What they discovered is
-extremely interesting.  By fine-tuning the temperature of the 2D Ising
-model on a triangular lattice, they found that for bond dimensions $\chi
-\leq 8$, the tensor would flow to the critical fixed point before
-flowing away to the high- and low-temperature trivial fixed points. When
-they increased the bond dimensions to $\chi =  12$ and further, the
-tensor would \textit{never} flow to the critical fixed point before
-flowing away to the trivial fixed points. Their analysis shows that the
-TRG fails to exhibit critical fixed points. Most physicists might be
-unaware of such a difficulty since it seldom occurs in the conventional
-approaches, but Wilson did notice this and called it ``a serious problem
-with the renormalization-group transformations'' in his 1982 Nobel prize
-lecture~\cite{wilsonNobel}.  Since this serious problem shows itself in
-the TRG-type calculations for relatively large $\chi$, the subsequent
-attempts only focused on very small bond dimensions like $\chi = 2, 3$
-or $4$ either using the TRG~\cite{kadanoff2014,aoki2009} or the
-HOTRG~\cite{meurice2013}. Three of
-them~\cite{Berker2008,aoki2009,meurice2013} are only able to calculate
-the scaling dimension of the energy density operator in the 2D Ising
-CFT, and the accuracy is similar to the old potential moving schemes.
-One of them~\cite{kadanoff2014} is able to calculate the scaling
-dimensions of both the spin operator and the energy density operator.
-However, the estimated value for the spin operator is more than a factor
-of 2 larger than the exact value. 
+Fortunately, in recent ten years, people have developed many tricks to solve the problem of this unsatisfactory tensor RG flows.
+In 2009, Gu and Wen~\cite{GuWen2009} was the first to deal with this problem. 
+They followed Levin's suggestion~\cite{trg,LevinTalk} and focused on a toy model called corner double-line (CDL) tensors, which represent systems with only short-range interactions. 
+They showed that the CDL tensors are fixed points of the TRG, indicating that the short-range interactions at the smaller length scales will be carried to the larger ones. 
+A relative crude algorithm was proposed to filter the CDL tensors and the problem of the tensor RG flows was partially solved, followed up by an improved algorithm in 2017~\cite{looptnr}. 
+From 2015 to 2017, several similar methods were proposed~\cite{tnr,tnralgo,tnrplus}. 
+All of these TRG-type techniques successfully exhibit critical fixed-point tensors. 
 %
 
-Fortunately, in recent ten years, people have developed many tricks to
-solve this serious problem of the TRG-type methods. In 2009, Gu and
-Wen~\cite{GuWen2009} was the first to deal with this problem. They
-followed Levin's suggestion~\cite{trg,LevinTalk} and focused on a toy
-model called corner double-line (CDL) tensors, which represent systems
-with only short-range interactions. They showed that the TRG fails to
-simplify the CDL tensors so the short-range interactions at the smaller
-length scales will be carried to the larger length scales. A relative
-crude algorithm was proposed to filter the CDL tensors and the problem
-of the tensor RG flows was partially solved, followed up by an improved
-algorithm in 2017~\cite{looptnr}. From 2015 to 2017, several similar
-methods were proposed~\cite{tnr,tnralgo,tnrplus}. All of these
-algorithms are designed for 2D systems and they all exhibit critical
-fixed point tensors. In the 2009 paper, Gu and Wen~\cite{GuWen2009}
-pointed out that a transfer matrix can be constructed from a fixed point
-tensor and the scaling dimensions for the corresponding CFT can be
-extracted by diagonalizing the transfer matrix according to a well-known
-result of a CFT in 2D~\cite{cardy1986}. This method has been applied to
-calculate scaling dimensions for 2D systems from then on, while the
-fixed-point analysis in the TRG-type calculations has never followed up.
+With a critical fixed-point tensor in hand, Gu and Wen~\cite{GuWen2009} pointed out that the scaling dimensions can be extracted by diagonalizing a transfer matrix constructed from the fixed-point tensor according to a well-known result of the CFT in 2D~\cite{cardy1986}. 
+Later, Evenbly and Vidal used the tensor network renormalization (TNR)~\cite{tnr,tnralgo} to implement local scale transformation that maps the plane to a cylinder~\cite{EvenblyDilatationOp}; the spectrum of eigenvalues of a transfer matrix on the cylinder gives scaling dimensions.
+These methods have been applied to calculate scaling dimensions from then on, while the fixed-point analysis in tensor space has never followed up.
 %
 
-In this paper, we want to provide the missing piece of analyzing the
-fixed points in the new TRG-type calculations with bond dimensions $\chi
-> 8$. On a practical level, it is a method to extract scaling dimensions
-for critical systems in any dimension, while the transfer matrix method
-is restricted to 2D CFTs. On a theoretical level, more importantly, it
-accomplishes a important step of the RG methods in tensor language. The
-fixed-point analysis is from a pure RG perspective, without reference to
-any CFT results. If the predictions of the fixed-point analysis agree
-with the results from the CFT arguments, we will have more evidence
-indicating the correspondence between an RG fixed point and a
-CFT~\cite{poland2019}.
+In this paper, we provide the missing piece of analyzing a fixed point in tensor space at a general bond dimension.
+The HOTRG is combined with a recently-developed technique, graph-independent local truncation (Gilt)~\cite{gilts}, to generate correct tensor RG flows that will go to a critical fixed point at a general bond dimension. 
+This HOTRG armed with Gilt is given a name, Gilt-HOTRG\@. 
+Most gauge redundancy in the tensor description is automatically fixed during Gilt-HOTRG, leaving only tractable sign ambiguities.
+The linearized RG equation for the Gilt-HOTRG is easy to implement and has a simple pictorial representation; in practice, it can be generated by automatic differentiation once the Gilt-HOTRG is implemented.
+The scaling dimensions can be extracted from this linearized RG equation.
 %
 
-The organization of this paper is as follows. In Sec.~\ref{introTRG}, we
-introduce how to construct a tensor network representation of a 2D
-classical statistical system and how to carry out an RG transformation
-in the tensor network language. In Sec.~\ref{fixRGflow}, we explain how
-the RG techniques in the tensor network language fail to integrate out
-all the local correlations at short distance, leading to problematic RG
-flows.  We propose a way to solve this problem for the HOTRG by using a
-recently-developed technique: Graph-independent local truncation
-(Gilt)~\cite{gilts}. This HOTRG armed with Gilt is given a name as
-Gilt-HOTRG.  In Sec.~\ref{diffRGeq}, fixed-point analysis in the tensor
-space is explained and the expression for the Gilt-HOTRG linearized
-around a fixed-point tensor is given. We benchmark the fixed-point
-analysis in the tensor space with the 1D and 2D classical Ising models
-in Sec.~\ref{benchmark}. We conclude in Sec.~\ref{conclusion}.
+%%% Organization of the paper
+% TODO
+[\textbf{Fill in later the paper organization and also the important advance of the paper.}]
+%%%
 
 \section{Renormalization group transformation in tensor network
-language\label{introTRG}} In this section, we first show how to rewrite
-the partition function of a 2D classical statistical system as a tensor
-network.  Notice that the procedure works equally well for $1 + 1$D
-quantum systems, whose Euclidean path integral can have a tensor network
-representation~\cite{GuWen2009}. We then move on to introduce the
-na\"ive block tensor transformation and a more practical RG
-transformation in the tensor space: the HOTRG. Readers who are familiar
-with the TRG-type methods can safely skip this section.
+language\label{sec:RGtensorSpace}} 
+TRG-type methods start with the fact that partition functions of all classical statistical models can be rewritten as tensor network models~\cite{trg}.
+Take the square lattice 2D Ising model as a concrete example. The partition function is
+%
+\begin{align}\label{eq:2DIsingZ}
+    Z =
+\sum_{\{\sigma(\mathbf{r})\}}e^{K\sum_{\langle i,j \rangle}\sigma_i \sigma_j},
+\end{align}
+%
+where $\sigma_i$ is the shorthand for the spin variable $\sigma(\mathbf{r}_i)$ located at lattice point $\mathbf{r}_i$ and can take values $\pm 1$, and $K = J / k_B T$.
+In this paper, we measure temperature in units of $J / k_B $ so it becomes a dimensionless number.
+The partition function in Eq.~\eqref{eq:2DIsingZ} can be rewritten as a tensor network by defining a tensor 
+%
+\begin{align}\label{def:tensorA}
+    A_{\sigma_i \sigma_j \sigma_k \sigma_l}
+\equiv e^{K(\sigma_i\sigma_j + \sigma_j\sigma_k + \sigma_k\sigma_l +
+\sigma_l\sigma_i)}
+= \scalebox{0.8}{\tikzfig{defAtensor}\text{ }}.
+\end{align}
+%
+Each index of this tensor can take two values $\pm 1$ and we say the bond dimension of a leg of this tensor is $\chi = 2$.
+It is now possible to rewrite the partition function of the 2D Ising model in Eq.~\eqref{eq:2DIsingZ} as the tensor product of $N$ copies of $A$, with all their indices summed over (Fig.~\ref{fig:spin2tensor})
+%
+\begin{align}\label{eq:ZbeforeRG}
+    Z = \sum_{\{ \sigma(\mathbf{r}) \}}
+    \bigotimes^{N}_{x=1}A_{\sigma_i \sigma_j \sigma_k \sigma_l}
+    \equiv \tTr\left(\bigotimes_{x=1}^{N}A\right).
+\end{align}
 %
 
-\subsection{From a lattice with statistical variables to a tensor
-network\label{spin2tensor}} We use the simplest example, the 2D
-classical Ising model with only the nearest-neighbor ferromagnetic
-interaction, to demonstrate how to find a tensor network representation
-of a partition function. The 2D classical Ising model will be our
-benchmark model in Sec.~\ref{benchmark:2DIsing}.  There are at least two
-ways to construct the tensor network. The method introduced by Hauru,
-Delcamp and Mizera~\cite{gilts} is more general and can be trivially
-adapted to apply to the 3D classical Ising model~\cite{hotrg} and other
-models like the $\phi^4$ theory in 2D~\cite{Delcamp2020}. However, we
-will use the other method~\cite{trg, tnr}, which is more straightforward
-and whose physical meaning is more transparent.
-%
-
-Consider classical spin variables living on a square lattice shown in
-Fig.~\ref{fig:spin2tensor}. The square lattice is sketched with blue
-dashed lines and the blue dots are where spin variables sit. The
-partition function is
-%
-\begin{align}\label{eq:2DIsingZ} Z =
-\sum_{\{\sigma(\mathbf{r})\}}e^{K\sum_{\langle i,j \rangle}\sigma_i
-\sigma_j}, \end{align} where $\sigma_i$ is the shorthand for the spin
-variable $\sigma(\mathbf{r}_i)$ located at lattice point $\mathbf{r}_i$
-and can take values $\pm 1$, and $K = J / k_B T$. In this paper, we
-measure temperature in units of $J / k_B $ so it becomes a dimensionless
-number.
 % Figure: mapping from spins on lattice to a tensor network
 \begin{figure}[htb]
-    % \includegraphics[width=6.5cm]{./figs/spin2tensor}
     \scalebox{0.8}{\tikzfig{spin2tensor}}
-    \caption{\label{fig:spin2tensor}Map spin variables to tensors.  The
-        blue dots are where the spin variables locate. They form a
-        square lattice slanted $45^\circ$. The larger green circles are
-        tensors encoding the Boltzmann weight of the configurations of
-the four surrounding spin variables; the tensors form another square
-lattice.} \end{figure}
+    \caption{\label{fig:spin2tensor}
+        Map spin variables to tensors.
+        The dots are where the spin variables locate.
+        They form a square lattice slanted $45^\circ$.
+        The larger circles are tensors $A$ encoding the Boltzmann weight of the configurations of the four surrounding spin variables.
+    The square lattice formed by $N$ copies of $A$ is the tensor network representation of the partition function as described in Eq.~\eqref{eq:ZbeforeRG}.}
+\end{figure}
 % Figure end
-%
 
-Now, imagine dividing this region into square blocks using the black
-solid lines in Fig.~\ref{fig:spin2tensor}, such that each side of a
-black square holds a spin variable. Finally, put a four-leg tensor
-(green circles with four green legs) at the center of each black square,
-with its four legs connected with the four spin variables on the sides
-of the black square. The graph we get in green is the tensor network,
-where the four-leg tensors connected with each other to form a new
-square lattice. To determine the value of the four-leg tensors, we
-simply divide the summation on the exponential in
-Eq.~\eqref{eq:2DIsingZ} into groups where pairs of spin variables are
-brought together if they belong to the same black square. We define the
-local Boltzmann weight for pairs of spins on the same black square as
+The coarse graining of the tensor network resembles the conventional block-spin methods.
+We replace a patch of, say, four copies of the original tensor $A$ with one coarse-grained tensor $A_c$, such that the partition function is approximately described by a coarser tensor network made of $N/4$ copies of $A_c$
 %
-\begin{align}\label{def:tensorA} A_{\sigma_i \sigma_j \sigma_k \sigma_l}
-&\defeq e^{K(\sigma_i\sigma_j + \sigma_j\sigma_k + \sigma_k\sigma_l +
-\sigma_l\sigma_i)} \nonumber\\ &= \tikzfig{defAtensor}\text{ }.
-    %\begin{minipage}{2.0truecm} \centering
-%\includegraphics[width=2.0truecm,clip]{./figs/defAtensor}
-%\end{minipage}.
-    \end{align}
-%
-Each leg of this tensor can take two values $\pm 1$ and we say the bond
-dimension of a leg of this tensor is $\chi = 2$. With this four-leg
-tensor $A$, it is now possible to rewrite the partition function of the
-2D Ising model in Eq.~\eqref{eq:2DIsingZ} as the tensor product of all
-tensors $A$, with all their legs summed over
-%
-\begin{align} Z = \sum_{\{ \sigma(\mathbf{r}) \}}
-\bigotimes_{\square}A_{\sigma_i \sigma_j \sigma_k \sigma_l}.
+\begin{align}\label{eq:ZafterRG}
+    Z \approx \tTr\left(\bigotimes_{x=1}^{N/4}A_c\right).
 \end{align}
 %
-As a concrete example, for a finite system in Fig.~\ref{fig:spin2tensor}
-with periodic boundary condition, the total $4 \times 8 = 32$ spin
-variables are mapped into $4 \times 4 = 16$ tensors $A$. If we adopt the
-summation convention that a leg is summed over whenever it is shared by
-two tensors, the partition function in Eq.~\eqref{eq:2DIsingZ} will have
-a nice pictorial description
+The map 
 %
-\begin{align}\label{eq:tensorZ4by4} Z_{4 \times 4} =
-    \tikzfig{Z-TN}\text{  }.
-    %\begin{minipage}{2.4truecm} \centering
-    %\includegraphics[width=2.3truecm,clip]{./figs/Z-TN} \tikzfig{Z-TN}
-    %\end{minipage}.
+\begin{align}\label{def:tensorRGeq}
+    A \xrightarrow{\text{RG}} A_c \text{ or } A_c = \mathcal{T}(A) 
+\end{align}
+is the tensor RG equation.
+%
+
+\subsection{General framework\label{RGprescrip}}
+Our goal is to carry out the canonical RG prescription in tensor space.
+To this end, it is helpful to start with a review of the old approach in Hamiltonian space (we follow the detailed review~\cite{kadanoff2014} and textbook~\cite{cardy_1996} closely).
+%
+
+It will be convenient to explain in terms of a specific physical system: classical system spin variables $\sigma \in \{+1, -1\}$ on a lattice, with general short-ranged interactions.
+The Hamiltonian (or energy) of the system can be parameterized by a set of coupling constants $\mathbf{K} = \{K_j\}$, each of which couples to a possible short-ranged interaction term $s_j(\mathbf{r})$,
+%
+\begin{align}\label{eq:generalspinHam}
+    \mathcal{H} = \sum_{\mathbf{r}} \sum_{j} K_j s_j(\mathbf{r}).
 \end{align}
 %
-Eq.~\eqref{eq:tensorZ4by4} above provides a tensor network
-representation of the partition function in Eq.~\eqref{eq:2DIsingZ}. It
-is the starting point of all the TRG-type methods. Notice that the
-number of tensors in the tensor network is half of the number of spin
-variables. In addition, if the lattice constant of the original spin
-system is $a/\sqrt{2}$ (that is, the length of a side of a blue dashed
-square in Fig.~\ref{fig:spin2tensor}), the distance of the nearest two
-tensors in the resultant tensor network is $a/\sqrt{2} \times \sqrt{2} =
-a$.  It is worth to mention that all classical models with local
-interactions have tensor network representations for their partition
-functions~\cite{trg}. 
-
-\subsection{Coarse graining a tensor network: a general
-description\label{cgTN}} The RG transformations in the tensor network
-representation are similar to the conventional spin block methods. The
-transformation is usually defined by grouping several old variables
-together to form a new variable. The system described by the new
-variables will have a different length scale (in particular, a
-difference lattice constant) but its partition function should be the
-same as that of the system described by the old variables.
-Interestingly, the RG transformations in the tensor representation are
-easier to grasp and more transparent.  Let's focus on the concrete
-example whose partition function is defined in
-Eq.~\eqref{eq:tensorZ4by4}. 
+For example, if $K_1$ is the magnetic field, $s_1(\mathbf{r}) = \sigma(\mathbf{r})$ is the spin variable at lattice point $\mathbf{r}$; if $K_2$ is the nearest neighbor interaction along $x$ direction, $s_2(\mathbf{r}) = \sigma(\mathbf{r})\sigma(\mathbf{r} + a\hat{\mathbf{e}}_x)$, where $\hat{\mathbf{e}}_x$ is the unit vector along $x$ direction and $a$ is the lattice constant. 
+A conventional RG transformation maps the old Hamiltonian $\mathcal{H}$ to a new one $\mathcal{H}'$ \textit{with the same form as} Eq.~\eqref{eq:generalspinHam} but characterized by a set of new coupling constants $\mathbf{K}' = \{ K_j'\}$. 
+The map from the old Hamiltonian to the new one $\mathcal{H} \xrightarrow{\text{RG}} \mathcal{H}'$ is then parametrized explicitly as the transformation from the old coupling constants to the new ones,
+%
+\begin{align}\label{eq:oldRGK}
+    \mathbf{K}' = \mathcal{T}^{\text{old}}\left(\mathbf{K}\right).
+\end{align}
+%
+We require that the RG transformation should preserve the partition function of the system and should exhibit a fixed-point Hamiltonian $\mathcal{H}^{*}$ parameterized by coupling constants $\mathbf{K}^{*}$, such that $\mathbf{K}^{*}$ remain unchanged under the RG transformation,
+%
+\begin{align}\label{eq:oldRGKstar}
+    \mathbf{K}^{*} =
+    \mathcal{T}^{\text{old}}\left(\mathbf{K}^{*}\right).
+\end{align}
 %
 
-The system is originally described by sixteen $A$ tensors. The simplest
-way to define an RG transformation is to block a square of four tensors
-by contracting legs between them and group every two legs in the same
-side. Call the new tensor $A_c$,
+The linearized RG equation around $\mathbf{K}^{*}$ is defined in the following way.
+We perturb the coupling constants around the fixed point $\mathbf{K}_p = \mathbf{K}^{*} + \delta \mathbf{K}$ and perform the RG transformation defined in Eq.~\eqref{eq:oldRGK}, $\mathbf{K}_p' = \mathcal{T}^{\text{old}}\left(\mathbf{K}_p\right)$. 
+The new coupling constants $\mathbf{K}_p'$ after the RG transformation should be close to $\mathbf{K}^{*}$ by continuity, so $\mathbf{K}_p' = \mathbf{K}^{*} + \delta \mathbf{K}'$.
+The linearized RG equation around $\mathbf{K}^{*}$ is a matrix $\mathcal{R}^{\text{old}}$ telling us how $\delta \mathbf{K}'$ is related to $\delta \mathbf{K}$,
+%
+\begin{align}\label{eq:respMat}
+    \delta K_i' = \sum_j\mathcal{R}^{\text{old}}_{ij} \delta K_j.
+\end{align}
+%
+$\mathcal{R}^{\text{old}}$ has right and left eigenvectors $\{\psi^{\alpha}\}, \{\phi^{\alpha}\}$ with eigenvalues $\{\lambda^{\alpha}\}$,
+%
+\begin{align}\label{eq:eigsofRespM}
+    \sum_j \mathcal{R}^{old}_{ij} \psi^{\alpha}_j = \lambda^{\alpha}
+    \psi^{\alpha}_i \text{ and } \sum_i \phi^{\alpha}_i
+    \mathcal{R}^{old}_{ij} = \lambda^{\alpha} \phi^{\alpha}_j.
+\end{align}
+%
+The linear combinations of $\delta K_i$ according to the components of the left eigenvector $\phi^{\alpha}$ are known as scaling fields
+%
+\begin{align}\label{def:scalingfields}
+    h^{\alpha} = \sum_i \phi^{\alpha}_i \delta K_i,
+\end{align}
+%
+while the linear combinations of interaction terms $s_j(\mathbf{r})$ according to the components of the right eigenvector $\psi^{\alpha}$ are known as scaling operators
+%
+\begin{align}\label{def:scalingOpt}
+    o^{\alpha}(\mathbf{r}) = \sum_j s_j(\mathbf{r}) \psi^{\alpha}_j.
+\end{align}
+%
+Under the RG transformation with rescaling factor $b$ for a system in dimension $d$, the scaling fields and the scaling operators transform in a simpler way with 
+%
+\begin{align}\label{eq:transfho}
+    \left(h^{\alpha} \right)' = b^{d - x_{\alpha}} h^{\alpha} \text{ and }
+    \left(o^{\alpha}\right)' = b^{x_{\alpha}} o^{\alpha},
+\end{align}
+where $x_{\alpha}$ are the scaling dimensions of the scaling operators $o^{\alpha}(\mathbf{r})$. 
+Equations~\eqref{eq:respMat} to~\eqref{def:scalingfields} and~\eqref{eq:transfho} give the relation between the scaling dimensions $\{x_{\alpha}\}$ and the eigenvalues $\{\lambda^{\alpha}\}$ of the linearize RG equation 
+%
+\begin{align}\label{eq:lambda2x}
+    b^{d-x_{\alpha}} = \lambda^{\alpha}.
+\end{align}
+%
+
+Next, we move on to the tensor approach of the canonical RG prescription.
+In the tensor RG approach, we skip the Hamiltonian description of the system. 
+Instead, we use a tensor network made of copies of tensor $A$ to represent the partition function $Z$ of the system. 
+The tensor RG equation is a map from the tensor $A$ to the coarser tensor $A_c$, as is shown in Eq.~\eqref{def:tensorRGeq}.
+We claim that the components of the tensor $A$ can be thought of as some proxies of the coupling constants $\mathbf{K}$.
+%
+
+To see why this claim is reasonable, note that we can map the partition function of the system with Hamiltonian in Eq.~\eqref{eq:generalspinHam} to a tensor network using the method introduced in Ref.~\cite{trg}. 
+Each component of the initial tensor $A$ is the Boltzmann weight of a given local configuration that depends on the coupling constants, so we have 
+%
+\begin{align}\label{eq:K2A}
+    A_{(i)} = f_{(i)}\left(\mathbf{K}\right),
+\end{align}
+%
+where we group all legs of $A$ to form a single index, $A_{(i)}\equiv A_{i_1 i_2 i_3 i_4}$. 
+After coarse graining, the components of $A_c$ are still functions of $\mathbf{K}$ but
+with different functional forms,
+%
+\begin{align}\label{eq:tensorEleRG}
+    \left(A_c\right)_{(i)} =
+\left(f_c\right)_{(i)}\left(\mathbf{K}\right).
+\end{align}
+%
+Now, we require that each component of the coarser tensor $A_c$ should have the same functional form as that of $A$, but with different coupling constants $\mathbf{K}'$,
+%
+\begin{align}\label{eq:tensorK2Kp}
+    f_{(i)}\left(\mathbf{K}'\right) =
+    \left(f_c\right)_{(i)}\left(\mathbf{K}\right), \forall (i).
+\end{align}
+%
+In the old Hamiltonian approach, we need to solve Eq.~\eqref{eq:tensorK2Kp} for $\mathbf{K}'$ in terms of $\mathbf{K}$, which defines the RG equation from the old $\mathbf{K}$ to the new $\mathbf{K}'$. 
+However, in the tensor approach, it is enough to know the existence of such $\mathbf{K}'$. Combine Eq.~\eqref{eq:tensorEleRG} and Eq.~\eqref{eq:tensorK2Kp}, we have
+%
+\begin{align}\label{eq:Kp2A}
+    \left(A_c\right)_{(i)} = f_{(i)}\left(\mathbf{K}'\right).
+\end{align}
+%
+At the fixed point, $\mathbf{K} = \mathbf{K}' = \mathbf{K}^*$, equations~\eqref{eq:K2A} and \eqref{eq:Kp2A} give
+%
+\begin{align}\label{eq:tensorRGAstar}
+    A^* \xrightarrow{\text{RG}} A^* \text{ or }A^* = \mathcal{T}\left(A^* \right).
+\end{align}
+%
+Take the total derivative of tensors $A$ and $A_c$ in Eqs.~\eqref{eq:K2A} and \eqref{eq:Kp2A} and set $\mathbf{K} = \mathbf{K}' = \mathbf{K}^*$, 
+%
+\begin{align}
+    \delta A_{(i)} = \sum_n \left(\partial_{(n)}
+    f_{(i)}\right)\Bigr|_{\mathbf{K} = \mathbf{K}^*} \delta K_n,
+    \label{eq:deltaK2deltaA} \\
+    \left(\delta A_c \right)_{(i)} = \sum_n \left(\partial_{(n)}
+    f_{(i)}\right)\Bigr|_{\mathbf{K}' = \mathbf{K}^*} \delta
+    K_n'.\label{eq:deltaK2deltaAp}
+\end{align}
+%
+Equations~\eqref{eq:deltaK2deltaA} and \eqref{eq:deltaK2deltaAp} give the transformation law between the coupling-constant description and tensor description of the canonical RG prescription, with $\partial_{(n)}f_{(i)}$ evaluated at $\mathbf{K}^*$ being the change of basis matrix.
+Under this transformation, the linearized RG equation in Eq.~\eqref{eq:respMat} becomes
+%
+\begin{align}\label{eq:respMatTen}
+    \left(\delta A_c\right)_{(i)} = \sum_j
+    \mathcal{R}_{(i)(j)} \delta A_{(j)},
+\end{align}
+%
+which defines the linearized RG equation in tensor space.
+Since Eqs.~\eqref{eq:respMat} and \eqref{eq:respMatTen} are the same linear transformation in two different representations, we can equally well diagonalize the matrix $\mathcal{R}_{(i)(j)}$ and find scaling dimensions according to Eq.~\eqref{eq:lambda2x}. 
+%
+
+In Sec.~\ref{benchmark:1DIsing}, we will use the 1D Ising model as a
+concrete example to demonstrate the general argument above.
+%
+
+\subsection{Technical obstacles}
+There are two major obstacles for the fixed-point analysis in tensor space. 
+They prevent us from achieving a fixed-point tensor satisfying Eq.~\eqref{eq:tensorRGAstar}.
+The first one is that many TRG-type methods, if not carefully treated, tend to give rise to peculiar tensor RG flows.
+The second one is the gauge redundancy in tensor network language.
+%
+
+Levin and Nave anticipated the first obstacles when looking from fixed points of the RG equation of the TRG~\cite{LevinTalk}.
+One of the earliest numerical evidence for the peculiar tensor RG flows of the 2D Ising model was provided by Hinczewski and Berker~\cite{Berker2008}. 
+Their results indicate that the TRG-type techniques have difficulty in integrating out all the local correlations at short distances, so physics at the lattice scale is carried all the way to the physics at larger ones. 
+This shortcoming of the TRG-type techniques makes identification of both non-critical and critical fixed-point tensors very difficult.
+%
+
+To understand how the problem of local correlations at the lattice scale arises in the TRG-type techniques, let us examine the physical picture of the tensor RG transformation.
+We focus on a concrete example of a tensor network made of $4 \times 4 = 16$ copies of tensor $A$ shown in Fig.~\ref{fig:spin2tensor} with periodic boundary condition.
+The general picture of a tensor RG transformation is similar to the conventional block-spin methods.
+For example, we block a square of four tensors by contracting legs between them and group every two legs in the same side. Call the new tensor $A_c$,
+%
+\begin{align}\label{eq:ZunderRG} 
+    Z_{4 \times 4} = 
+    \tikzfig{Z-TNblock} \rgeq \scalebox{0.8}{\tikzfig{Z-underRG}},
+\end{align}
+where 
 %
 \begin{align}\label{eq:exactBlock}
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=1.7truecm,clip]{./figs/Ac-thickleg}
-    %\end{minipage}
-    \tikzfig{Ac-thickleg} \defeq \tikzfig{block4As}\text{ }.
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=2.0truecm,clip]{./figs/block4As}
-    %\end{minipage}.
+    \scalebox{0.8}{\tikzfig{Ac-thickleg}} 
+    \defeq 
+    \scalebox{0.8}{\tikzfig{block4As}}\text{ }.
 \end{align}
 %
-Then, the partition function can be fully described by the new tensors
-$A_c$ after the coarse graining
-%
-\begin{align}\label{eq:ZunderRG} Z_{4 \times 4} = 
-    %\begin{minipage}{2.4truecm} \centering
-    %\includegraphics[width=2.3truecm,clip]{./figs/Z-TN} \end{minipage}
-    \tikzfig{Z-TNblock} \rgeq \tikzfig{Z-underRG}.
-    %\begin{minipage}{2.6truecm} \centering
-    %\includegraphics[width=2.6truecm,clip]{./figs/Z-underRG}
-    %\end{minipage}.
-\end{align}
-%
-It is also enlightening to put the original spin variables back into the
-tensor network to get a more physical picture of what is happening under
-such a tensor block RG transformation. To avoid too many lines
-clustering together, we only keep spin variables, tensors and black
-solid squares in Fig.~\ref{fig:spin2tensor}. The big picture for the
-above coarse graining is shown schematically in Fig.~\ref{fig:rgschem}
-below.
+It is enlightening to put the original spin variables back into the tensor network to get a more physical picture of what is happening under
+such a block-tensor RG transformation. 
+We refrain from drawing legs of tensor $A$ and the dashed lines of the spin lattice in Fig.~\ref{fig:spin2tensor}, and surround copies of tensor $A$ with squares on whose sides the spin variables sit. 
+The big picture for the coarse graining in Eq.~\eqref{eq:ZunderRG} is shown schematically in Fig.~\ref{fig:rgschem}.
 %
 % RG directly in both tensor and original spin decimation language
 \begin{figure}[ht]
-    %\includegraphics[width=8.5cm]{./figs/rgschem}
-    \tikzfig{rgschem} \caption{\label{fig:rgschem}The block tensor
-    transformation $A\rightarrow A_c$. Part of the spins shared by two
-tensors $A$ are summed over according to Eq.~\eqref{eq:exactBlock}. The
-black squares are larger after the decimation.} 
+    \tikzfig{rgschem} \caption{\label{fig:rgschem}
+        The block-tensor transformation $A\rightarrow A_c$. 
+        The spins shared by two tensors $A$ are summed over according to Eq.~\eqref{eq:exactBlock}. 
+        The squares are larger after the decimation.} 
 \end{figure}
 %
 The process is similar to the decimation in the conventional approaches.
-After the spin variables shared by two tensors are summed over, we are
-left with four bigger black squares, with two spin variables sitting on
-each side of each square. The length scale is multiplied by $b = 2$. The
-RG equation is then defined as a mapping from the old tensor $A$ to the
-new tensor $A_c$,
-%
-\begin{align}\label{eq:RGeqExact}
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/Aold} \end{minipage}
-    \tikzfig{Aold} \xrightarrow{\text{RG}} \tikzfig{Ac-thickleg}\text{
-    }.
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/Ac-thickleg}
-    %\end{minipage}. 
-\end{align}
-%
-%
-The coarse graining above is exact, but the bond dimension grows fast.
-The initial tensor has bond dimension $\chi = 2$. After $n$ RG
-transformations, the bond dimension grows to $2^{2^n}$. It can be easily
-shown that the computation cost will grow exponentially in the original
-lattice size. A clever approximation technique is necessary to prevent
-the bond dimension from growing as the RG transformation goes.
-%
-
-In the conventional RG approaches, we avoid generating a Hamiltonian
-with infinitely many interaction terms by only keeping a finite number
-of the couplings that are important
-quantitatively~\cite{wilsonNobel,wilson1970a}.  This statement was
-confirmed by Wilson in his 1975 numerical RG calculations of the 2D
-Ising model using Kadanoff's decimation approach~\cite{wilsonNumRG}.
-This observation suggests that we should be able to find a good
-approximation of a local patch of the tensors, such as the square of
-four $A$ tensors in Eq.~\eqref{eq:exactBlock}. We will introduce such an
-approximation scheme, the HOTRG, in the next subsection.
-
-
-\subsection{HOTRG\label{hotrg}} The HOTRG~\cite{hotrg} is the earliest
-TRG-type technique that can be easily applied to 3D classical
-statistical models. Since the method of extracting scaling dimensions by
-linearizing the RG transformation around a fixed-point tensor has the
-advantage in 3D and higher compared with the current transfer matrix
-method, we want to perform the numerical calculation in a such a way
-that the generalization to 3D and higher is straightforward. The HOTRG
-is a nice choice for our purpose. It is simple to implement and has a
-beautiful pictorial representation for the fixed-point analysis where we
-linearize the RG equation near a fixed-point tensor, as will be shown in
-Sec.~\ref{RespAnaGiltHOTRG}.
-%
-
-As has been explained in the end of previous subsection, we want to
-approximate the square of four $A$ tensors in the right hand side of
-Eq.~\eqref{eq:exactBlock} in order to prevent the growing of the bond
-dimensions. In the original treatment~\cite{hotrg}, the approximation
-was explained in terms of higher-order singular value
-decompositions~\cite{hosvd1,hosvd2,hosvd3}.  However, we will present
-the HOTRG from a different perspective inspired by a broader class of
-local approximation methods called projective truncations\cite{tnr}.
-Let's imagine we first contract two $A$ tensors on the left in
-Eq.~\eqref{eq:exactBlock}. A projection operator $P = w w^{\dagger}$ is
-inserted and acts on, say, two left legs whose bond dimensions are both
-assumed to be $\chi$, and we hope this patch of two $A$ tensors after
-projection gives a good approximation to the original patch,
-%
-\begin{align}\label{eq:hotrgProjTrun}
-    %\begin{minipage}{2.8truecm} \centering
-    %\includegraphics[width=2.6truecm,clip]{./figs/twoAProj}
-    %\end{minipage}
-    \tikzfig{twoAProj} \approx \tikzfig{twoA}\text{ }.
-    %\begin{minipage}{1.6truecm} \centering
-    %\includegraphics[width=1.4truecm,clip]{./figs/twoA} \end{minipage}.
-\end{align}
-%
-Here, $w$ is an isometric tensor and $w^{\dagger}$ its hermitian
-conjugate (or transpose if $w$ is a real tensor). The isometry is a
-linear mapping:
-$\mathbb{V}_{\chi}\otimes\mathbb{V}_{\chi}\rightarrow\mathbb{V}_{\tilde{\chi}}$,
-where $\mathbb{V}_{\chi}$ denotes a $\chi$-dimensional vector space, and
-the isometry satisfies $w^{\dagger}w = \mathbb{1}$. In a more
-physicists-oriented language, the isometry $w$ is nothing but a
-collection of $\tilde{\chi}$ orthonormal ket vectors with dimensionality
-$\chi^2$ in a given representation. In fact, we draw it as a gray
-triangle to mimic Dirac's bra-ket notation. If we fix the leg connecting
-the vertex angle of the gray triangle to be $k$-th index, we get a ket
-vector $\ket{w_k}$.  The projection operator is $P =
-\sum_{k=1}^{\tilde{\chi}}\ket{w_k}\bra{w_k}$. If $\tilde{\chi} =
-\chi^2$, we have a complete orthonormal set and the projection operator
-becomes the identity operator. We will see later that in order to
-prevent the growing of the bond dimensions, we should choose
-$\tilde{\chi} \leq \chi$.
-%
-
-Now, suppose we have found the isometry $w$ that gives a good
-approximation in Eq.~\eqref{eq:hotrgProjTrun}, then we use this
-approximation to replace all pairs of $A$ tensors in the tensor network
-representation of the partition function in Eq.~\eqref{eq:tensorZ4by4}
-to get
-%
-\begin{align}\label{eq:Zapproxy} Z_{4 \times 4}
-&\textapprox{\eqref{eq:hotrgProjTrun}}
-    %\begin{minipage}{3.2truecm} \centering
-%\includegraphics[width=3.0truecm,clip]{./figs/Z-approy} \end{minipage}
-%\nonumber\\
-    \tikzfig{Z-approy} \nonumber\\ &= \tikzfig{Z-contry}\text{  },
-    %\begin{minipage}{3.5truecm} \centering
-    %\includegraphics[width=3.3truecm,clip]{./figs/Z-contry}
-    %\end{minipage},
-\end{align}
-%
-where in the second step, we contract two $A$ tensors and two isometric
-tensors $w, w^{\dagger}$ to get a new tensor $A'$,
-%
-\begin{align}\label{def:Apycontr}
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/Ap-ycontr}
-    %\end{minipage}
-    \tikzfig{Ap-ycontr} \defeq \tikzfig{twoAcoarse}\text{ }.
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/twoAcoarse}
-    %\end{minipage}.
-\end{align}
-%
-Notice in the approximation step in Eq.~\eqref{eq:Zapproxy}, we move the
-two leftmost $w$ tensors to the far right because we have a periodic
-boundary condition. Equation~\eqref{def:Apycontr} defines a coarse
-graining $A \rightarrow A'$ in the vertical direction. 
-%
-
-Apply a similar projective truncation on two $A'$ tensors put side by
-side using another isometry $v$, we will get a coarse graining $A'
-\rightarrow A_c$ in the horizontal direction,
-%
-\begin{align}\label{def:Achotrg}
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    %\end{minipage}
-    \tikzfig{Ac-hotrg} \defeq \tikzfig{twoApcoarse}\text{  }.
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/twoApcoarse}
-    %\end{minipage}.
-\end{align}
-%
-Equation~\eqref{def:Apycontr} and~\eqref{def:Achotrg} combined together
-defines an RG transformation
-%
-\begin{subequations}\label{def:RGeqHOTRG}
-    \begin{align}\label{def:RGeqHOTRGschem}
-    %\begin{minipage}{2.0truecm} \centering
-        %\includegraphics[width=1.8truecm,clip]{./figs/Aold}
-        %\end{minipage}
-    \tikzfig{Aold} \xrightarrow{\text{HOTRG}} \tikzfig{Ac-hotrg}\text{
-    },
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    %\end{minipage},
-    \end{align} or explicitly as \begin{align}\label{def:RGeqHOTRGepl}
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    %\end{minipage}
-    \tikzfig{Ac-hotrg} = \tikzfig{rgEq4HOTRG}\text{ }.
-    %\begin{minipage}{4.0truecm} \centering
-    %\includegraphics[width=3.8truecm,clip]{./figs/rgEq4HOTRG}
-    %\end{minipage}.
-    \end{align} \end{subequations}
-%
-The legs of tensor $A_c$ have the bond dimensions $\tilde{\chi} \leq
-\chi$, so the HOTRG implements an approximate RG transformation which
-prevents the bond dimensions from growing.
-
-The final question is how to determine the isometry $w$, so that we have
-a good approximation in Eq.~\eqref{eq:hotrgProjTrun}. The approximation
-error is usually quantified by the Frobenius norm of the difference of
-two tensors. To simplify the notation, we combine the two left legs of
-the patch of two $A$ tensors in right hand side of
-Eq.~\eqref{eq:hotrgProjTrun} as one group, and combine its remaining
-four legs as the other group; treat the patch as a matrix $M$,
-%
-\begin{align}\label{def:M-AA} M = 
-    %\begin{minipage}{1.6truecm} \centering
-    %\includegraphics[width=1.4truecm,clip]{./figs/M-AA} \end{minipage}
-    \tikzfig{M-AA} \defeq \tikzfig{twoA2M}\text{ }.
-    %\begin{minipage}{1.6truecm} \centering
-    %\includegraphics[width=1.4truecm,clip]{./figs/twoA2M}
-    %\end{minipage}.
-\end{align}
-%
-The square of the approximation error $\epsilon$ of
-Eq.~\eqref{eq:hotrgProjTrun} is
-%
-\begin{subequations}\label{eq:approxerrAll}
-    \begin{align}\label{eq:approxerr} \epsilon^2 &= \left\Vert M - w
-        w^{\dagger}M \right\Vert^{2} \nonumber \\ &= \Tr\left(\left(M -
-        w w^{\dagger}M \right) \left(M - ww^{\dagger}M\right)^{\dagger}
-    \right ) \nonumber\\ &= \Tr\left(M M^{\dagger}\right) -
-\Tr\left(w^{\dagger}M M^{\dagger}w\right), \end{align} where in the last
-step, we expand the two parentheses, apply the cyclic property of trace,
-and use the property of an isometry, $w^{\dagger}w = \mathbb{1}$. Notice
-the first term $\Tr\left(M M^{\dagger}\right)$ is a constant since
-matrix $M$ is given. The result can be put pictorially as 
-%
-\begin{align}\label{eq:approxerrPic} \epsilon^2 = \text{Const.} -
-    \tikzfig{wMMw}\text{ }.
-    %\begin{minipage}{4.2truecm} \centering
-    %\includegraphics[width=4.0truecm,clip]{./figs/wMMw} \end{minipage}.
-    \end{align} \end{subequations}
-%
-Since the square of any number is non-negative, we have $\Tr\left(
-w^{\dagger}M M^{\dagger} w\right) \leq \Tr\left(M M^{\dagger}\right)$.
-It follows that $\epsilon$ in Eq.~\eqref{eq:approxerrAll} is minimized
-when $\Tr\left(w^{\dagger}M M^{\dagger}w\right)$ is maximized. This is a
-well-known optimization problem that can be converted into an eigenvalue
-problem~\cite{ghojogh2019eigenvalue}. In Appendix~\ref{appd:opteig}, we
-will use the method of Lagrangian multiplier to prove this statement.
-The optimal isometry $w$ is a collection of $\tilde{\chi}$ eigenvectors
-of the positive semi-definite matrix $M M^{\dagger}$ corresponding to
-the first $\tilde{\chi}$ largest eigenvalues. For example, the ket
-vector $\ket{w_k}$ corresponding to the column vector we get when fixing
-the leg connecting the vertex angle of $w$ (see, for example, the figure
-in Eq.~\eqref{eq:approxerrPic}) should satisfy 
-%
-\begin{align}\label{eq:optwCondi} M M^{\dagger}\ket{w_k} = \lambda_k
-\ket{w_k},     \end{align}
-%
-where $\lambda_k$ is the $k$-th largest eigenvalues of $M M^{\dagger}$.
-The square of the approximation error $\epsilon^2$ in
-Eq.~\eqref{eq:approxerrAll} is the sum of $\chi^2 - \tilde{\chi}$
-smallest eigenvalues we throw away during the approximation.
-%
-
-In summary, instead of grouping the two legs in
-Eq.~\eqref{eq:exactBlock} directly, the HOTRG performs a change of basis
-using the isometry $w$ defined in Eq.~\eqref{eq:optwCondi}. The
-importance of the new basis vector $\ket{w_k}$ is reflected by the
-corresponding eigenvalues $\lambda_k$.  The $\tilde{\chi}$ most
-important state vectors are chosen to construct the isometry $w$.
-Perform the coarse graining of the tensors $A$ in the vertical direction
-according to Eq.~\eqref{def:Apycontr} to get $A'$. Then, construct the
-isometry $v$ in a similar manner and perform the coarse graining of the
-tensors $A'$ in the horizontal direction according to
-Eq.~\eqref{def:Achotrg} to get $A_c$. The composite transformation from
-$A$ to $A_c$ is the RG equation of the HOTRG in
-Eq.~\eqref{def:RGeqHOTRG}.
-%
-
-We hope the RG equation of the HOTRG will exhibit critical fixed-point
-tensors. However, the RG flows generated by the HOTRG suffer from the
-same problem as those generated by the TRG. We will explain this problem
-and introduce a way to solve it in the next section.
-
-
-\section{RG Flow towards a fixed-point tensor\label{fixRGflow}} Most
-TRG-type techniques will give rise to a peculiar RG flow of tensor, the
-HOTRG is no exception. Different points in the tensor space belonging to
-the same phase do not flow to a single isolated fixed point. Instead,
-they will flow to different points on a continuous surface. Levin
-anticipated this unconventional feature of the TRG when looking for the
-fixed-point tensors under the TRG transformations~\cite{LevinTalk}. One
-of the earliest numerical evidence for this peculiar RG flow of tensor
-for the 2D Ising model was provided by Hinczewski and
-Berker~\cite{Berker2008}. This indicates that the TRG-type techniques
-fail to integrate out all the local correlations at short distances, so
-physics at the lattice scale is carried all the way to the physics at
-larger length scales. This shortcoming of the TRG-type techniques makes
-identification of both non-critical and critical fixed-point tensors
-very difficult.
-%
-
-The local correlations can be understood quantitatively by the corner
-double-line (CDL) tensors. The CDL tensors are fixed points of both the
-TRG~\cite{LevinTalk,GuWen2009,tnr,gilts} and the HOTRG
-transformations~\cite{hotrgfixpoint}.
-
-In this section, we will explain the CDL tensors and introduce a
-technique called Graph-independent local truncation (Gilt)~\cite{gilts}
-to filter out the CDL tensors for the HOTRG.
-
-\subsection{Local correlations and CDL tensors\label{CDLten}} To
-understand how the local correlations at the lattice scale arise in the
-tensor network approach of the RG, let us examine the physical picture
-of the tensor block RG transformation in more details. As is shown in
-Fig.~\ref{fig:rgschem} in Sec.~\ref{spin2tensor}, the tensor block RG
-transformation erases inner edges of smaller black squares to build up
-larger squares, with more spin variables located on its edges. The HOTRG
-simply represents the states of the spin variables in another basis
-determined by the isometries. When the black squares become large
-enough, the spin variables on different edges are far away from each
-other and we expect they are uncorrelated. The only exception is for the
-spin variables around the four corner. See Fig.~\ref{fig:ariseCDL}. We
-can use a matrix $C$ to capture the correlations around the corners and
-it must contain physics at the lattice scale. Since the spin variables
-around different corners are far away from each other, the tensor
-$A^{\text{CDL}}$ corresponding to this black square should factorize
-into the tensor product of four corner matrices $C$. A tensor with the
-structure of $A^{\text{CDL}}$ is called a CDL tensor.
+After the spin variables shared by two tensors are summed over, we are left with four bigger squares, with two spin variables sitting on each side of each square.
+When the squares become large enough as the block-tensor transformation goes on, the spin variables on different edges are far away from each other and we expect they are uncorrelated. 
+The only exception is for the spin variables around the four corners.
+See Fig.~\ref{fig:ariseCDL}. 
+We can use a matrix $C$ to capture the correlations around the corners and it must contain physics at the lattice scale. 
+Since the spin variables around different corners are far away from each other, the tensor $A^{\text{CDL}}$ corresponding to this black square should factorize into the tensor product of four corner matrices $C$. 
+A tensor with the structure of $A^{\text{CDL}}$ is called a CDL tensor.
 %
 \begin{figure}[ht]
     %\includegraphics[width=7.5cm]{./figs/ariseCDL}
@@ -759,407 +437,30 @@ lattice scale.}
 \end{figure}
 %
 
-We will explain in Appendix~\ref{appd:cdlHOTRG} that the CDL tensors
-form a class of fixed points for the RG equation of the HOTRG in
-Eq.~\eqref{def:RGeqHOTRGepl}. If we feed $A^{\text{CDL}}$ into the right
-hand side of Eq.~\eqref{def:Apycontr}, the output tensor is proportional
-to $A^{\text{CDL}}$,
-%
-\begin{align}\label{eq:cdlHOTRG}
-    %\begin{minipage}{4.0truecm} \centering
-    %\includegraphics[width=3.8truecm,clip]{./figs/cdlHOTRG}
-    %\end{minipage}
-    \tikzfig{cdlHOTRG} \propto \tikzfig{singleCDL}\text{ }.
-    %\begin{minipage}{2.0truecm} \centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/singleCDL}
-    %\end{minipage}.
-\end{align}
-%
-Equation~\eqref{eq:cdlHOTRG} shows that although the HOTRG can detect
-and project out four inner C matrices, it can do nothing about the four
-outer C matrices. This means that the HOTRG, like the TRG, cannot
-integrate out the local interactions among the spin variables around the
-corners. If we start with two temperatures $T_1 \neq T_2$, both larger
-than the critical temperature $T_c$ of the 2D Ising model, the HOTRG
-will generate tensors flowing to two different CDL tensors
-$A^{\text{CDL}}_1, A^{\text{CDL}}_2$. At criticality, the previous
-numerical calculations indicate that we will never reach a critical
-fixed-point tensor~\cite{Berker2008,tnr}. Their calculations suggest a
-tensor RG flow shown in Fig.~\ref{fig:tensorRGflow}(b), where the low-
-and high-temperature fixed points turn into two fixed lines and the
-critical fixed point disappears. As a comparison, the correct RG flow is
-shown in Fig.~\ref{fig:tensorRGflow}(a).
+The CDL tensors are fixed points of the RG equations of the TRG~\cite{LevinTalk,GuWen2009,tnr,gilts} and the HOTRG~\cite{hotrgfixpoint}.
+This shows that the TRG and the HOTRG have difficulty in integrating out the local interactions among the spin variables around the corners. 
+If we start with two temperatures $T_1 \neq T_2$, both larger than the critical temperature $T_c$ of the 2D Ising model, either of these two methods will generate tensors flowing to two different CDL tensors $A^{\text{CDL}}_1, A^{\text{CDL}}_2$. 
+At criticality, the previous numerical calculations indicate that we will never reach a critical fixed-point tensor~\cite{Berker2008,tnr}.
+Their calculations suggest tensor RG flows shown in Fig.~\ref{fig:tensorRGflow}(b), where the low- and high-temperature fixed points turn into two fixed lines and the critical fixed point disappears. 
+As a comparison, the correct RG flow is shown in Fig.~\ref{fig:tensorRGflow}(a).
+We will introduce a way to solve the problem of CDL tensors for the HOTRG in Sec.~\ref{sec:gilthotrg}.
 %
 \begin{figure}[ht]
     %\includegraphics[width=8.6cm]{./figs/tensorRGflowSchem}
     \tikzfig{tensorRGflowSchem}
-    \caption{\label{fig:tensorRGflow}Schematic RG flows of the 2D Ising
-        model. Each point on the blue line represents the lattice model
-        at a given temperature and it is the starting point of the RG
-        transformations. The green lines with arrows represent different
-        RG flows. (a) The correct RG flow. There are one $T=0$ fixed
-        point, one $T=\infty$ fixed point and one critical fixed point.
-        The blue dot is the 2D Ising model at the critical temperature
-    $T=T_c$. (b) The RG flow generated by the TRG and the HOTRG. The two
-trivial fixed points become two fixed lines, and the critical fixed
-point disappears.} 
+    \caption{\label{fig:tensorRGflow}
+        Schematic RG flows of the 2D Ising model.
+        Each point on the dashed line represents the lattice model at a given temperature and is the starting point of an RG transformation.
+        The solid lines with arrows represent different RG flows.
+        (a) The correct RG flow. There are one $T=0$ fixed point, one $T=\infty$ fixed point and one critical fixed point.
+        (b) The RG flows generated by the TRG and the HOTRG\@.
+        The two trivial fixed points become two fixed lines, and the critical fixed point disappears.
+    }
 \end{figure}
 %
 
-There are many ways to filter out the local correlations. Early attempts
-include the tensor-entanglement-filtering renormalization
-(TEFR)~\cite{GuWen2009}, the tensor network renormalization
-(TNR)~\cite{tnr,tnralgo}, the non-negative tensor network
-renormalization (TNR+)~\cite{tnrplus} and the loop-TNR~\cite{looptnr}.
-In these methods, the filtering of the local correlations is mixed
-together with the ordinary coarse graining. They are powerful techniques
-in 2D, but generalizations to 3D are complicated and usually come with
-very high computational costs. 
-%
-
-In recent two years, several more convenient techniques have appeared.
-They are all stand-alone procedures to filer out or identify the local
-correlations.  The main advantage is that they can in principle be
-combined with any tensor coarse graining techniques.
-Harada~\cite{harada2018} proposed a new operation called entanglement
-branching operator, designed to manipulate the flow of the local
-correlations in a tensor network. Lee and Kawashima~\cite{tensor-ring}
-used an index-splitting strategy to identify the exact inner structure
-of a given CDL tensor. Three quite similar methods~\cite{tns,gilts,fet}
-focus on filtering the local correlations by reducing bond dimensions in
-a tensor network without changing its geometry. We choose one of these
-three methods, Graph-independent local truncation (Gilt)~\cite{gilts},
-to filter the local correlations for the HOTRG. It has be demonstrated
-that the TRG combined with the Gilt will exhibit the critical
-fixed-point tensors of the 2D Ising model~\cite{gilts} and the 2D
-$\phi^4$ theory~\cite{Delcamp2020}. We will show in
-Sec.~\ref{benchmark:2DIsing} that the HOTRG combined with the Gilt can
-successfully exhibit the critical fixed-point tensor for the 2D Ising
-model.  However, let us first introduce the Gilt and show how to
-integrate it into the HOTRG.
-%
-
-\subsection{Gilt-HOTRG\label{gilt-hotrg}}
-The key feature of the Gilt is that it is stand-alone and does not
-change the geometry of a given tensor network, so it is very flexible.
-Figure~\ref{fig:gilt} summarizes the process of the Gilt. The idea is
-similar to the approximations in the HOTRG. Instead of finding an
-approximation of a patch of two $A$ tensors in
-Eq.~\eqref{eq:hotrgProjTrun}, this time we want to approximate a larger
-patch of four $A$ tensors. The loop containing four matrices $C$ inside
-the plaquette represents the local correlations (see
-Fig.~\ref{fig:ariseCDL} and imagine putting four CDL tensors together to
-form a plaquette). The first step, which is the most crucial one, is to
-insert a low-rank matrix $Q$ into the leg we wish to truncate. We refer
-the reader to the original Gilt paper~\cite{gilts} for how to find such
-a low-rank matrix. The remaining two steps are exact. We split $Q$ using
-singular value decomposition and absorb the two pieces into the adjacent
-two $A$ tensors. The bond dimension of the leg is smaller and the local
-correlations on this leg are filtered out. We can repeat the procedure
-on other three legs and filter out the local correlations inside this
-plaquette completely.
-%
-
-\begin{figure}[h]
-    %\includegraphics[width=7.5cm]{./figs/gilt}
-    \tikzfig{gilt}
-    \caption{\label{fig:gilt}The process of the Gilt. In the first step, a
-    low-rank matrix $Q$ is inserted into a bond. Then we split $Q$ using
-singular value decomposition. The low-rank matrix $Q$ is able to cut the
-legs of the corner matrices $C$ during the splitting. Finally, the parts
-of the splitting are absorbed into the two neighboring tensors. The
-original Gilt paper~\cite{gilts} presents a nice way to determine the
-low-rank matrix $Q$.}
-\end{figure}
-%
-
-However, since every insertion of a low-rank matrix $Q$ comes with an
-approximation error, we should only perform the necessary truncations of
-legs. We notice in Eq.~\eqref{eq:cdlHOTRG} that the HOTRG can take care
-of four inner $C$ matrices, so it suffices for the Gilt to filter out the
-local interactions encoded in four outer $C$ matrices. In
-Appendix~\ref{appd:cdlHOTRG}, we demonstrate how to choose the plaquette
-and where to insert the $Q$ matrix. After truncating all the
-necessary legs, we perform the HOTRG coarse graining as usual. We call
-this HOTRG armed with the Gilt \textit{Gilt-HOTRG}. The coarse graining
-process in the vertical direction goes similar as
-Eq.~\eqref{def:Apycontr} except we now have four pieces of $Q$
-matrices as well as the isometry $w$,
-%
-\begin{align}\label{def:ApycontrGilt}
-    %\begin{minipage}{2.0truecm}
-    %  \centering
-    %  \includegraphics[width=1.8truecm,clip]{./figs/Ap-ycontr}
-    %\end{minipage}
-    \tikzfig{Ap-ycontr}
-    \defeq
-    \tikzfig{twoAgiltcoarse}\text{ },
-    %\begin{minipage}{4.0truecm}
-    %  \centering
-    %  \includegraphics[width=3.8truecm,clip]{./figs/twoAgiltcoarse}
-    %\end{minipage},
-\end{align}
-%
-where $Q_{Bl}$ and $Q_{Br}$ are two matrices obtained by splitting a
-$Q_B$ matrix, $Q_B = Q_{Br}Q_{Bl}$; $Q_B$ matrix is determined
-using Gilt algorithm (see Appendix~\ref{appd:cdlHOTRG} for details).
-$Q_{Al}$ and $Q_{Ar}$ are obtained in the same way. Then, we repeat the
-similar Gilt truncations and the HOTRG coarse graining in the
-horizontal direction to have
-%
-\begin{align}\label{def:ApxcontrGilt}
-    %\begin{minipage}{2.0truecm}
-    %  \centering
-    %  \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    %\end{minipage}
-    \tikzfig{Ac-hotrg}
-    \defeq
-    \tikzfig{twoApgiltcoarse}\text{ }.
-    %\begin{minipage}{4.0truecm}
-    %  \centering
-    %  \includegraphics[width=3.8truecm,clip]{./figs/twoApgiltcoarse}
-    %\end{minipage}.
-\end{align}
-%
-Equation~\eqref{def:ApycontrGilt} and~\eqref{def:ApxcontrGilt} together
-defines the RG equation of the Gilt-HOTRG
-%
-\begin{subequations}\label{def:RGeqGiltHOTRG}
-    \begin{align}\label{def:RGeqGiltHOTRGschem}
-    %\begin{minipage}{2.0truecm}
-    %    \centering
-    %    \includegraphics[width=1.8truecm,clip]{./figs/Aold}
-    %\end{minipage}
-    \tikzfig{Aold}
-    &\xrightarrow{\text{Gilt-HOTRG}}
-    \tikzfig{Ac-hotrg}
-    %\begin{minipage}{2.0truecm}
-    %    \centering
-    %    \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    %\end{minipage}
-    \text{ or}\nonumber\\
-    &A_c = \mathcal{T}\left(A\right). 
-    \end{align}
-or explicitly as
-    \begin{align}\label{def:RGeqGiltHOTRGepl}
-    %\begin{minipage}{2.0truecm}
-    %    \centering
-    %    \includegraphics[width=1.8truecm,clip]{./figs/Ac-hotrg}
-    %\end{minipage}
-    \tikzfig{Ac-hotrg}
-    = 
-    \scalebox{0.8}{\tikzfig{rgEq4GiltHOTRG}}\text{ }.
-    %\begin{minipage}{4.8truecm}
-    %    \centering
-    %    \includegraphics[width=4.6truecm,clip]{./figs/rgEq4GiltHOTRG}
-    %\end{minipage}.
-    \end{align}
-\end{subequations}
-%
-The coarse graining defined in Eq.~\eqref{def:RGeqGiltHOTRG} is
-able to simplify the $A^{\text{CDL}}$ tensor in Fig.~\ref{fig:ariseCDL}
-to a single number (see Appendix~\ref{appd:cdlHOTRG} for detailed
-calculations)
-%
-\begin{align}\label{eq:CDL2number}
-    %\begin{minipage}{2.0truecm}
-    %    \centering
-    %    \includegraphics[width=1.8truecm,clip]{./figs/singleCDL}
-    %\end{minipage}
-    \tikzfig{singleCDL}
-    \xrightarrow{\text{Gilt-HOTRG}}
-    \left(
-        %\begin{minipage}{1.8truecm}
-        %\centering
-        %\includegraphics[width=1.6truecm,clip]{./figs/CDLnumber}
-        %\end{minipage}
-        \tikzfig{CDLnumber}
-    \right)^4.
-\end{align}
-%
-
-Equation~\eqref{eq:CDL2number} shows that the Gilt-HOTRG can
-successfully filter out the local correlations among the spin variables
-around the corners at the lattice scale (see Fig.~\ref{fig:ariseCDL}).
-Since the CDL tensors are no longer fixed points for the RG equation of
-the Gilt-HOTRG, the peculiar fixed lines in
-Fig.~\ref{fig:tensorRGflow}(b) generated by the HOTRG will collapse to
-fixed points and we expect the RG equation of the Gilt-HOTRG is able to
-exhibit the critical fixed point tensor shown schematically in
-Fig.~\ref{fig:tensorRGflow}(a).
-%
-
-The computational cost of the Gilt-HOTRG in
-Eq.~\eqref{def:RGeqGiltHOTRGepl} is $O(\chi^7)$, the same as the HOTRG.
-
-\section{Response analysis\label{diffRGeq}}
-Now we have the desired tensor RG transformation, the Gilt-HOTRG, which
-can integrate out the local correlations and exhibit critical
-fixed-point tensors (we demonstrate this in Sec.~\ref{benchmark:2DIsing}
-by applying the Gilt-HOTRG to the 2D Ising model). The next step is to
-linearize the tensor RG equation near a critical fixed point tensor and
-extract scaling dimensions of the local operators in the CFT
-corresponding to this fixed point. We will follow the convention
-in~\cite{kadanoff2014} to call such an analysis \textit{response
-analysis}, and call the linearized RG transformation in a certain
-representation a \textit{response matrix}.
-%
-
-For people who are familiar with the TRG-type techniques, the response
-analysis might look straightforward. The response matrix is the
-derivative of $A_c$ with respect to $A$ in
-Eq.~\eqref{def:RGeqGiltHOTRGepl} evaluated at a fixed point tensor
-$A^{*}$. The scaling dimensions $x_{\alpha}$ are related to the eigenvalues
-$\lambda^{\alpha}$ of the response matrix through $b^{d-x_{\alpha}} =
-\lambda^{\alpha}$, where $b$ is the RG rescaling factor and $d$ the
-spatial dimension. For the RG equation of the Gilt-HOTRG in
-Eq.~\eqref{def:RGeqGiltHOTRGepl}, $b = 2$ and $d = 2$. 
-%
-
-However, there is a caveat to the response analysis in tensor space: gauge
-redundancy. To see how gauge redundancy arises in the new tensor
-approach, it is informative to compare it with the conventional
-approach. In this section, we will first give a review of the response
-analysis in the conventional RG approach. Then, we move on to the tensor
-response analysis and explain how it relates to the conventional
-approach. The problem of gauge redundancy in the tensor response analysis will
-reveal itself during the comparison. Finally, we will introduce a
-proper way to perform the response analysis in tensor space using
-the Gilt-HOTRG.
-%
-
-\subsection{Response analysis in Hamiltonian space: a review of the old
-approach}
-It will be convenient to explain in terms of a specific physical system,
-still a classical system spin variables $\sigma \in \{+1, -1\}$ on a
-lattice, with general short-ranged interactions (the short review
-here follows the detailed review~\cite{kadanoff2014} and
-textbook~\cite{cardy_1996} closely).  The Hamiltonian (or energy) of the
-system can be described by a set of coupling constants $\mathbf{K} =
-\{K_j\}$, each of which couples to a possible short-ranged interaction
-term $s_j(\mathbf{r})$,
-%
-\begin{align}\label{eq:generalspinHam}
-    \mathcal{H} = \sum_{\mathbf{r}} \sum_{j} K_j s_j(\mathbf{r}).
-\end{align}
-%
-For example, if $K_1$ is the magnetic field, $s_1(\mathbf{r}) =
-\sigma(\mathbf{r})$ is the spin variable at lattice point $\mathbf{r}$;
-if $K_2$ is the nearest neighbor interaction along $x$ direction,
-$s_2(\mathbf{r}) = \sigma(\mathbf{r})\sigma(\mathbf{r} +
-a\hat{\mathbf{e}}_x)$, where $\hat{\mathbf{e}}_x$ is the unit vector
-along $x$ direction and $a$ is the lattice constant. An RG transformation
-will convert the old Hamiltonian $\mathcal{H}$ to a new Hamiltonian
-$\mathcal{H}'$ \textit{with the same form as} Eq.~\eqref{eq:generalspinHam} but
-characterized by a set of new coupling constants
-$\mathbf{K}' = \{ K_j'\}$. The mapping from the old Hamiltonian to the
-new one $\mathcal{H} \xrightarrow{\text{RG}} \mathcal{H}'$ is
-then parametrized explicitly as the transformation from the old coupling
-constants to the new coupling constants,
-%
-\begin{align}\label{eq:oldRGK}
-    \mathbf{K}' = \mathcal{T}^{\text{old}}\left(\mathbf{K}\right).
-\end{align}
-%
-We require that the RG transformation preserves the partition function of
-the system and it must exhibit a fixed-point Hamiltonian $\mathcal{H}^{*}$
-described by coupling constants $\mathbf{K}^{*}$, such that
-$\mathbf{K}^{*}$ remain unchanged under the RG transformation,
-%
-\begin{align}\label{eq:oldRGKstar}
-    \mathbf{K}^{*} =
-    \mathcal{T}^{\text{old}}\left(\mathbf{K}^{*}\right).
-\end{align}
-%
-The response matrix is defined in the following way. We perturb the
-coupling constants around the fixed point $\mathbf{K}_p = \mathbf{K}^{*}
-+ \delta \mathbf{K}$ and perform the RG transformation defined in
-Eq.~\eqref{eq:oldRGK}, $\mathbf{K}_p' = \mathcal{T}^{\text{old}}\left(
-\mathbf{K}_p\right)$. The new coupling constants $\mathbf{K}_p'$ after
-the RG transformation  should be close to $\mathbf{K}^{*}$ by
-continuity, so $\mathbf{K}_p' = \mathbf{K}^{*} + \delta \mathbf{K}'$.
-The response matrix $\mathcal{R}^{\text{old}}$ tells us how $\delta
-\mathbf{K}'$ is related to $\delta \mathbf{K}$,
-%
-\begin{subequations}\label{eq:respMat}
-    \begin{align}
-    \delta \mathbf{K}' = \mathcal{R}^{\text{old}} \delta \mathbf{K},
-    \end{align}
-or in its component form,
-    \begin{align}
-        \delta K_i' = \sum_j\mathcal{R}^{\text{old}}_{ij} \delta K_j.
-    \end{align}
-\end{subequations}
-%
-Equation~\eqref{eq:respMat} is the definition of the response matrix,
-which is nothing but the linearized RG equation around the fixed point
-$\mathbf{K}^{*}$. The response matrix has right and left eigenvectors
-$\{\psi^{\alpha}\}, \{\phi^{\alpha}\}$ with eigenvalues
-$\{\lambda^{\alpha}\}$,
-%
-\begin{align}\label{eq:eigsofRespM}
-    \sum_j \mathcal{R}^{old}_{ij} \psi^{\alpha}_j = \lambda^{\alpha}
-    \psi^{\alpha}_i \text{ and } \sum_i \phi^{\alpha}_i
-    \mathcal{R}^{old}_{ij} = \lambda^{\alpha} \phi^{\alpha}_j.
-\end{align}
-%
-The linear combinations of $\delta K_i$ according to the components of the
-left eigenvector $\phi^{\alpha}$ are known as scaling fields
-%
-\begin{align}\label{def:scalingfields}
-    h^{\alpha} = \sum_i \phi^{\alpha}_i \delta K_i,
-\end{align}
-%
-while the linear combinations of interaction terms $s_j(\mathbf{r})$
-according to the components of the right eigenvector $\psi^{\alpha}$
-are known as scaling operators
-%
-\begin{align}\label{def:scalingOpt}
-    o^{\alpha}(\mathbf{r}) = \sum_j s_j(\mathbf{r}) \psi^{\alpha}_j.
-\end{align}
-%
-Under the RG transformation with rescaling factor $b$ for a system in
-dimension $d$, the scaling fields and the scaling operators transform in
-a simpler way with $\left(h^{\alpha} \right)' = b^{d - x_{\alpha}}
-h^{\alpha}$ and $\left(o^{\alpha}\right)' = b^{x_{\alpha}} o^{\alpha}$,
-where $x_{\alpha}$ are the scaling dimensions of the scaling operators
-$o^{\alpha}(\mathbf{r})$. The scaling dimensions $x_{\alpha}$ are related to the eigenvalues
-$\lambda^{\alpha}$ of the response matrix through
-%
-\begin{align}\label{eq:lambda2x}
-    b^{d-x_{\alpha}} = \lambda^{\alpha}.
-\end{align}
-%
-
-In summary, in the conventional approach, we first find a fixed point
-and determine the response matrix $\mathcal{R}^{\text{old}}$ at this
-fixed point according to its definition in Eq.~\eqref{eq:respMat}. Then,
-we find the eigenvalues $\lambda^{\alpha}$ of $\mathcal{R}^{\text{old}}$
-and calculate the scaling dimensions according to
-Eq.~\eqref{eq:lambda2x}.  Various critical exponents can be calculated
-from these scaling dimensions if desired. 
-
-\subsection{Response analysis in tensor space: gauge redundancy}
-Na\"ively, response analysis in tensor space can be carried out
-in the same manner as the old approach. However, there is one more
-complication in the tensor approach: gauge redundancy.
-%
-
-In the conventional approach, we fix the form of the new Hamiltonian
-$\mathcal{H}'$ to be the same as the old one $\mathcal{H}$ in
-Eq.~\eqref{eq:generalspinHam}. They have the same interaction terms
-$s_j(\mathbf{r})$, coupled to different coupling constants
-$\mathbf{K}$ and $\mathbf{K}'$. This gives a one-to-one correspondence
-between a set of coupling constants $\mathbf{K} = \{K_j \}$ and a
-Hamiltonian $\mathcal{H}$.
-
-In a tensor RG transformation $A \xrightarrow{\text{RG}} A_c$
-defined in Eqs.~\eqref{eq:exactBlock} to~\eqref{eq:RGeqExact}, for
-example, the only requirement is that the partition function should be
-unchanged, and the new tensor $A_c$ could be express in a different set
-of bases as the old tensor $A$. To be explicit, we say two tensors
-$\tilde{A}$ and $A$ are \textit{equivalent} if they are related by the
-following gauge transformation
+The second obstacle that prevents us from achieving Eq.~\eqref{eq:tensorRGAstar} is that the tensor network representation of the partition function in Eq.~\eqref{eq:ZbeforeRG} has gauge redundancy.
+If two tensors $\tilde{A}$ and $A$ are related through the invertible matrices $S_x,S_y$ by the gauge transformation
 %
 \begin{subequations}\label{def:gaugeTrans}
     \begin{align}\label{def:gaugeTransMath}
@@ -1169,310 +470,382 @@ following gauge transformation
     \end{align}
 or pictorially as
     \begin{align}\label{def:gaugeTransPic}
-    %\begin{minipage}{2.0truecm}
-    %\centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/Atilde}
-    %\end{minipage}
-    \tikzfig{Atilde}
+        \scalebox{0.8}{\tikzfig{Atilde}}
     =
-    \tikzfig{AsimilarTrans}\text{ },
-    %\begin{minipage}{3.0truecm}
-    %  \centering
-    %  \includegraphics[width=2.8truecm,clip]{./figs/AsimilarTrans}
-    %\end{minipage},
+        \scalebox{0.8}{\tikzfig{AsimilarTrans}}\text{ },
     \end{align}
 \end{subequations}
 %
-where $S_x, S_y$ are two invertible matrices and $S_x^{-1},S_y^{-1}$
-are their inverses. If two tensors are equivalent, they describe the same
-physics because it is easy to check that they will give the same partition
-function. The gauge redundancy makes the correspondence between a tensor
-$A$ and a physical system no long one-to-one. Instead, any element $A$
-in its equivalence class defined in Eq.~\eqref{def:gaugeTrans} can be
-selected to describe the physical system.
+the tensors $A$ and $\tilde{A}$ represent the same partition function $Z$.
+Equation~\eqref{def:gaugeTrans} defines a equivalence relation where all the elements in an equivalence class represent a same partition function $Z$.
+The gauge redundancy makes the correspondence between a tensor $A$ and the partition function $Z$ no longer one-to-one.
+Instead, the whole equivalence class $[A]$ corresponds to a single $Z$; any element $\tilde{A}$ in this equivalence class can represent $Z$.
 %
 
-In fact, the TRG-type techniques feature the exploiting of this gauge
-redundancy in tensor network representations. For the HOTRG described in
-Sec.~\ref{hotrg}, we use eigenvectors defined in
-Eq.~\eqref{eq:optwCondi} as good bases since their importance is
-reflected by the corresponding eigenvalues. Several unimportant bases
-are thrown away and a change of horizontal bases of a patch of two $A$
-tensors is performed in Eq.~\eqref{def:Apycontr} using
-$w^{\dagger}$ as $S_x$ to define the coarse graining in the vertical
-direction.
+As a comparison, in the conventional Hamiltonian approach, we fix the form of the new Hamiltonian $\mathcal{H}'$ to be the same as the old one $\mathcal{H}$ in Eq.~\eqref{eq:generalspinHam}. 
+They have the same interaction terms $s_j(\mathbf{r})$, coupled to different coupling constants $\mathbf{K}$ and $\mathbf{K}'$. 
+This gives a one-to-one correspondence between a set of coupling constants $\mathbf{K} = \{K_j \}$ and a Hamiltonian $\mathcal{H}$ (or a partition function $Z$).
 %
 
-However, the gauge redundancy makes response analysis in tensor space less
-straightforward than the old approach. Even when we have reached a fixed
-point, the RG transformation in tensor space could bring one element in
-an equivalence class to another one in the same equivalence class, $A^*
-\xrightarrow{\text{RG}} \tilde{A}^*$. In general, we must fix the gauge
-of the tensor during an RG transformation by choosing a preferred set of
-bases, so that the fixed point tensor is manifestly fixed under the RG
-transformation, $A^* \xrightarrow{\text{RG}} A^*$, or written in a
-similar fashion to Eq.~\eqref{eq:oldRGKstar},
+The gauge redundancy makes the canonical RG prescription in tensor space less straightforward than that in Hamiltonian space.
+Even if we have reached a representation tensor $A^*$ of the fixed-point equivalence class $[A^*]$, the tensor RG equation could bring this tensor to another representation of $[A^*]$, 
 %
-\begin{align}\label{eq:tensorRGAstar}
-    A^* = \mathcal{T}^{\text{ten}}\left(A^* \right).
+\begin{align}\label{eq:tensorRGAstarnotfix}
+    A^* \xrightarrow{\text{RG}} \tilde{A}^* 
+    \text{ or } 
+    \tilde{A}^* = \mathcal{T}\left(A^* \right).
 \end{align}
 %
-We will show how the gauge is fixed in the Gilt-HOTRG to achieve
-Eq.~\eqref{eq:tensorRGAstar} in Sec.~\ref{RespAnaGiltHOTRG}.
+In general, we must fix the gauge of the tensor during an tensor RG transformation by choosing a preferred set of bases, so that the fixed-point tensor is manifestly fixed, as is shown in Eq.~\eqref{eq:tensorRGAstar}.
+We will show how the gauge is fixed for a HOTRG-like scheme in Sec.~\ref{sec:gaugefix}.
 %
 
-After the gauge fixing, the rest is exactly the same as the old
-approach. We linearize the tensor RG transformation near a fixed-point
-tensor $A^*$ by adding a perturbation $\delta A$ and studying how the
-perturbation
-transforms to $\delta A_c = A_c - A^*$ after coarse graining. This gives the
-response matrix in tensor space,
+
+\subsection{Gilt-HOTRG\label{sec:gilthotrg}}
+In this subsection, we present a HOTRG-like scheme to solve the first technical obstacles.
+Compared with the state-of-the-art TRG-type methods~\cite{GuWen2009,tnr,tnralgo,tnrplus,looptnr,harada2018,fet,tns,tensor-ring,gilts} that can generate correct tensor RG flows, our scheme can be most easily generalized to dimensions higher than 2 and is convenient for the subsequent gauge fixing and linearization procedure.
+The graph-independent local truncation (Gilt)~\cite{gilts} is performed to filter out the problematic local correlations before the coarse graining of the HOTRG\@.
+We call this scheme Gilt-HOTRG\@.
 %
-\begin{align}\label{eq:respMatTen}
-    \left(\delta A_c\right)_{(i)} = \sum_j
-    \mathcal{R}^{\text{ten}}_{(i)(j)} \delta A_{(j)},
+
+The key feature of the Gilt is that it is a stand-alone procedure to filter out the local correlations and does not change the geometry of a given tensor network, so it is very flexible.
+Figure~\ref{fig:gilt} summarizes the basic process of the Gilt. 
+The loop containing four matrices $C$ inside the plaquette represents the local correlations (see Fig.~\ref{fig:ariseCDL} and imagine putting four CDL tensors together to form a plaquette). 
+The first step, which is the most crucial one, is to insert a low-rank matrix $Q$ into the leg we wish to truncate. 
+The remaining two steps are exact. We split $Q$ into two pieces using singular value decomposition and absorb the two pieces into the adjacent two $A$ tensors. 
+The bond dimension of the leg is smaller and the local correlations on this leg are filtered out. 
+%
+%
+\begin{figure}[ht]
+    \tikzfig{gilt}
+    \caption{\label{fig:gilt}
+        The process of the Gilt. 
+        Four copies of $C$ matrices are unknown inner structure of the adjacent 4-leg tensors.
+        They are drawn explicitly to make the demonstration clearer.
+        In the first step, a low-rank matrix $Q$ is inserted into a bond. Then we split $Q$ into two pieces using singular value decomposition. 
+        The low-rank matrix $Q$ is able to cut the legs of the corner matrices $C$ during the splitting. Finally, the pieces of the matrix $Q$ are absorbed into the two neighboring tensors. 
+        The original Gilt paper~\cite{gilts} presents a nice way to determine the
+low-rank matrix $Q$.}
+\end{figure}
+%
+
+The low-rand matrix $Q$ is determined by examining the environment $E$ of the bond and performing the singular value decomposition,
+%
+\begin{align}\label{eq:bondEnvSVD}
+    E \defeq \tikzfig{bondEnviro} \svdeq \tikzfig{bondEnvSVD}\text{ },
 \end{align}
 %
-where we have grouped the four legs of the tensor into a single leg,
-$\delta A_{(j)} \defeq \delta A_{j_1 j_2 j_3 j_4}$. The eigenvalues of
-the response matrix $\mathcal{R}^{\text{ten}}$ then give the scaling
-dimensions of the scaling operators in the CFT corresponding to this
-fixed point according to Eq.~\eqref{eq:lambda2x}.
+where we refrain from drawing the $C$ matrices in the plaquette.
+The environment $E$ of the bond should be thought of as a linear map from the vector space of all the legs with ingoing arrows to that of all the legs with outgoing arrows. 
+We can use the tensor $U$ and the diagonal matrix $s$ in Eq.~\eqref{eq:bondEnvSVD} to construct the low-rank matrix $Q$. 
+To this end, we first define a vector $t$ by contracting two ingoing legs of the tensor $U$,
 %
-
-In the discussions above, we show, by analogy to the old approach, how
-to perform the response analysis in tensor space. There is one last thing
-that needs to be clarified. We assume that the tensor $A$, after proper
-gauge fixing, plays the same role as the coupling constants
-$\mathbf{K}$ does in the old approach. We provide the justification for
-this assumption in the next subsection.
-%
-
-
-\subsection{Relation between the response analysis in tensor space and that
-in Hamiltonian space\label{relateTensorCoupling}}
-In the old approach, the RG flow of Hamiltonians is parameterized by a
-flow in the coupling constants space $\mathbf{K}$ after various interaction
-terms $s_j(\mathbf{r})$ are given. In the tensor approach, we skip the
-Hamiltonian description of the system. Instead, we use a tensor $A$
-that encodes Boltzmann weight of local configurations to describe the
-system. The RG flow is then parameterized by a flow in tensor space. We
-claim that the components of the tensor $A$ can be thought of as some
-proxies of the coupling constants $\mathbf{K}$ (also see a brief
-discussion in Ref.~\cite{GuWen2009}).
-%
-
-To see why this claim is reasonable, note that we can map the partition
-function of the system with Hamiltonian in Eq.~\eqref{eq:generalspinHam}
-to a tensor network using the method introduce in
-Sec.~\ref{spin2tensor} and
-in Ref.~\cite{trg}. Each component of the initial tensor $A$ is the
-Boltzmann weight of a given local configuration that depends on the
-coupling constants, so we have 
-%
-\begin{align}\label{eq:K2A}
-    A_{(i)} = f_{(i)}\left(\mathbf{K}\right),
+\begin{align}\label{def:tfromU}
+    \tikzfig{tvec} \defeq \tikzfig{Ucontract}.
 \end{align}
 %
-where we group all legs of $A$ to form a single index. After coarse
-graining, the components of $A_c$ are still functions of $\mathbf{K}$ but
-with different functional forms,
+Then, we perform a soft truncation of the vector $t$ according to
 %
-\begin{align}\label{eq:tensorEleRG}
-    \left(A_c\right)_{(i)} =
-\left(f_c\right)_{(i)}\left(\mathbf{K}\right).
+\begin{align}\label{eq:tpfromt}
+    t'_i = t_i \frac{s_i^2}{s_i^2 + \epsilon_{\text{gilt}}^2},
 \end{align}
 %
-Now, imagine we have imposed the gauge fixing condition by requiring the
-same functional form as old tensor $A$ but with different coupling
-constants $\mathbf{K}'$, 
+where $s_i$ are the singular values and $\epsilon_{\text{gilt}}$ is the hyper-parameter of the Gilt.
+Equation~\eqref{eq:tpfromt} says that the components of the vector $t$ will be set to very small values if the corresponding singular values $s_i$ are much smaller than $\epsilon_{\text{gilt}}$. 
+The justification for the truncation in Eq.~\eqref{eq:tpfromt} can be found in Ref.~\cite{gilts}. 
+The low-rank matrix $Q$ is constructed from the tensor $U^{\dagger}$ and the truncated vector $t'$ as
 %
-\begin{align}\label{eq:tensorK2Kp}
-    f_{(i)}\left(\mathbf{K}'\right) =
-    \left(f_c\right)_{(i)}\left(\mathbf{K}\right), \forall (i).
+\begin{align}\label{def:QfromUtp}
+    \tikzfig{Qmat} \defeq \tikzfig{Utp2Q}\text{ }.
 \end{align}
 %
-In the old approach, we need to solve Eq.~\eqref{eq:tensorK2Kp} for
-$\mathbf{K}'$ in terms of $\mathbf{K}$, which defines the RG equation
-from the old $\mathbf{K}$ to the new $\mathbf{K}'$. However, in the
-tensor approach, it is enough to know the existence of such
-$\mathbf{K}'$. Combine Eq.~\eqref{eq:tensorEleRG} and
-Eq.~\eqref{eq:tensorK2Kp}, we have
+It is proved in Ref.~\cite{gilts} that the matrix $Q$ determined in this
+way is able to filter out the loop of four $C$ matrices shown in
+Fig.~\ref{fig:gilt}. 
 %
-\begin{align}\label{eq:Kp2A}
-    \left(A_c\right)_{(i)} = f_{(i)}\left(\mathbf{K}'\right).
+%% Gilt applied on plaquettes
+\begin{figure*}[!t]
+\tikzfig{gilt4hotrg}
+\caption{\label{fig:gilt4hotrg}
+    The plaquettes and bonds where the Gilt is applied to for the subsequent HOTRG coarse graining.
+    (a) Two copies of $A$ in the center will be coarse grained vertically. 
+    The problematic loops of local correlations are drawn explicitly in the plaquettes to make the demonstration clearer.
+    They are unknown inner structure of the main tensor $A$.
+    (b) Copies of low-rank matrices $Q_A,Q_B$, determined by the Gilt~\cite{gilts}, are inserted into the bonds to catch the legs of the loops.
+    (c) $Q_A,Q_B$ are split using singular value decomposition. The Gilt ensures the legs of the loops do not leak out.
+    (d) The pieces of $Q_A,Q_B$ matrices are absorbed into the copies of tensor $A$. The subsequent HOTRG will be applied on the patch of tensors in the dashed circle.
+}
+\end{figure*}
+%
+
+Next, we move on to explain the HOTRG\@.
+The block-tensor transformation in Eqs.~\eqref{eq:ZunderRG} and~\eqref{eq:exactBlock} is exact but not practical, since the bond dimension grows exponentially in the original lattice size.
+The HOTRG is an approximate tensor RG transformation, which can keep the bond dimension from growing.
+For the HOTRG in the vertical direction, we aim at the following approximation of a local patch of two copies of $A$ put together vertically,
+%
+\begin{align}\label{eq:hotrgProjTrun}
+    \tikzfig{twoAProj} \approx \tikzfig{twoA}\text{ },
 \end{align}
 %
-Take the total derivative of tensors $A$ and $A_c$ in Eqs.~\eqref{eq:K2A}
-and \eqref{eq:Kp2A} and set $\mathbf{K} = \mathbf{K}' = \mathbf{K}^*$,
+where $w$ is an isometric tensor to be determined and $w^{\dagger}$ its hermitian conjugate.
+The isometry $w$ is a linear mapping: $\mathbb{V}_{\chi}\otimes\mathbb{V}_{\chi}\rightarrow\mathbb{V}_{\tilde{\chi}}$, where $\mathbb{V}_{\chi}$ denotes a $\chi$-dimensional vector space, and the isometry satisfies $w^{\dagger}w = \mathbb{1}$.
+It is shown in Ref.~\cite{hotrg,tnralgo} that a good approximation can be achieved if the isometry $w$ is a collection of $\tilde{\chi}$ eigenvectors corresponding to the first $\tilde{\chi}$ largest eigenvalues of the $\chi^2$-by-$\chi^2$ positive semi-definite matrix $MM^{\dagger}$, with the matrix $M$ defined as
 %
-\begin{align}
-    \delta A_{(i)} = \sum_n \left(\partial_{(n)}
-    f_{(i)}\right)\Bigr|_{\mathbf{K} = \mathbf{K}^*} \delta K_n,
-    \label{eq:deltaK2deltaA} \\
-    \left(\delta A_c \right)_{(i)} = \sum_n \left(\partial_{(n)}
-    f_{(i)}\right)\Bigr|_{\mathbf{K}' = \mathbf{K}^*} \delta
-    K_n'.\label{eq:deltaK2deltaAp}  
+\begin{align}\label{def:M-AA} 
+    M = 
+    \tikzfig{M-AA} \defeq \tikzfig{twoA2M}\text{ }.
 \end{align}
 %
-Equations~\eqref{eq:deltaK2deltaA} and \eqref{eq:deltaK2deltaAp} explain
-the relation between the response analysis in tensor space defined in
-Eq.~\eqref{eq:respMatTen} and that in Hamiltonian space defined in
-Eq.~\eqref{eq:respMat}. They are the same linear transformation in two
-different representations, with $\partial_{(n)}f_{(i)}$ evaluated at
-$\mathbf{K}^*$ being the change of basis matrix.
+We use the approximation to replace all pairs of $A$ tensors in the tensor network representation of the partition function $Z_{4\times4}$ in Eq.~\eqref{eq:ZunderRG} to get
+%
+\begin{align}\label{eq:Zapproxy} 
+    Z_{4 \times 4}
+&\textapprox{\eqref{eq:hotrgProjTrun}}
+    \tikzfig{Z-approy} \nonumber\\ &= \tikzfig{Z-contry}\text{  },
+\end{align}
+%
+where in the second step, we contract two $A$ tensors and two isometric tensors $w, w^{\dagger}$ in the dashed circle to get a coarser tensor $A'$,
+%
+\begin{align}\label{def:Apycontr}
+    \tikzfig{Ap-ycontr} \defeq \tikzfig{twoAcoarse}\text{ }.
+\end{align}
+%
+Notice in the approximation step in Eq.~\eqref{eq:Zapproxy}, we move the two leftmost $w$ tensors to the far right because we have a periodic boundary condition. 
+Equation~\eqref{def:Apycontr} defines the HOTRG coarse graining in the vertical direction.
 %
 
-In Sec.~\ref{benchmark:1DIsing}, we will use the 1D Ising model as a
-concrete example to demonstrate the general argument above.
+It is shown in Ref.~\cite{hotrgfixpoint} that the HOTRG in the vertical direction transforms the $A^{\text{CDL}}$ in Fig.~\ref{fig:ariseCDL} in the following way,
+%
+\begin{align}\label{eq:cdlHOTRG}
+    \tikzfig{cdlHOTRG} \propto \tikzfig{singleCDL}\text{ },
+\end{align}
+%
+which means that although the HOTRG can detect and project out four inner C matrices, it can do nothing about the four outer C matrices.
+Therefore, the Gilt should be applied to filter out these four outer $C$ matrices before the HOTRG coarse graining. 
+To this end, we apply the Gilt to the plaquettes where the loops of local correlations are drawn explicitly in Fig.~\ref{fig:gilt4hotrg} and insert two low-rank matrices $Q_A,Q_B$ into the upper and lower bonds for each plaquette. 
+The legs of the unwanted $C$ matrices will be truncated after the splitting of $Q_A, Q_B$. 
+Finally, we apply the ordinary HOTRG coarse graining in the vertical direction (see Ref.~\cite{hotrg,tnralgo} for details) to the local patch of tensors in the dashed circle in Fig.~\ref{fig:gilt4hotrg} to get the coarser tensor $A'$
+%
+\begin{align}\label{def:ApycontrGilt}
+    \tikzfig{Ap-ycontr}
+    \defeq
+    \scalebox{0.8}{\tikzfig{twoAgiltcoarse}}\text{ }.
+\end{align}
+%
+We repeat the similar Gilt and the HOTRG on $A'$ in the horizontal direction.
+The coarse graining steps in two directions together define the RG equation of the Gilt-HOTRG,
+%
+\begin{align}\label{def:RGeqGiltHOTRG}
+    \tikzfig{Ac-hotrg}
+    =
+    \scalebox{0.8}{\tikzfig{rgEq4GiltHOTRG}}\text{ }.
+\end{align}
+%
+The computational cost of the Gilt-HOTRG is $O(\chi^7)$, the same as the HOTRG.
 %
 
-\subsection{Response analysis of the Gilt-HOTRG\label{RespAnaGiltHOTRG}}
-We will introduce a way to fix the gauge redundancy and give the
-explicit expression of the response matrix for the Gilt-HOTRG in this
-subsection.
+The coarse graining defined in Eq.~\eqref{def:RGeqGiltHOTRG} is able to simplify the $A^{\text{CDL}}$ tensor in Fig.~\ref{fig:ariseCDL} to a single number, 
+%
+\begin{align}\label{eq:CDL2number}
+    \tikzfig{singleCDL}
+    \xrightarrow{\text{Gilt-HOTRG}}
+    \left(
+        \tikzfig{CDLnumber}
+    \right)^4.
+\end{align}
+%
+To see this, notice that after the Gilt scheme described in Fig.~\ref{fig:gilt4hotrg}, the local patch of two $A^{\text{CDL}}$ tensors lose four outer horizontal legs of the $C$ matrices,
+%
+\begin{align}\label{eq:twoACDLunderGilt}
+    \tikzfig{twoACDL}
+    \xrightarrow[\text{Fig.}~\ref{fig:gilt4hotrg}]{\text{Gilt in}}
+    c_1\times \tikzfig{twoACDLgilt}\text{ },
+\end{align}
+%
+where $c_1$ is an overall multiplication constant.
+The subsequent HOTRG in the vertical direction sees the right hand side of Eq.~\eqref{eq:twoACDLunderGilt} and finds the isometry $w$ by examine $MM^{\dagger}$, with the $M$ defined in Eq.~\eqref{def:M-AA},
+%
+\begin{align}\label{eq:MMdaggerCDL}
+    \tikzfig{MMCDL} 
+    \propto 
+    \tikzfig{MMCDLdetail}\text{  },
+\end{align}
+%
+whose only eigenvector with non-zero eigenvalues is the vector in the outer product, properly normalized,
+%
+\begin{align}\label{def:innerMeigvec}
+    \tikzfig{CCnormedVector} 
+    \defeq 
+    \tikzfig{CCvector}\text{ } \bigg/
+    \sqrt{\tikzfig{CCnormSquare}}\text{ }.
+\end{align}
+%
+This vector is chosen by the HOTRG as $w$ and will project out the inner horizontal legs,
+%
+\begin{align}\label{eq:twoACDLunderGiltHOTRG}
+    \tikzfig{twoACDLgilt}
+    \xrightarrow[\text{HOTRG}]{\text{vertical}}
+    c_2 \times \tikzfig{twoACDLgilthotrg}\text{ },
+\end{align}
+%
+with $c_2$ another overall multiplication constant.
+Equations~\eqref{eq:twoACDLunderGilt} and~\eqref{eq:twoACDLunderGiltHOTRG} together demonstrate that half of the Gilt-HOTRG in the vertical direction truncates the bond dimensions of the two horizontal legs of $A^{\text{CDL}}$ to $\chi = 1$.
+It is easy to see that after the second half of the Gilt-HOTRG, the vertical legs will be cut away. 
+This shows that the full Gilt-HOTRG will simplify $A^{\text{CDL}}$ to a single number $c$. 
+The number $c$ can be determined by recalling that the free energy represented by the tensor network will stay unchanged after the coarse graining since every step of the Gilt-HOTRG applied to the $A^{\text{CDL}}$ is exact in
+principle. 
+The number of the tensors in the tensor network after the coarse graining will become one fourth of the previous. 
+The number of the loops, each consisting of four $C$ matrices, is the same as that of the tensors in the original tensor network. 
+As a result, to produce the same free energy, $c$ should be the loop raised to the fourth power.
+This completes the proof of Eq.~\eqref{eq:CDL2number}.
 %
 
-Part of the gauge redundancy can be fixed if the physical model
-possesses a global internal symmetry. The global symmetry can be
-incorporate into the tensor network representation of the
-model~\cite{Singh2010SymTen,Singh2011U1Ten,Singh2012SU2Ten}, which is a
-generalization of Schur's lemma applicable for general symmetric
-tensors. For example, the classical Ising model with only the
-nearest-neighbor interaction has $\mathbb{Z}_2$ symmetry. In its tensor
-network representation, each leg of the tensor $A$ will break into even
-and odd sectors. Half of the gauge redundancy will be fixed by going to
-the bases where the states in the even sector transform trivially and
-the states in the odd sector is multiplied by $-1$ under the spin flip
-transformation.
+Equation~\eqref{eq:CDL2number} shows that the Gilt-HOTRG can successfully filter out the local correlations among the spin variables around the corners at the lattice scale (see Fig.~\ref{fig:ariseCDL}).
+Since the CDL tensors are no longer fixed points for the RG equation of the Gilt-HOTRG, the peculiar fixed lines in Fig.~\ref{fig:tensorRGflow}(b) generated by the HOTRG will collapse to fixed points; we expect the RG equation of the Gilt-HOTRG is able to exhibit the critical fixed point tensor shown schematically in Fig.~\ref{fig:tensorRGflow}(a).
 %
 
-Most part of the remaining gauge redundancy can be automatically fixed
-in the Gilt-HOTRG due to the following property of the Gilt-HOTRG, whose
-proof will be provided in Appendix~\ref{appd:gaugeFix}. For two tensors
-$A, \tilde{A}$ that are related by the gauge transformation defined in
-Eq.~\eqref{def:gaugeTrans} where we further restrict $S_x,S_y$ to be
-orthogonal matrices, 
-the new tensors produced by the Gilt-HOTRG according to
-Eq.~\eqref{def:RGeqGiltHOTRG}, $A_c = \mathcal{T}\left(A\right),
-\tilde{A}_c = \mathcal{T}(\tilde{A})$ are equal up to sign ambiguities.
-The sign ambiguities can be easily fixed by comparing components of
-$A_c$ and $\tilde{A}_c$. After adding a sign fixing step in the
-Gilt-HOTRG (see Appendix~\ref{appd:gaugeFix}),
-we will have
+\subsection{Gauge fixing and linearization for the Gilt-HOTRG\label{sec:gaugefix}}
+We show how the gauge is fixed and give the explicit expression of the linearized RG equation for the Gilt-HOTRG in this subsection.
+%
+
+Part of the gauge can be fixed if the physical model possesses a global internal symmetry.
+The global symmetry can be incorporate into the tensor network representation of the model~\cite{Singh2010SymTen,Singh2011U1Ten,Singh2012SU2Ten}; it is a generalization of Schur's lemma from matrices to general tensors.
+For the 2D Ising model, $\mathbb{Z}_2$ symmetry can be imposed.
+Each index of the tensor $A$ breaks into even and odd sectors.
+Half of the gauge is fixed since $A$ is in the bases where the states in the even sector transform trivially and
+the states in the odd sector is multiplied by $-1$ under the spin flip operation.
+%
+
+Most of the remaining gauge in the degenerate sectors of $A$ can be automatically fixed by the Gilt-HOTRG due to the following property of its RG equation.
+The tensor RG equation in Eq.~\eqref{def:RGeqGiltHOTRG} can be written schematically as $A_c = \mathcal{T}\left(A\right)$.
+For two real tensors $A, \tilde{A}$ that are related by the gauge transformation defined in Eq.~\eqref{def:gaugeTrans} where we further restrict $S_x,S_y$ to be orthogonal matrices, the new tensors produced by the Gilt-HOTRG according to Eq.~\eqref{def:RGeqGiltHOTRG}, $A_c = \mathcal{T}\left(A\right), \tilde{A}_c = \mathcal{T}(\tilde{A})$ are equal up to sign ambiguities,
+%
+\begin{align}\label{eq:signAmbi}
+    \left(\tilde{A}_c \right)_{ijkl} =
+    \left(A_c\right)_{ijkl}(d_x)_i (d_y)_j (d_x)_k (d_y)_l, 
+\end{align}
+%
+where $d_x,d_y$ are vectors with components $\pm 1$ and can be determined by comparing the sign of the components of $\tilde{A}_c$ and $A_c$.
+After this sign fixing, the Gilt-HOTRG ensures
 %
 \begin{align}\label{eq:HOTRGgaugefix}
     \mathcal{T}(A) = \mathcal{T}(\tilde{A}).
 \end{align}
 %
-Since the orthogonal matrices $S_x, S_y$ are arbitrary,
-Eq.~\eqref{eq:HOTRGgaugefix} says that the whole equivalence class tensor
-$A$ lives in will be mapped into the same tensor $A_c$. This means
-that the Gilt-HOTRG, after incorporating the sign fixing step, will choose a
-preferred set of bases. It is worth to mention that the TRG has this
-property too~\cite{kadanoff2014}.
+Since the orthogonal matrices $S_x, S_y$ are arbitrary, equation~\eqref{eq:HOTRGgaugefix} says that the whole equivalence class $[A]$ will be mapped into the same tensor $A_c$. 
+This means that the Gilt-HOTRG, after incorporating the sign fixing step, will choose a preferred set of bases. 
+It is worth to mention that the TRG has a similar property~\cite{kadanoff2014}.
 %
 
-For a fixed-point tensor, Eq.~\eqref{eq:HOTRGgaugefix} indicates that we
-can start with any element $\tilde{A}^*$ in the equivalence class, and
-the Gilt-HOTRG will bring this tensor to the proper bases where further
-Gilt-HOTRG coarse graining will give a manifestly fixed-point tensor
+For a fixed-point tensor, equation~\eqref{eq:HOTRGgaugefix} indicates that we can start with any representation $\tilde{A}^*$ of the equivalence class $[A^*]$, and the Gilt-HOTRG will bring $\tilde{A}^*$ to the proper bases; further Gilt-HOTRG coarse graining will satisfy Eq.~\eqref{eq:tensorRGAstar}
 %
 \begin{align}\label{eq:GiltHOTRGfixT}
     \mathcal{T}(\tilde{A}^*) =
-    \mathcal{T}\left(\mathcal{T}(\tilde{A}^*)  \right) = A^*.
+    \mathcal{T}\left(\mathcal{T}(\tilde{A}^*)  \right) \equiv A^*.
 \end{align}
 %
 
-This leaves us a question of why we can restrict invertible matrices
-$S_x, S_y$ to be orthogonal. The justification comes from the
-numerical evidence in Sec.~\ref{benchmark:2DIsing}.
-Fig.~\ref{fig:flowAnorm}(a) and Fig.~\ref{fig:flowA}(a) demonstrate
-that the two fixed-point tensors before and after the Gilt-HOTRG
-have the same Frobenius norm and also the same singular values defined
-in Eq.~\eqref{def:Asvd}. These two quantities are not invariant under
-the most general gauge transformation defined in
-Eq.~\eqref{def:gaugeTrans}. They are only invariant if the matrices
-$S_x,S_y$ are unitary. Therefore, for real tensors $A$, the invertible
-matrices $S_x,S_y$ should be orthogonal.
+Let us prove the property of the tensor RG equation of the Gilt-HOTRG in Eq.~\eqref{eq:HOTRGgaugefix}.
+We focus on the equivalence relation defined as
+%
+\begin{align}\label{eq:simorth}
+    \tikzfig{Atilde} 
+    = 
+    \scalebox{0.8}{\tikzfig{AsimOrth}},
+\end{align}
+%
+where $S_x,S_y$ are orthogonal matrices. 
+It suffices to discuss the first half of the Gilt-HOTRG coarse graining defined in
+Eq.~\eqref{def:ApycontrGilt}. 
+We want to show that if $\tilde{A}$ is fed into the right hand side of Eq.~\eqref{def:ApycontrGilt}, the $\tilde{A}'$ we obtain in the left hand is related with the original $A'$ by (after sign fixing)
+%
+\begin{align}\label{eq:Ap2Aptilde}
+    \tikzfig{Aptilde} 
+    = 
+    \scalebox{0.8}{\tikzfig{ApsimOrth}},
+\end{align}
+which means that the gauge redundancy in the horizontal legs will be fixed during the first half of the Gilt-HOTRG in the vertical direction.
+It follows immediately that the full Gilt-HOTRG will fixed the gauge.
 %
 
-After reaching the fixed-point tensor $A^*$, the next step is to
-linearize the RG equation of the Gilt-HOTRG in
-Eq.~\eqref{def:RGeqGiltHOTRG} to obtain the
-response matrix $\mathcal{R}$. We substitute $A = A^* + \delta A$ into
-the right hand side of Eq.~\eqref{def:RGeqGiltHOTRGepl} and collect
-terms that are first order in $\delta A$ to get $\delta A_c$,
+Let us first figure out the correct $\tilde{Q}_A,\tilde{Q}_B$ matrices in Fig.~\ref{fig:gilt4hotrg}. 
+The environment in Eq.~\eqref{eq:bondEnvSVD} is multiplied by several orthogonal matrices, which will not change the singular values, so $\tilde{s}_i=s_i$. 
+It is easy to check that the tensor $U$ in the singular value decomposition becomes (the sign ambiguities coming from the singular value decomposition does not matter here)
+%
+\begin{align}\label{eq:Utilde}
+    \tikzfig{Utilde} = \tikzfig{U2Utilde}.
+\end{align}
+%
+The vector $\tilde{t}$ is thus the same as the original $t$ by its definition in Eq.~\eqref{def:tfromU}, which further gives $\tilde{t}'_i= t'_i$ since the tilde version of the right hand side of Eq.~\eqref{eq:tpfromt} is the same as the original version. 
+Finally, equation~\eqref{def:QfromUtp} gives
+%
+\begin{align}\label{eq:QAtilde}
+    \tikzfig{QAtildeMat} \texteq{\eqref{def:QfromUtp}}
+    \tikzfig{Utp2QAtilde} &= \tikzfig{Utp2Qupdate} \nonumber\\ 
+                          &= \tikzfig{QAMatUU}.  
+\end{align}
+%
+Equation~\eqref{eq:QAtilde} means that the low rank matrix $Q_A$ transforms in a nice way when we perform a gauge transformation of the tensor $A$ defined in Eq.~\eqref{eq:simorth}. 
+If the singular values of $Q_A$ \textit{does not have degeneracies}, after splitting of $Q_A$, we have $Q_{Ar},Q_{Al}$ transform like
+%
+\begin{align}\label{eq:QpieceTrans}
+    \tikzfig{QArTransf} \text{ and } \tikzfig{QAlTransf}\text{ }. 
+\end{align}
+% 
+The $S_x,S_x^T$ matrices that $Q_{Ar},Q_{Al}$ pick up will cancel those acting on the $A$ tensor when $\tilde{Q}_{Ar},\tilde{Q}_{Al}$ are contracted with the $\tilde{A}$ tensor in Eq.~\eqref{eq:simorth}.
+The same argument works for $Q_B$. 
+Equation~\eqref{eq:QpieceTrans} indicates that all the $S_x,S_x^T$ matrices acting on the four horizontal legs of the local patch in Eq.~\eqref{def:ApycontrGilt} will be canceled by the low-rank matrices used in the Gilt process. 
+The above analysis shows that during the first half of the Gilt-HOTRG, the gauge in the horizontal legs will be fixed since the Gilt favors the bases chosen by the singular value decompositions of $Q_A, Q_B$.
+%
+
+However, there is one more twist. In practice, we observe that the low-rank matrices are projection operators, which are highly degenerated. 
+As a result, the gauge redundancy in the degenerate subspace will leak out, which will be seen by the subsequent HOTRG process. 
+Luckily, the HOTRG has a similar feature as the Gilt process.
+It favors bases where the positive semi-definite matrix $M M^{\dagger}$ (see the definition of matrix $M$ in Eq.~\eqref{def:M-AA}) is diagonal. 
+It is straightforward to see that the isometry $w$ will pick up the suitable $S_x,S_x^T$ matrices to cancel out the gauge transformation leaking out from the Gilt process.
+There are still concerns about whether degeneracies occur in eigenvalues of $M M^{\dagger}$. 
+Our result in Fig.~\ref{fig:flowA}(b) shows, a posteriori, that this potential degeneracies do not cause any problem for the 2D Ising model at criticality.
+%
+
+We still have one last question to answer: why can we restrict invertible matrices $S_x, S_y$ to be orthogonal? 
+The justification comes from the numerical evidence in Sec.~\ref{benchmark:2DIsing}.
+Fig.~\ref{fig:flowAnorm}(a) and Fig.~\ref{fig:flowA}(a) demonstrate that the two fixed-point tensors before and after the Gilt-HOTRG have the same Frobenius norm and also the same singular values defined in Eq.~\eqref{def:Asvd}. 
+These two quantities are not invariant under the most general gauge transformation defined in Eq.~\eqref{def:gaugeTrans}. 
+They are only invariant if the matrices $S_x,S_y$ are unitary. 
+Therefore, for a real tensor $A$, the invertible matrices $S_x,S_y$ should be orthogonal.
+This completes our argument of Eq.~\eqref{eq:HOTRGgaugefix}.
+%
+
+After reaching the fixed-point tensor $A^*$ in Eq.~\eqref{eq:GiltHOTRGfixT}, the next step is to linearize the RG equation of the Gilt-HOTRG in Eq.~\eqref{def:RGeqGiltHOTRG}.
+We substitute $A = A^* + \delta A$ into the right hand side of Eq.~\eqref{def:RGeqGiltHOTRG} and collect terms that are first order in $\delta A$ to get $\delta A_c$,
 %
 \begin{widetext}
     \begin{align}\label{eq:respMatGiltHOTRG}
-    %\begin{minipage}{2.0truecm}
-    %\centering
-    %\includegraphics[width=1.8truecm,clip]{./figs/deltaAc}
-    %\end{minipage}
     \tikzfig{deltaAc}
     &=
-    %\begin{minipage}{5.0truecm}
-    %\centering
-    %\includegraphics[width=4.8truecm,clip]{./figs/deltaA1}
-    %\end{minipage}
     \scalebox{0.8}{\tikzfig{deltaA1}}
     +
     \scalebox{0.8}{\tikzfig{deltaA2}}
-    %\begin{minipage}{5.0truecm}
-    %\centering
-    %\includegraphics[width=4.8truecm,clip]{./figs/deltaA2}
-    %\end{minipage} %\nonumber\\
-%    &+
-%    \begin{minipage}{5.0truecm}
-%    \centering
-%    \includegraphics[width=4.8truecm,clip]{./figs/deltaA3}
-%    \end{minipage}
-%    +
-%    \begin{minipage}{5.0truecm}
-%    \centering
-%    \includegraphics[width=4.8truecm,clip]{./figs/deltaA4}
-%    \end{minipage}
     + \text{ two similar terms}.
     \end{align}
 \end{widetext}
 %
-The result resembles the product rule for taking the differentials in
-calculus. Equation~\eqref{eq:respMatGiltHOTRG} provides a nice pictorial
-representation of how the response matrix $\mathcal{R}$ for the Gilt-HOTRG
-acts on the perturbation $\delta A$ around a fixed-point tensor $A^*$.
-In practice, after the fixed-point tensor $A^*$, pieces of low-rank
-matrices $Q$ and isometric tensors $w, v$ in
-Eq.~\eqref{def:RGeqGiltHOTRGepl} are determined, automatic
-differentiation techniques can linearize
-Eq.~\eqref{def:RGeqGiltHOTRGepl} around $A^*$ and generate the action of
-the response matrix described in Eq.~\eqref{eq:respMatGiltHOTRG} for us.
-There are many libraries that support automatic differentiation,
-including PyTorch~\cite{pytorch} and JAX~\cite{jax2018github}.
+The result resembles the product rule for taking the differentials in calculus.
+Equation~\eqref{eq:respMatGiltHOTRG} provides a simple pictorial representation of the linearized tensor RG equation $\mathcal{R}$ in Eq.~\eqref{eq:respMatTen} for the Gilt-HOTRG\@.
+In practice, after the fixed-point tensor $A^*$, the pieces of low-rank matrices $Q_A,Q_B$ and the isometric tensors $w, v$ in Eq.~\eqref{def:RGeqGiltHOTRG} are determined, automatic differentiation can linearize Eq.~\eqref{def:RGeqGiltHOTRG} around $A^*$ and generate Eq.~\eqref{eq:respMatGiltHOTRG} for us.
+There are many libraries that support automatic differentiation, including PyTorch~\cite{pytorch} and JAX~\cite{jax2018github}.
 %
 
-% TODO
-[\textbf{Maybe add justifications for why we can ignore corrections
-coming from isometric tensors and low-rank matrices.}]
-
-The computation cost for calculating the action of the response matrix
-on $\delta A$ shown in Eq.~\eqref{eq:respMatGiltHOTRG} is $O(\chi^7)$.
-
-\section{Benchmark results\label{benchmark}}
-We use the classical Ising model in 1D and 2D to demonstrate how to carry out
-the response analysis in tensor space. The Ising model in 1D serves as a
-concrete example to elucidate the connection with the old approach; the
-general argument of the connection has been explained in
-Sec.~\ref{relateTensorCoupling}. The Ising model in 2D provides more
-nontrivial benchmark results for our method.
+\section{Benchmarks\label{benchmark}}
+We use the classical Ising model in 1D and 2D to demonstrate how to carry out the canonical RG prescription in tensor space. 
+The Ising model in 1D serves as a concrete example to elucidate the general argument in Sec.~\ref{RGprescrip}. 
+The Ising model in 2D provides more nontrivial benchmark results for our method.
 %
 
 \subsection{The Ising Model in 1D\label{benchmark:1DIsing}}
-The Ising model in 1D has an exact real-space RG transformation realized via
-decimation. Even better, the decimation has a natural tensor
-network representation. This makes the Ising model in 1D a nice example to see
-the relation between the old and the new approaches of response
-analysis.
+The Ising model in 1D has an exact real-space RG transformation realized via decimation. 
+Even better, the decimation has a natural tensor network representation. 
+This makes the Ising model in 1D a nice example to see the relation between the old and the new approaches of canonical RG prescription.
 %
 
 The partition function is
@@ -1494,29 +867,26 @@ It is realized by summing over all the even-numbered spins and then
 renumber the remaining odd-numbered spins. 
 %
 \begin{figure}[h]
-    %\includegraphics[width=7.5cm]{./figs/Ising1D-decimation}
     \scalebox{0.98}{\tikzfig{Ising1D-decimation}}
-    \caption{\label{fig:Ising1D-decimation}The decimation for the 1D
-    Ising model. The black dots are spin variables. The spins on even
-sites $\sigma_2,\sigma_4,\ldots$ are summed over and the remaining spins
-$\sigma_1,\sigma_3,\ldots$ are renamed $\sigma_1',\sigma_2',\ldots$ to
-become new spin variables. In the tensor network language, this
-decimation is nothing but a matrix multiplication of two transfer matrices
-$A$ to form a coarse-grained matrix $A_c = AA$.}
+    \caption{\label{fig:Ising1D-decimation}
+        The decimation for the 1D Ising model. 
+        The black dots are spin variables. 
+        The spins on even sites $\sigma_2,\sigma_4,\ldots$ are summed over and the remaining spins $\sigma_1,\sigma_3,\ldots$ are renamed $\sigma_1',\sigma_2',\ldots$ to become new spin variables. 
+        In the tensor network language, this decimation is nothing but a matrix multiplication of two transfer matrices $A$ to form a coarse-grained matrix $A_c = AA$.
+    }
 \end{figure}
 %
 
-We denote $\sigma_i'=\sigma_{2i-1}, s_i = \sigma_{2i}$ and sum over all
-$s$-spins in the partition function in Eq.~\eqref{def:Z4Ising1D} to have
+We denote $\sigma_i'=\sigma_{2i-1}, s_i = \sigma_{2i}$ and sum over all $s$-spins in the partition function in Eq.~\eqref{def:Z4Ising1D} to have
 %
 \begin{align}\label{eq:oldK2newKZ}
-    Z_{\text{1D}} = \sum_{\{\sigma_j'\}} \sum_{\{s_j \}}
+    Z_{\text{1D}} = 
+    \sum_{\{\sigma_j'\}} \sum_{\{s_j \}}
     \exp{\left[ \sum_i^{N/2} \left[\mathscr{H}\left(\sigma_i',s_i\right)
     + \mathscr{H}\left(s_i,\sigma_{i+1}'\right)\right]\right]},
 \end{align}
 %
-from which we can define the effective local interaction $\mathscr{H}'$
-through
+from which we can define the effective local interaction $\mathscr{H}'$ through
 %
 \begin{align}\label{eq:oldK2newK}
     \exp{\left[\mathscr{H}'\left(\sigma_1',\sigma_2'\right)\right]} =
@@ -1524,11 +894,10 @@ through
         \mathscr{H}\left(s,\sigma_2'\right)\right]},
 \end{align}
 %
-where the effective local interaction has the same form as the old one
-in Eq.~\eqref{def:H4Ising1D} but with new coupling constants $g',h',K'$,
+where the effective local interaction has the same form as the old one in Eq.~\eqref{def:H4Ising1D} but with new coupling constants $g',h',K'$,
 %
 \begin{align}\label{def:newH4Ising1D}
-    \exp{\left[\mathscr{H}'\left(\sigma_1,\sigma_2\right)\right]} = g' +
+    \mathscr{H}'\left(\sigma_1,\sigma_2\right) = g' +
     \frac{h'}{2}\left(\sigma_1 + \sigma_2\right) + K' \sigma_1 \sigma_2.
 \end{align}
 %
@@ -1539,23 +908,16 @@ The partition function can be fully described by the new $\sigma'$-spins,
     \exp{\left[\sum_{i=1}^{N/2}\mathscr{H}'\left(\sigma_i',\sigma_{i+1}'\right)\right]}.
 \end{align}
 %
-Equations~\eqref{def:H4Ising1D}, \eqref{eq:oldK2newK}
-and~\eqref{def:newH4Ising1D} together define the RG equation that maps
-the old coupling constants $(g,h,K)$ to the new coupling constants
-$(g',h',K')$. The explicit expression of the RG equation can be found in
-Kardar's textbook~\cite{kardar2007}. The RG equation has two fixed
-points, one for high temperature phase and the other for low temperature
-phase. Let us focus on the high temperature fixed point here, where the
-coupling constants are $g^* = \log\left(1/2\right),h^*=0,K^*=0$. The
-linearized RG equation around this fixed point gives $\delta g' =
-2\delta g, \delta h' = \delta h, \delta K' = 0\times \delta K$. The
-response matrix is in its diagonal form with eigenvalues $2,1,0$ for
-$\delta g,\delta h,\delta K$ respectively.
+Equations~\eqref{def:H4Ising1D}, \eqref{eq:oldK2newK} and~\eqref{def:newH4Ising1D} together define the RG equation that maps the old coupling constants $(g,h,K)$ to the new coupling constants $(g',h',K')$. 
+The explicit expression of the RG equation can be found in Kardar's textbook~\cite{kardar2007}. 
+The RG equation has two fixed points, one for high-temperature phase and the other for low-temperature phase. 
+Let us focus on the high-temperature fixed point here, where the coupling constants are $g^* = \log\left(1/2\right),h^*=0,K^*=0$. 
+The linearized RG equation around this fixed point gives $\delta g' = 2\delta g, \delta h' = \delta h, \delta K' = 0\times \delta K$. 
+The matrix $\mathcal{R}$ is in its diagonal form with eigenvalues $2,1,0$ for $\delta g,\delta h,\delta K$ respectively.
 %
 
-Next, we translate the above decimation process into tensor network
-language. We first define the tensor $A$ sitting on the bond connecting two
-spins shown in Fig.~\ref{fig:Ising1D-decimation} as
+Next, we translate the above decimation process into tensor network language. 
+We first define the tensor $A$ sitting on the bond connecting two spins shown in Fig.~\ref{fig:Ising1D-decimation} as
 %
 \begin{subequations}\label{def:A4Ising1D}
     \begin{align}\label{def:A4Ising1DCompo}
@@ -1573,18 +935,15 @@ spins shown in Fig.~\ref{fig:Ising1D-decimation} as
     \end{align}
 \end{subequations}
 %
-which is the familiar transfer matrix. Each component of the tensor $A$ is
-a function of coupling constants $g, h, K$, as is claimed in
-Eq.~\eqref{eq:K2A}. The partition function in Eq.~\eqref{def:Z4Ising1D}
-can be rewritten as
+which is the familiar transfer matrix. Each component of the tensor $A$ is a function of coupling constants $g, h, K$, as is claimed in Eq.~\eqref{eq:K2A}. 
+The partition function in Eq.~\eqref{def:Z4Ising1D} can be rewritten as
 %
 \begin{align}\label{eq:Z4Ising1DbyA}
     Z_{\text{1D}} = \sum_{\{\sigma_j\}} \bigotimes_{i=1}^N A_{\sigma_i
         \sigma_{i+1}}.
 \end{align}
 %
-The decimation in the tensor network language is a multiplication of
-two old $A$ matrices to form a new $A_c$ matrix,
+The decimation in the tensor network language is a multiplication of two old $A$ matrices to form a new $A_c$ matrix,
 %
 \begin{align}\label{def:Ising1DRGeqTen}
     A_c = AA.
@@ -1593,23 +952,15 @@ two old $A$ matrices to form a new $A_c$ matrix,
 In terms of the new $A_c$ matrix, the partition function is
 %
 \begin{align}\label{eq:Z4Ising1DbyAp}
-    Z_{\text{1D}} = \sum_{\{\sigma_j'\}} \prod_{i=1}^{N/2}
+    Z_{\text{1D}} = \sum_{\{\sigma_j'\}} \bigotimes_{i=1}^{N/2}
     (A_c)_{\sigma_i' \sigma_{i+1}'}.
 \end{align}
 %
-Equation~\eqref{def:Ising1DRGeqTen} is the RG equation in the tensor network
-language. Now, each component of $A_c$ is a function of coupling
-constants $g,h,K$ but with different functional form, as is claimed in
-Eq.~\eqref{eq:tensorEleRG}. If we further require $A_c$ has the same
-form as $A$ in Eq.~\eqref{def:A4Ising1D} but with $\mathscr{H}$ replaced
-by $\mathscr{H}'$, new coupling constants $g',h',K'$ can be solved in
-terms of the old ones, which is what we do in the conventional approach. The
-advantage of using the tensor network language is that the RG equation in
-Eq.~\eqref{def:Ising1DRGeqTen} suffices for the response analysis in
-tensor space. First, let us set the coupling constants in
-Eq.~\eqref{def:A4Ising1Depl} to be the high temperature fixed point
-$g^* = \log{\left(1/2\right)}, h^*=0, K^* = 0$ to get the fixed-point
-tensor,
+Equation~\eqref{def:Ising1DRGeqTen} is the RG equation in the tensor network language. 
+Now, each component of $A_c$ is a function of coupling constants $g,h,K$ but with different functional form, as is claimed in Eq.~\eqref{eq:tensorEleRG}. 
+If we further require $A_c$ has the same form as $A$ in Eq.~\eqref{def:A4Ising1D} but with $\mathscr{H}$ replaced by $\mathscr{H}'$, new coupling constants $g',h',K'$ can be solved in terms of the old ones, which is what we do in the conventional approach. 
+The advantage of using the tensor network language is that the RG equation in Eq.~\eqref{def:Ising1DRGeqTen} suffices for the canonical RG prescription in tensor space. 
+First, let us set the coupling constants in Eq.~\eqref{def:A4Ising1Depl} to be the high-temperature fixed point $g^* = \log{\left(1/2\right)}, h^*=0, K^* = 0$ to get the fixed-point tensor,
 %
 \begin{align}\label{eq:fixedA4Ising1D}
     A^* = \frac{1}{2}
@@ -1619,21 +970,17 @@ tensor,
 \end{pmatrix}.
 \end{align}
 %
-It can be checked that $A^* A^* = A^*$. The linearized version of
-Eq.~\eqref{def:Ising1DRGeqTen} around this fixed-point tensor is
+It can be checked that $A^* A^* = A^*$. 
+The linearized version of Eq.~\eqref{def:Ising1DRGeqTen} around this fixed-point tensor is
 %
 \begin{align}\label{eq:Ising1DRespEq}
     \delta A_c = \delta A A^* + A^* \delta A = I \delta A A^* + A^*
     \delta A I,
 \end{align}
 %
-where in the last equal sign, we add two identity matrices. Write
-Eq.~\eqref{eq:Ising1DRespEq} in its component form, we have
-$\left(\delta A_c\right)_{ab} =
-\sum_{\alpha,\beta}I_{a\alpha}\left(\delta A\right)_{\alpha\beta}
-\left(A^*\right)_{\beta b} + \left(A^*\right)_{a\alpha} \left(\delta
-A\right)_{\alpha \beta} I_{\beta b}$. We can read off the response
-matrix as
+where in the last equal sign, we add two identity matrices. 
+Write Eq.~\eqref{eq:Ising1DRespEq} in its component form, we have $\left(\delta A_c\right)_{ab} = \sum_{\alpha,\beta}I_{a\alpha}\left(\delta A\right)_{\alpha\beta} \left(A^*\right)_{\beta b} + \left(A^*\right)_{a\alpha} \left(\delta A\right)_{\alpha \beta} I_{\beta b}$. 
+We can read off the matrix of the linearized RG equation as
 %
 \begin{align}\label{eq:Ising1DRespMat}
     \mathcal{R}_{(ab)(\alpha \beta)} = \frac{\left(\delta
@@ -1642,9 +989,8 @@ matrix as
     I_{\beta b},
 \end{align}
 %
-where we group two indices $a,b$ as a single index $(ab)$, and
-$\alpha,\beta$ as $(\alpha\beta)$. If we put the grouped index into the
-following order,
+where we group two indices $a,b$ as a single index $(ab)$, and $\alpha,\beta$ as $(\alpha\beta)$. 
+If we put the grouped index into the following order,
 %
 \begin{align}\label{def:orderConvention}
     (11) \rightarrow 1, (12) \rightarrow 2, (21) \rightarrow 3, (22)
@@ -1663,21 +1009,12 @@ the response matrix takes the following value
 \end{pmatrix}.
 \end{align}
 %
-It is a symmetric matrix, and we can find its eigenvalues and
-eigenvectors: $\lambda_1 = 2,\mathbf{v}_1 = (1,1,1,1)^T$; $\lambda_2 =
-1,\mathbf{v}_2 = (1,0,0,-1)^T$; $\lambda_3 =1, \mathbf{v}_3 =
-(0,1,-1,0)^T$ and $\lambda_4 = 0, \mathbf{v}_4 = (1,-1,-1,1)^T$. The
-eigenvalues are the same as what we get in the conventional method. 
+It is a symmetric matrix, and we can find its eigenvalues and eigenvectors: $\lambda_1 = 2,\mathbf{v}_1 = (1,1,1,1)^T$; $\lambda_2 = 1,\mathbf{v}_2 = (1,0,0,-1)^T$; $\lambda_3 =1, \mathbf{v}_3 = (0,1,-1,0)^T$ and $\lambda_4 = 0, \mathbf{v}_4 = (1,-1,-1,1)^T$. 
+The eigenvalues are the same as what we get in the conventional method. 
 %
 
-The relation between the response analysis in tensor space and the
-conventional approach can be clarified by noticing that the relation between
-the coupling constants and the tensor $A$ is given in
-Eq.~\eqref{def:A4Ising1Depl}. We perturb the coupling constants around
-the fixed point, $g_p = \log{(1/2)} + \delta g, h_p = \delta h, K_p =
-\delta K$, substitute them into the right hand side of
-Eq.~\eqref{def:A4Ising1Depl} and Taylor expand to get the perturbed
-tensor,
+The relation between the canonical RG prescription in tensor space and the Hamiltonian space can be clarified by noticing that the relation between the coupling constants and the tensor $A$ is given in Eq.~\eqref{def:A4Ising1Depl}. 
+We perturb the coupling constants around the fixed point, $g_p = \log{(1/2)} + \delta g, h_p = \delta h, K_p = \delta K$, substitute them into the right hand side of Eq.~\eqref{def:A4Ising1Depl} and Taylor expand to get the perturbed tensor,
 %
 \begin{align}\label{eq:Apert4Ising1D}
     A_p &= A^* + \frac{1}{2} \delta g
@@ -1718,135 +1055,74 @@ We can read off $\delta A = A_p - A^*$ as
     \end{pmatrix},
 \end{align}
 %
-which is Eq.~\eqref{eq:deltaK2deltaA} in practice. Recall the order
-convention in Eq.~\eqref{def:orderConvention}, we see the correspondence
-$\mathbf{v}_1 \leftrightarrow \delta g$, $\mathbf{v}_2 \leftrightarrow
-\delta h$ and $\mathbf{v}_4 \leftrightarrow \delta K$. All of the
-results fit together nicely! 
+which is Eq.~\eqref{eq:deltaK2deltaA} in practice. 
+Recall the order convention in Eq.~\eqref{def:orderConvention}, we see the correspondence $\mathbf{v}_1 \leftrightarrow \delta g$, $\mathbf{v}_2 \leftrightarrow \delta h$ and $\mathbf{v}_4 \leftrightarrow \delta K$.
 %
-
 
 \subsection{The Ising Model in 2D\label{benchmark:2DIsing}}
-There is no exact RG transformation for the Ising model in 2D, so we will
-use the Gilt-HOTRG developed in Sec.~\ref{gilt-hotrg} to generate an RG flow
-in tensor space. The partition function is given in
-Eq.~\eqref{eq:2DIsingZ} and we translate the partition function into
-a tensor network in Fig.~\ref{fig:spin2tensor}. Let us denote the
-initial tensor in Eq.~\eqref{def:tensorA} as $A^{(0)}$. To prevent a
-rapid grow of the magnitude of the tensor during the RG transformation, we
-pull out the Frobenius norm of the tensor, $A^{(0)} = \Vert
-A^{(0)}\Vert \mathcal{A}^{(0)}$, to define a normalized tensor
-$\mathcal{A}^{(0)}$. The normalized tensor $\mathcal{A}^{(0)}$ will be
-fed into the RG equation of the Gilt-HOTRG in Eq.~\eqref{def:RGeqGiltHOTRG}
-and we denote the output coarse-grained tensor as $A^{(1)}$, from which
-the norm $\Vert A^{(1)}\Vert$ is pulled out and the normalized tensor
-$\mathcal{A}^{(1)}$ is defined the same way as the previous step. The
-process can be repeated so we will have $A^{(n)} = \Vert A^{(n)}\Vert
-\mathcal{A}^{(n)}$ at the $n$-th step. The RG flow in tensor space can
-be conveniently visualized by examining the evolution of the norms
-$\Vert A^{(n)}\Vert$ as the RG step $n$ increases.
 %%
-\begin{figure}[htb]
-    % \includegraphics[width=7.5cm]{./figs/flowAnorm}
+\begin{figure}[tb]
     \includegraphics[width=\columnwidth]{./figures/AnormFlow-a.pdf}
     \includegraphics[width=\columnwidth]{./figures/AnormFlow-b.pdf}
-    \caption{\label{fig:flowAnorm}The RG flows of the tensor norms $\Vert
-    A^{(n)} \Vert$ at temperatures near the estimated critical
-temperature $T_c^{[\chi]}$. Different markers represent different
-deviations $| \Delta T| $ from $T_c^{[\chi]}$. Blue solid lines are for
-$\Delta T<0$ and black dashed lines for $\Delta T>0$. (a) For the
-Gilt-HOTRG with $\chi = 30,\epsilon_{\text{gilt}} = 6\times 10^{-6}$,
-two trivial fixed points are isolated and the critical fixed point can
-be reached. It corresponds to the schematic RG flows in
-Fig.~\ref{fig:tensorRGflow}(a). (b) For the HOTRG with $\chi = 12$, we
-have fixed lines and there is no exhibition of a critical fixed point.
-It corresponds to the schematic RG flows in
-Fig.~\ref{fig:tensorRGflow}(b).}
+    \caption{\label{fig:flowAnorm}
+        The RG flows of the tensor norms $\Vert A^{(n)} \Vert$ at temperatures near the estimated critical temperature $T_c^{[\chi]}$. 
+        Different markers represent different deviations $| \Delta T| $ from $T_c^{[\chi]}$. Blue solid lines are for $\Delta T<0$ and black dashed lines for $\Delta T>0$. 
+        (a) For the Gilt-HOTRG with $\chi = 30,\epsilon_{\text{gilt}} = 6\times 10^{-6}$, two trivial fixed points are isolated and the critical fixed point can be reached. It corresponds to the schematic RG flows in Fig.~\ref{fig:tensorRGflow}(a). 
+        (b) For the HOTRG with $\chi = 12$, we have fixed lines and there is no exhibition of a critical fixed point. 
+        It corresponds to the schematic RG flows in Fig.~\ref{fig:tensorRGflow}(b).
+    }
 \end{figure}
-%
-
-The RG flows of the norms $\Vert A^{(n)} \Vert$ indicate the Gilt-HOTRG is
-capable of generating a correct RG flow for the 2D Ising model in tensor
-space shown schematically in Fig.~\ref{fig:tensorRGflow}(a). For example,
-for bond dimension $\chi = 30$ and the hyper-parameter for the Gilt process
-$\epsilon_{\text{gilt}} = 6\times 10^{-6}$, Fig.~\ref{fig:flowAnorm}(a)
-shows several RG flows of the tensor norms $\Vert A^{(n)} \Vert$ at
-different temperatures. For a given bond dimension $\chi$, there is an
-estimated critical
-temperature $T_c^{[\chi]}$ at which the tensor
-hits the critical surface and will flow to the critical fixed-point
-tensor $(A^{[\chi]})^*_{\text{cr}}$. The $T_c^{[\chi]}$ can be determined
-using the bisection method, and for $\chi = 30$ the difference between
-the estimated value $T_c^{[30]}$and the exact $T_c$, $|T_c^{[30]} - T_c|
-/ T_c$, is of order $10^{-6}$. At temperatures off by $\Delta T = \pm 10^{-3}$
-from $T_c^{[30]}$, the tensor flows to the high- and
-low-temperature trivial fixed-point tensors respectively before it comes
-near to $(A^{[30]})^*_{\text{cr}}$. As $|\Delta T|$ becomes smaller to
-order of $10^{-6}$, the tensor will stay in the vicinity of the critical
-fixed-point tensor $(A^{[30]})^*_{\text{cr}}$ for a while and then flow
-away to one of the two trivial fixed-point tensors. If $|\Delta T|$
-becomes smaller further to $10^{-10}$, the tensor
-will stay longer near $(A^{[30]})^*_{\text{cr}}$. By comparison, the
-RG flow of $\Vert A^{(n)}\Vert$ generated by the HOTRG with bond
-dimension $\chi = 12$ is displayed in Fig.~\ref{fig:flowAnorm}(b). The RG
-flow shows that the RG equation in Eq.~\eqref{def:RGeqHOTRG} cannot
-exhibit a
-critical fixed-point tensor or produce isolated trivial fixed-point
-tensors. It is interesting to mention that the RG flow generated by the
-TRG has a similar behavior~\cite{Berker2008} for bond
-dimensions $\chi > 10$.
-%%
-\begin{figure}[htb]
-    %\includegraphics[width=7.5cm]{./figs/flowA}
+%%%
+\begin{figure}[tb]
     \includegraphics[width=\columnwidth]{./figures/flowA-singVal.pdf}
     \includegraphics[width=\columnwidth]{./figures/flowA-diff.pdf}
-    \caption{\label{fig:flowA}The RG flows of (a) singular values defined in
-        Eq.~\eqref{def:Asvd} and (b) the difference between the normalized
-tensors $\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)} \Vert$, both at
-temperature $T_c^{[30]}$ for the Gilt-HOTRG with $\chi = 30,
-\epsilon_{\text{gilt}} = 6\times 10^{-6}$.}
+    \caption{\label{fig:flowA}
+        The RG flows of (a) singular values defined in Eq.~\eqref{def:Asvd} and (b) the difference between the normalized tensors $\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)} \Vert$, both at temperature $T_c^{[30]}$ for the Gilt-HOTRG with $\chi = 30, \epsilon_{\text{gilt}} = 6\times 10^{-6}$.
+    }
 \end{figure}
 %
+There is no exact RG transformation for the Ising model in 2D, so we will use the Gilt-HOTRG developed in Sec.~\ref{sec:gilthotrg} to generate an RG flow in tensor space. 
+The partition function is given in Eq.~\eqref{eq:2DIsingZ} and we translate the partition function into a tensor network in Fig.~\ref{fig:spin2tensor}. 
+Let us denote the initial tensor in Eq.~\eqref{def:tensorA} as $A^{(0)}$. 
+To prevent a rapid grow of the magnitude of the tensor during the RG transformation, we pull out the Frobenius norm of the tensor, $A^{(0)} = \Vert A^{(0)}\Vert \mathcal{A}^{(0)}$, to define a normalized tensor $\mathcal{A}^{(0)}$. 
+The normalized tensor $\mathcal{A}^{(0)}$ will be fed into the RG equation of the Gilt-HOTRG in Eq.~\eqref{def:RGeqGiltHOTRG} and we denote the output coarse-grained tensor as $A^{(1)}$, from which the norm $\Vert A^{(1)}\Vert$ is pulled out and the normalized tensor $\mathcal{A}^{(1)}$ is defined the same way as the previous step. 
+The process can be repeated so we will have $A^{(n)} = \Vert A^{(n)}\Vert \mathcal{A}^{(n)}$ at the $n$-th step. 
+The RG flow in tensor space can be conveniently visualized by examining the evolution of the norms $\Vert A^{(n)}\Vert$ as the RG step $n$ increases.
+%
 
-To make sure that the plateau in the RG flow of $\Vert A^{(n)} \Vert$
-gives a critical fixed-point tensor $(A^{[30]})^*_{\text{cr}}$ at the
-estimated critical temperature $T_c^{[30]}$, we plot the singular values
-$s^{(n)}$ of tensors $\mathcal{A}^{(n)}$ defined as
+The RG flows of the norms $\Vert A^{(n)} \Vert$ indicate the Gilt-HOTRG is capable of generating a correct RG flow for the 2D Ising model in tensor space shown schematically in Fig.~\ref{fig:tensorRGflow}(a). 
+For example, for bond dimension $\chi = 30$ and the hyper-parameter of the Gilt process $\epsilon_{\text{gilt}} = 6\times 10^{-6}$, Fig.~\ref{fig:flowAnorm}(a) shows several RG flows of the tensor norms $\Vert A^{(n)} \Vert$ at different temperatures. 
+For a given bond dimension $\chi$, there is an estimated critical temperature $T_c^{[\chi]}$ at which the tensor hits the critical surface and will flow to the critical fixed-point tensor $(A^{[\chi]})^*_{\text{cr}}$. 
+The $T_c^{[\chi]}$ can be determined using the bisection method, and for $\chi = 30$ the difference between the estimated value $T_c^{[30]}$and the exact $T_c$, $|T_c^{[30]} - T_c| / T_c$, is of order $10^{-6}$. 
+At temperatures off by $\Delta T = \pm 10^{-3}$ from $T_c^{[30]}$, the tensor flows to the high- and low-temperature trivial fixed-point tensors respectively before it comes near to $(A^{[30]})^*_{\text{cr}}$. 
+As $|\Delta T|$ becomes smaller to order of $10^{-6}$, the tensor will stay in the vicinity of the critical fixed-point tensor $(A^{[30]})^*_{\text{cr}}$ for a while and then flow away to one of the two trivial fixed-point tensors. 
+If $|\Delta T|$ becomes smaller further to $10^{-10}$, the tensor will stay longer near $(A^{[30]})^*_{\text{cr}}$. 
+By comparison, the RG flow of $\Vert A^{(n)}\Vert$ generated by the HOTRG with bond dimension $\chi = 12$ is displayed in Fig.~\ref{fig:flowAnorm}(b). 
+The RG flow shows that the HOTRG has difficulty in exhibiting a critical fixed-point tensor or producing isolated trivial fixed-point tensors. 
+It is interesting to mention that the RG flow generated by the TRG has a similar behavior~\cite{Berker2008} for bond dimensions $\chi > 8$.
+%
+
+To make sure that the plateau in the RG flow of $\Vert A^{(n)} \Vert$ gives a critical fixed-point tensor $(A^{[30]})^*_{\text{cr}}$ at the estimated critical temperature $T_c^{[30]}$, we plot the singular values $s^{(n)}$ of tensors $\mathcal{A}^{(n)}$ defined as
 %
 \begin{align}\label{def:Asvd}
-    %\begin{minipage}{2.0truecm}
-    %    \centering
-    %    \includegraphics[width=1.8truecm,clip]{./figs/Aold}
-    %\end{minipage}
     \tikzfig{Acaln}
     \svdeq
     \tikzfig{Asvd}\text{ }.
-    %\begin{minipage}{2.0truecm}
-    %    \centering
-    %    \includegraphics[width=1.8truecm,clip]{./figs/Asvd}
-    %\end{minipage}.
 \end{align}
 %
-The RG flow of the singular values in Fig.~\ref{fig:flowA}(a) indicates
-that we indeed reach a non-trivial fixed-point tensor. The fixed-point
-tensor is manifestly fixed numerically after adding the sign fixing step
-in the Gilt-HOTRG, which can be confirmed by plotting the Frobenius norm
-of the difference between the normalized tensors at successive RG steps
-$\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$, see
-Fig.~\ref{fig:flowA}(b). The norm of the difference starts to decay
-systematically at RG step $n = 14$, goes all the way down to the order
-$\sim 10^{-2}$ at $n = 23$ and then increases when the tensor begins to
-flow away from the critical fixed point.
+The RG flow of the singular values in Fig.~\ref{fig:flowA}(a) indicates that we indeed reach a non-trivial fixed-point tensor. 
+The fixed-point tensor is manifestly fixed numerically after adding the sign fixing step in the Gilt-HOTRG, which can be confirmed by plotting the Frobenius norm of the difference between the normalized tensors at successive RG steps
+$\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$, see Fig.~\ref{fig:flowA}(b). 
+The norm of the difference starts to decay systematically at RG step $n = 14$, goes all the way down to the order $\sim 10^{-2}$ at $n = 23$ and then increases when the tensor begins to flow away from the critical fixed point.
 %%
-\begin{figure}[htb]
-    %\includegraphics[width=8.5cm]{./figs/scDim}
+\begin{figure}[tb]
     \includegraphics[width=\columnwidth]{./figures/scDim.pdf}
-    \caption{\label{fig:scDim}The scaling dimensions of the 2D Ising
-    model by the response analysis of the Gilt-HOTRG with $\chi = 30,
-\epsilon_{\text{gilt}} = 6\times 10^{-6}$.}
+    \caption{\label{fig:scDim}
+        The scaling dimensions of the 2D Ising model by the response analysis of the Gilt-HOTRG with $\chi = 30, \epsilon_{\text{gilt}} = 6\times 10^{-6}$.
+    Dashed lines are the exact values.}
 \end{figure}
 %
-\begin{table}[h]%[H] add [H] placement to break table across pages
+\begin{table}[tb]%[H] add [H] placement to break table across pages
 \caption{The scaling dimensions for the relevant and marginal operators
     of the 2D Ising model at criticality from the response analysis of
     the Gilt-HOTRG and from the transfer matrix method \`a la Gu and
@@ -1865,446 +1141,75 @@ Exact      & 0.125 & 1 & 1.125 & 1.125 & 2 & 2 & 2 & 2 \\
 \end{table}
 %
 
-We use the automatic differentiation implemented in
-JAX~\cite{jax2018github} to linearize the RG equation of the Gilt-HOTRG in
-Eq.~\eqref{def:RGeqGiltHOTRG} and get the response matrix defined in
-Eq.~\eqref{eq:respMatGiltHOTRG} at RG steps $n = 14,15,\ldots, 28$, when the
-tensor is very close to the critical fixed-point tensor. The scaling
-dimensions are extracted from the eigenvalues of the response matrix
-according to Eq.~\eqref{eq:lambda2x}. In Fig.~\ref{fig:scDim}, we show
-the first few scaling dimensions. The dashed lines are the exact
-values~\cite{DiFrancesco1997}. For $\chi = 30$, the response analysis in
-tensor space gives correct scaling dimensions up to $2.125$. The results from
-the response analysis at $n = 14 \text{ and } 28$ is unreliable since $\Vert
-\mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$ is of order $1$ (see
-Fig.~\ref{fig:flowA}(b)). The results for $n = 15,16,\ldots,27$
-indicates that the scaling dimensions from the response analysis in tensor
-space are reliable as long as the values of $\Vert \mathcal{A}^{(n+1)} -
-\mathcal{A}^{(n)}\Vert$ have order of or smaller than $10^{-1}$. 
+We use the automatic differentiation implemented in JAX~\cite{jax2018github} to generate the linearized tensor RG equation $\mathcal{R}$ in Eq.~\eqref{eq:respMatGiltHOTRG} at RG steps $n = 14,15,\ldots, 28$, when the tensor is very close to the critical fixed-point tensor. 
+The scaling dimensions are extracted from the eigenvalues of the matrix $\mathcal{R}$ according to Eq.~\eqref{eq:lambda2x}, where $b = 2, d = 2$. 
+In Fig.~\ref{fig:scDim}, we show the first few scaling dimensions. 
+The dashed lines are the exact values~\cite{DiFrancesco1997}. 
+For $\chi = 30$, the response analysis in tensor space gives correct scaling dimensions up to $2.125$. 
+The results at RG step $n = 14 \text{ and } 28$ are unreliable since $\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$ is of order $1$ (see Fig.~\ref{fig:flowA}(b)). 
+The results for $n = 15,16,\ldots,27$ indicates that the scaling dimensions from the response analysis in tensor space are reliable as long as the values of $\Vert \mathcal{A}^{(n+1)} - \mathcal{A}^{(n)}\Vert$ have order of or smaller than $10^{-1}$. 
 %
 
-In Table~\ref{table:scDim}, we show the scaling dimensions for all
-relevant and marginal operators at RG step $n = 22$, compared with
-the results obtained by Gu and Wen's method~\cite{GuWen2009}. Both
-methods have similar accuracy for scaling dimensions less or equal to
-$1.125$, but Gu and Wen's method cannot produce higher scaling
-dimensions. Our method can give two out of total four scaling dimension
-$2$ accurately, but the remaining two are overestimated and more close
-to $2.125$.
+In Table~\ref{table:scDim}, we show the scaling dimensions for all relevant and marginal operators at RG step $n = 22$, compared with the results obtained by Gu and Wen's method~\cite{GuWen2009}. 
+Both methods have similar accuracy for scaling dimensions less or equal to $1.125$, but Gu and Wen's method cannot produce higher scaling dimensions. 
+Our method can give two out of total four scaling dimension $2$ accurately, but the remaining two are overestimated and more close to $2.125$.
 %
 
 We end this section with a few remarks on the above calculations. 
+Firstly we impose the $\mathbb{Z}_2$ symmetry of the tensors~\cite{Singh2010SymTen, Singh2011U1Ten} when generating the RG flow in tensor space. 
+There are three reasons. 
+Only if the $\mathbb{Z}_2$ symmetry of the tensor is imposed will the low-temperature fixed-point tensor be stable under the RG.  
+Otherwise, it will flow to the high-temperature fixed point eventually due to numerical errors, which will make the bisection search for the estimated critical temperature $T_c^{[\chi]}$ less convenient. 
+The second merit of symmetric tensors is that half of the gauge redundancy can be automatically fixed (see Sec.~\ref{sec:gaugefix}), making the sign fixing procedure in the Gilt-HOTRG easier. 
+The third reason is to speed up the computations. 
+However, we roll back to ordinary tensors when performing the response analysis, since the perturbations around the fixed-point tensor do not have to preserve $\mathbb{Z}_2$ symmetry (for example, the spin operator). 
 %
 
-Firstly we impose the $\mathbb{Z}_2$ symmetry of the
-tensors~\cite{Singh2010SymTen, Singh2011U1Ten} when generating the RG
-flow in tensor space. There are three reasons. Only if the
-$\mathbb{Z}_2$ symmetry of the tensor is imposed will the
-low-temperature fixed-point tensor be stable under the RG.  Otherwise, it
-will flow to the high-temperature fixed point eventually due to
-numerical errors, which will make the bisection search for the estimated
-critical temperature $T_c^{[\chi]}$ less convenient. The second merit of
-symmetric tensors is that half of the gauge redundancy can be
-automatically fixed (see Sec.~\ref{RespAnaGiltHOTRG}), making the sign
-fixing procedure in the Gilt-HOTRG easier. The third reason is to speed up
-the computations. However, we roll back to ordinary tensors when
-performing the response analysis, since the perturbations around the
-fixed-point tensor do not have to preserve $\mathbb{Z}_2$ symmetry (for
-example, the spin operator). 
+The second remark is about the improvement of the accuracy as the bond dimension $\chi$ increases. 
+There are two sources of approximation errors in the above computations. 
+One comes from the truncations of the CDL tensors during the Gilt that is necessary to produce the critical fixed point. 
+This error is controlled by the hyper-parameter $\epsilon_{\text{gilt}}$. 
+The other source is the leg squeezing step during the HOTRG to prevent the grow of the bond dimension.
+This error can be reduced by increasing the bond dimension $\chi$. 
+In general, for a given $\chi$, the $\epsilon_{\text{gilt}}$ should be as small as possible provided that the Gilt-HOTRG can exhibit a critical fixed-point tensor. 
+In practice, we tried $\chi = 10, 20, 30$, and $\epsilon_{\text{gilt}}$ goes down from $6\times 10^{-4}$ to $6\times10^{-5}$ and further to $6\times10^{-6}$. 
+The estimated scaling dimensions converge to the exact results in this process. 
+However, as $\chi$ increases further, the $\epsilon_{\text{gilt}}$ does not go down much. 
+As a result, the estimation accuracy of the scaling dimensions is bounded by the approximation errors during Gilt. 
 %
 
-The second remark is about the improvement of the results of the response
-analysis as the bond dimension $\chi$ increases. There are two sources
-of approximation errors in the above computations. One comes from the
-truncations of the CDL tensors during the Gilt that is necessary to
-produce the critical fixed point. This error is controlled by the
-hyper-parameter $\epsilon_{\text{gilt}}$. The other source is the leg
-squeezing step during the HOTRG to prevent the grow of the bond dimension.
-This error can be reduced by increasing the bond dimension $\chi$. In
-general, for a given $\chi$, the $\epsilon_{\text{gilt}}$ should be as small
-as possible provided that the Gilt-HOTRG can exhibit a critical fixed-point
-tensor. In practice, we tried $\chi = 10, 20, 30$, and
-$\epsilon_{\text{gilt}}$ goes down from $6\times 10^{-4}$ to
-$6\times10^{-5}$ and further to $6\times10^{-6}$.  The estimated scaling
-dimensions converge to the exact results in this process. However, as
-$\chi$ increases further, the $\epsilon_{\text{gilt}}$ does not go down
-much. As a result, the estimation accuracy of the scaling dimensions is
-bounded by the approximation errors during Gilt. 
+The third remark is about the overall multiplication constant in front of the fixed-point tensor. 
+After reaching the critical fixed point, the RG from $n$-th step to $(n+1)$-th step is the mapping $\mathcal{A}^{*}\rightarrow A^{*} = \Vert A^{*} \Vert \mathcal{A}^{*}$. 
+The shape of $\mathcal{A}^*$ is fixed but its magnitude is still changing under the RG transformation. 
+It has been shown in Ref.~\cite{GuWen2009} that the fixed-point tensor with correct magnitude is simply given by $A^*_{\text{inv}} = \Vert A^* \Vert^{-1/3} \mathcal{A}^*$, and we will have $A^*_{\text{inv}}\rightarrow A^*_{\text{inv}}$ under the RG transformation.
 %
 
-The third remark is about the overall multiplication constant in front
-of the fixed-point tensor. After reaching the critical fixed point, the
-RG from $n$-th step to $(n+1)$-th step is the mapping
-$\mathcal{A}^{*}\rightarrow A^{*} = \Vert A^{*} \Vert
-\mathcal{A}^{*}$. The shape of $\mathcal{A}^*$ is fixed but its
-magnitude is still changing under the RG transformation. It has been shown
-in Ref.~\cite{GuWen2009} that the fixed-point tensor with correct
-magnitude is simply given by $A^*_{\text{inv}} = \Vert A^* \Vert^{-1/3}
-\mathcal{A}^*$, and we will have $A^*_{\text{inv}}\rightarrow
-A^*_{\text{inv}}$ under the RG transformation.
-%
-
-The final remark is that the Gilt-HOTRG can be replaced with
-the TNR~\cite{tnr,tnralgo} with few changes of other procedures, because
-the TNR is known to be capable of exhibiting critical fixed-point
-tensors with its RG equation similar to that of Gilt-HOTRG, and there is
-a method to fix the gauge redundancy~\cite{tnralgo}. Considering the
-unprecedented accuracy of the TNR, the estimation of the scaling dimensions
-might be much better. We develop the response analysis in tensor space
-using the Gilt-HOTRG in this paper in order to prepare for the further
-applications to 3D systems.
+The final remark is that the problem of local correlations could be removed by other methods other than Gilt.
+For example, the TNR~\cite{tnr,tnralgo} is known to be capable of exhibiting critical fixed-point tensors with its RG equation similar to that of the Gilt-HOTRG, and there is a method to fix its gauge~\cite{tnralgo}. 
+Considering the unprecedented accuracy of the TNR, the estimation of the scaling dimensions might be much better.
+We develop the canonical RG prescription in tensor space using the Gilt-HOTRG in this paper in order to prepare for the further applications to 3D systems.
 %
 
 
-\section{Summary and discussion\label{conclusion}}
-In this paper, we show how to extract scaling dimensions by analyzing a
-fixed point (termed as response analysis here) in tensor space. There are two
-major obstacles for such an analysis. The first one is the failure of
-the exhibition of critical fixed points in the TRG-type methods. We develop
-the Gilt-HOTRG to solve this problem. The second obstacle is the
-gauge redundancy in the tensor network language. This is solved due to a
-nice property of the Gilt-HOTRG.  We use the 1D Ising model to demonstrate
-the relation between the old and the new approaches of the response
-analysis, and also present benchmark results for the 2D Ising model
-by generating RG flows in tensor space using the Gilt-HOTRG and carrying out
-the response analysis in tensor space. 
-%
+\section{Summary and discussions\label{conclusion}}
 
-The general procedure of the response analysis in tensor space is summarized
-as follows: reach a fixed-point tensor using a TRG-type RG equation, fix
-the gauge redundancy to make the fixed-point tensor manifestly fixed,
-linearize the RG equation at this fixed-point tensor to get the response
-matrix and finally calculate the scaling dimensions from the
-eigenvalues of the response matrix.
-%
 
-The response analysis in tensor space accomplishes an important step of
-the RG methods in the tensor network language. It extends the success of
-the TRG-type techniques in calculating accurate free energy further to
-the excellent performance of extracting scaling dimensions directly from
-the tensor RG equation. It has an advantage over the transfer matrix
-method for systems in 3D and higher. 
 
 
 
 
 % If you have acknowledgments, this puts in the proper section head.
 \begin{acknowledgments}
-We thank Satoshi Morita, Shumpei Iino, Takuhiro Ogino for fruitful
-discussions and insightful suggestions, and Glen Evenbly, Guifre Vidal
-for explanations regarding the TNR and other tensor network methods. We
-also thank Markus Hauru for clarifying the implementation of the Gilt.
-X.L.\ and R.G.X.\ are grateful to the support of the Global Science
-Graduate Course (GSGC) program of the University of Tokyo. N.K.\ is
-supported by [\textbf{fill in here}]
-% TODO
+We thank Satoshi Morita, Shumpei Iino, Takuhiro Ogino, Yuan Yao and Takeo Kato for fruitful discussions and insightful suggestions, and Glen Evenbly and Guifre Vidal for explanations regarding the TNR and other tensor network methods. 
+We also thank Markus Hauru for clarifying the implementation of the Gilt.
+X.L.\ and R.G.X.\ are grateful to the support of the Global Science Graduate Course (GSGC) program of the University of Tokyo. 
+This work is financially supported by MEXT Grant-in-Aid for Scientific Research (B) (19H01809).
 
 \end{acknowledgments}
 
 % Specify following sections are appendices. Use \appendix* if there
 % only one appendix.
 \appendix
-\section{Optimization forms of eigenvalue problems\label{appd:opteig}}
-In Sec.~\ref{hotrg}, it is claimed that the optimization problem in
-Eq.~\eqref{eq:approxerrAll} can be converted into an eigenvalue problem.
-This is a well-known result. We will provide a short proof here to make
-this paper self-contained. 
-%
-
-Given a Hermitian positive semi-definite matrix $H$, find the optimal
-matrix $w$ such that $\Tr{(w^{\dagger} H w)}$ is maximized, provided that
-the matrix $w$ satisfies $w^{\dagger}w = \mathbb{1}$. This constraint
-means that $(w^{\dagger}w)_{ij} = \sum_{\alpha} w^*_{\alpha i} w_{\alpha
-j}$ is $0$ for $i\neq j$ and is $1$ for $i = j$. The first condition
-says that the column vectors of $w$ are orthogonal to each other, and the
-second says that they are normalized. We first impose the normalization
-constraint and construct the Lagrangian,
-%
-\begin{align}\label{eq:langMult}
-    \mathcal{L} = \sum_{\alpha \beta i} H_{\alpha\beta} w^*_{\alpha i}
-    w_{\beta i} - \sum_i \lambda _i \left(\sum_{\alpha}w^*_{\alpha i}
-        w_{\alpha i} - 1\right),
-\end{align}
-%
-where $\lambda_i$ are the Lagrange multipliers. Set the derivative of
-$\mathcal{L}$ with respect to $w^*_{\alpha i}$ to zero, we get the
-following eigenvalue problem for $H$,
-%
-\begin{align}\label{eq:eigenProblem}
-    \sum_{\beta} H_{\alpha\beta} w_{\beta i} = \lambda_i w_{\alpha i},
-\end{align}
-%
-which means the columns of $w$ are the eigenvectors of $H$. Then, the
-quantity that we want to maximize becomes $\Tr{(w^{\dagger}Hw)} = \sum_i
-\lambda_i$. Finally, we impose the orthogonality condition of $w$, so
-the columns of $w$ should be the linearly independent eigenvectors of
-$H$ corresponding to the first several largest eigenvalues. This
-completes our proof.
-%
-
-\section{CDL tensors, HOTRG, and Gilt-HOTRG\label{appd:cdlHOTRG}}
-%
-\begin{figure*}[!t]
-\tikzfig{gilt4hotrg} 
-\caption{\label{fig:gilt4hotrg}The plaquettes and bonds where the
-Gilt is applied to for the subsequent HOTRG coarse graining.} 
-\end{figure*}
-%
-
-In this appendix, we first explain why the CDL tensors $A^{\text{CDL}}$
-form a class of fixed points for the HOTRG, as is claimed in
-Eq.~\eqref{eq:cdlHOTRG}. We then move on to show how to determine the
-$Q_{Al},Q_{Ar},Q_{Bl}, Q_{Br}$ matrices for the Gilt-HOTRG coarse
-graining in the vertical direction shown in
-Eq.~\eqref{def:ApycontrGilt}. Finally, the details of how the Gilt-HOTRG
-simplify the $A^{\text{CDL}}$ to a single number (see
-Eq.~\eqref{eq:CDL2number}) are explained.
-%
-
-The definition of $A^{\text{CDL}}$ is given in Fig.~\ref{fig:ariseCDL}.
-The corner matrix $C$ can be assumed to be symmetric considering its
-physical origin. It can be further put into its diagonal form. In order
-to find the isometric tensor in Eq.~\eqref{eq:cdlHOTRG}, we refer to
-Eqs.~\eqref{def:Apycontr}, \eqref{def:M-AA} and \eqref{eq:approxerrPic},
-which says the isometry is a collection of the eigenvectors of
-%
-\begin{align}\label{eq:MMdaggerCDL}
-    \tikzfig{MMCDL} \propto \tikzfig{MMCDLdetail}\text{  }.
-\end{align}
-%
-Let us say $C$ is a $\sqrt{\chi}\times\sqrt{\chi}$ matrix, so $M
-M^{\dagger}$ is a $\chi^2 \times \chi^2$ matrix.
-Equation~\eqref{eq:MMdaggerCDL} shows the rank of $M M^{\dagger}$ is
-$\chi$. The eigenvectors of this $M M^{\dagger}$ is easy to write down.
-Since $C$ is already in its diagonal form, we do nothing about the two
-outer matrices, $\scalebox{0.8}{\tikzfig{MMCDLouter1}}$ and
-$\scalebox{0.8}{\tikzfig{MMCDLouter2}}$. The inner matrix,
-$\scalebox{0.8}{\tikzfig{MMCDLinner}}$,
-is the outer product of two $\chi$-dimensional vectors, both constructed
-from two $C$ matrices, so
-the inner matrix has rank $1$. The only eigenvector of the inner matrix
-with non-zero eigenvalues is the vector in the outer product, properly
-normalized,
-%
-\begin{align}\label{def:innerMeigvec}
-    \tikzfig{CCnormedVector} \defeq \tikzfig{CCvector}\text{ } \bigg/
-    \sqrt{\tikzfig{CCnormSquare}}\text{ }.
-\end{align}
-%
-Therefore, the isometry $w$ for the HOTRG coarse graining of two
-$A^{\text{CDL}}$ tenors in the verticle direction is
-%
-\begin{align}\label{eq:wforACDL}
-    \tikzfig{w4CDL}\text{ },
-\end{align}
-%
-which is what we use in Eq.~\eqref{eq:cdlHOTRG}.
-%
-
-Next, we introduce how to determine the  $Q_{Al},Q_{Ar}$,$Q_{Bl},Q_{Br}$
-matrices in Eq.~\eqref{def:ApycontrGilt}.  The idea of the Gilt is to
-insert a low-rank matrix into a bond to detect and truncate the legs of
-$C$ matrices, which is shown in Fig.~\ref{fig:gilt}. The low-rand matrix
-$Q$ is determined by examining the environment $E$ of the bond and
-performing the singular value decomposition,
-%
-\begin{align}\label{eq:bondEnvSVD}
-    E \defeq \tikzfig{bondEnviro} \svdeq \tikzfig{bondEnvSVD}\text{ }, 
-\end{align}
-%
-where we refrain from drawing the $C$ matrices in the plaquette to make
-the figure clearer. The environment $E$ of the bond should be thought of
-as a linear map from the vector space of all the legs with ingoing
-arrows to that of all the legs with outgoing arrows. We can use the
-tensor $U$ and the diagonal matrix $s$ in Eq.~\eqref{eq:bondEnvSVD} to
-construct the low-rank matrix $Q$. To this end, we first define a vector
-$t$ by contracting two ingoing legs of the tensor $U$,
-%
-\begin{align}\label{def:tfromU}
-    \tikzfig{tvec} \defeq \tikzfig{Ucontract}.
-\end{align}
-%
-Then, we perform a soft truncation of the vector $t$ according to
-%
-\begin{align}\label{eq:tpfromt}
-    t'_i = t_i \frac{s_i^2}{s_i^2 + \epsilon_{\text{gilt}}^2},
-\end{align}
-%
-where $s_i$ are the singular values and
-$\epsilon_{\text{gilt}}$ is the hyper-parameter of the Gilt.
-Equation~\eqref{eq:tpfromt} says that the components of the vector $t$
-will be set to very small values if the corresponding singular values
-$s_i$ are much smaller than $\epsilon_{\text{gilt}}$. The justification
-for the truncation in Eq.~\eqref{eq:tpfromt} can be found in
-Ref.~\cite{gilts}. The low-rank matrix $Q$ is constructed from the
-tensor $U^{\dagger}$ and the truncated vector $t'$ as
-%
-\begin{align}\label{def:QfromUtp}
-    \tikzfig{Qmat} \defeq \tikzfig{Utp2Q}\text{ }.
-\end{align}
-%
-It is proved in Ref.~\cite{gilts} that the matrix $Q$ determined in this
-way is able to filter out the loop of four $C$ matrices shown in
-Fig.~\ref{fig:gilt}. 
-%
-
-In Fig.~\ref{fig:gilt4hotrg}, we show where to insert the low-rank
-matrices. The two $A$ tensors will be coarse grained vertically, but we
-have shown in the previous discussion that the isometric tensor $w$ in
-the HOTRG can only project out the inner $C$ matrices (not drawn in
-Fig.~\ref{fig:gilt4hotrg}), but can do nothing
-about the four outer $C$ matrices (drawn explicitly in
-Fig.~\ref{fig:gilt4hotrg}). The Gilt should be applied to filter
-out these four outer $C$ matrices before the HOTRG coarse graining. 
-To this end, we apply the Gilt to the plaquettes where the loops
-representing local correlations are drawn explicitly in
-Fig.~\ref{fig:gilt4hotrg} and insert two low-rank matrices $Q_A,Q_B$
-into the upper and lower bonds for each plaquette. The legs of the
-unwanted $C$ matrices will be truncated after the splitting of $Q_A, Q_B
-$. Finally, we apply the ordinary HOTRG coarse graining to the local
-patch of tensors in the dashed circle to get
-Eq.~\eqref{def:ApycontrGilt}.
-%
-
-Finally, we show how the $A^{\text{CDL}}$ transforms under the
-Gilt-HOTRG. After the Gilt scheme described in
-Fig.~\ref{fig:gilt4hotrg}, the local patch of two $A^{\text{CDL}}$
-tensors lose four outer horizontal legs of the $C$ matrices; the
-subsequent HOTRG will choose the vector in Eq.~\eqref{def:innerMeigvec}
-as the isometry $w$ and will project out the four inner $C$ matrices,
-%
-\begin{align}\label{eq:twoACDLunderGilt}
-    \tikzfig{twoACDL}
-    \xrightarrow[\text{Fig.}~\ref{fig:gilt4hotrg}]{\text{Gilt in}}
-    c_1\times \tikzfig{twoACDLgilt}
-    \xrightarrow[\text{HOTRG}]{\text{vertical}}
-    c_2 \times \tikzfig{twoACDLgilthotrg}\text{ },
-\end{align}
-%
-where $c_1, c_2$ are some overall multiplication constants. We see that
-after half of the Gilt-HOTRG in the vertical direction, the bond
-dimensions of the two horizontal legs of $A^{\text{CDL}}$ are
-truncated to $\chi = 1$. It is easy to see that after the second half
-Gilt-HOTRG, the vertical legs will be cut away. This shows that the full
-Gilt-HOTRG will map $A^{\text{CDL}}$ to a single number $c$. The number
-$c$ can be determined by noticing the free energy represented by the
-tensor network will stay unchanged after the coarse graining since every
-step of the Gilt-HOTRG applied to the $A^{\text{CDL}}$ is exact in
-principle.  The number of the tensors in the tensor network after the
-coarse graining will become one fourth of the previous. The number of
-the loops, each consisting of four $C$ matrices, is the same as that of
-the tensors.  As a result, to produce the same free energy, $c$ should
-be the loop raised to the fourth power. This completes the proof of
-Eq.~\eqref{eq:CDL2number} in the main text.
-%
-
-
-\section{Gauge redundancy in the Gilt-HOTRG\label{appd:gaugeFix}}
-Equation~\eqref{eq:HOTRGgaugefix} in Sec.~\ref{RespAnaGiltHOTRG} claims
-that any two tensors $A, \tilde{A}$ in the same equivalence class will
-be mapped to the same tensor after the Gilt-HOTRG with a sign fixing
-procedure. 
-%
-
-We focus on the equivalence relation defined as
-%
-\begin{align}\label{eq:simorth}
-    \tikzfig{Atilde} = \tikzfig{AsimOrth},
-\end{align}
-%
-where $S_x,S_y$ are orthogonal matrices. It suffices to discuss the
-first half of the Gilt-HOTRG coarse graining defined in
-Eq.~\eqref{def:ApycontrGilt}. We want to show if $\tilde{A}$ is fed into
-the right hand side of Eq.~\eqref{def:ApycontrGilt}, the $\tilde{A}'$ we
-obtain in the left hand is related with the original $A'$ by
-%
-\begin{align}\label{eq:Ap2Aptilde}
-    \tikzfig{Aptilde} = \tikzfig{ApsimOrth},
-\end{align}
-which means that the gauge redundancy in the horizontal legs will be
-fixed during the first half of the Gilt-HOTRG in the vertical direction.
-It follows immediately that the full Gilt-HOTRG will fixed the gauge.
-%
-
-Let us first figure out the correct
-$\tilde{Q}_A,\tilde{Q}_B$ matrices in Fig.~\ref{fig:gilt4hotrg}. The
-environment in Eq.~\eqref{eq:bondEnvSVD} is multiplied by several
-orthogonal matrices, which will not change the singular values, so
-$\tilde{s}_i=s_i$. It is easy to check that the tensor $U$ in the
-singular value decomposition becomes
-%
-\begin{align}\label{eq:Utilde}
-    \tikzfig{Utilde} = \tikzfig{U2Utilde}.
-\end{align}
-%
-The vector $\tilde{t}$ is thus the same as the original $t$ by its
-definition in Eq.~\eqref{def:tfromU}, which further gives $\tilde{t}'_i=
-t'_i$ since the tilde version of the right hand side of
-Eq.~\eqref{eq:tpfromt} is the same as the original version. Finally,
-equation~\eqref{def:QfromUtp} gives
-%
-\begin{align}\label{eq:QAtilde}
-    \tikzfig{QAtildeMat} \texteq{\eqref{def:QfromUtp}}
-    \tikzfig{Utp2QAtilde} &= \tikzfig{Utp2Qupdate} \nonumber\\ 
-                          &= \tikzfig{QAMatUU}.  
-\end{align}
-%
-Equation~\eqref{eq:QAtilde} means that the low rank matrix $Q_A$
-transforms in a nice way when we perform a gauge transformation of the
-tensor $A$ defined in Eq.~\eqref{eq:simorth}. If the singular values of
-$Q_A$ \textit{does not have degeneracies}, after splitting of $Q_A$,
-we have $Q_{Ar},Q_{Al}$ transform like
-%
-\begin{align}\label{eq:QpieceTrans}
-    \tikzfig{QArTransf} \text{ and } \tikzfig{QAlTransf}\text{ }. 
-\end{align}
-% 
-The $S_x,S_x^T$ matrices that $Q_{Ar},Q_{Al}$ pick up will cancel those
-acting on the $A$ tensor when $\tilde{Q}_{Ar},\tilde{Q}_{Al}$ are
-contracted with the $\tilde{A}$ tensor in Eq.~\eqref{eq:simorth}.
-The same argument works for $Q_B$. It indicates all the $S_x,S_x^T$
-matrices acting on the four horizontal legs of the local patch in
-Eq.~\eqref{def:ApycontrGilt} will be canceled by the low-rank matrices
-used in the Gilt process. The above analysis shows that during the
-first half of the Gilt-HOTRG, the gauge in the horizontal legs will be
-fixed since the Gilt favors the bases chosen by the singular value
-decompositions of $Q_A, Q_B$.
-%
-
-However, there is one more twist. In practice, we observe that the
-low-rank matrices are projection operators, which are highly
-degenerated. As a result, the gauge redundancy in the degenerate
-subspace will leak out, which will be seen by the subsequent HOTRG
-process. Luckily, the HOTRG has the similar feature as the Gilt process.
-It favors bases where the positive semi-definite matrix $M M^{\dagger}$
-in Eq.~\eqref{eq:approxerrPic} is diagonal. It is straightforward to see
-that the isometry $w$ will pick up the suitable $S_x,S_x^T$ matrices to
-cancel out the gauge transformation leaking out from the Gilt process.
-There are still concerns about whether degeneracies occur in eigenvalues
-of $M M^{\dagger}$. Our result in Fig.~\ref{fig:flowA}(b) shows, a posteriori,
-that this potential degeneracies do not cause any problem for the 2D
-Ising model at criticality.
-%
-
-The last step is to fix the sign ambiguities. For real matrices, the
-normalized eigenvectors are unique up to sign ambiguities, indicating
-that after a full Gilt-HOTRG coarse graining, $\tilde{A}_c$ and $A_c$
-are equal up to sign ambiguities,
-%
-\begin{align}\label{eq:signAmbi}
-    \left(\tilde{A}_c \right)_{ijkl} =
-    \left(A_c\right)_{ijkl}(d_x)_i (d_y)_j (d_x)_k (d_y)_l, 
-\end{align}
-%
-where $d_x,d_y$ are vectors with components $\pm 1$ and they can be
-determined by comparing the sign of the components of $\tilde{A}_c$ and
-$A_c$. For $\mathbb{Z}_2$ symmetric tensors, we perform the
-aforementioned sign fixing in each sector of the tensor. The detailed
-implementation can be found in the source code of this paper.
-%
-
-
-
 \section{Source Code}
 The source code of this paper can be found at
 \href{https://github.com/brucelyu/tensorRGflow}{github.com/brucelyu/tensorRGflow}.

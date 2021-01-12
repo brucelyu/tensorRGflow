@@ -15,10 +15,16 @@
 		\node [style=none] (14) at (-6.025, 0) {};
 		\node [style=Qul] (15) at (-1.275, -1) {};
 		\node [style=Qur] (16) at (-4.525, -1) {};
+		\node [style=cdlMat] (17) at (-3.5, -2) {};
+		\node [style=cdlMat] (18) at (-2.275, -2) {};
+		\node [style=none] (19) at (-2.4, -2.75) {};
 		\node [style=none] (20) at (-4.2, -1.25) {};
 		\node [style=none] (21) at (-1.6, -1.25) {};
 		\node [style=Qdl] (22) at (-1.275, 1) {};
 		\node [style=Qdr] (23) at (-4.525, 1) {};
+		\node [style=cdlMat] (24) at (-3.5, 2) {};
+		\node [style=cdlMat] (25) at (-2.275, 2) {};
+		\node [style=none] (26) at (-2.4, 2.75) {};
 		\node [style=none] (27) at (-4.2, 1.25) {};
 		\node [style=none] (28) at (-1.6, 1.25) {};
 		\node [style=green] (33) at (2.9, 1) {$A^*$};
@@ -36,10 +42,16 @@
 		\node [style=none] (45) at (5.9, 0) {};
 		\node [style=Qul] (46) at (4.525, -1) {};
 		\node [style=Qur] (47) at (1.275, -1) {};
+		\node [style=cdlMat] (48) at (2.3, -2) {};
+		\node [style=cdlMat] (49) at (3.525, -2) {};
+		\node [style=none] (50) at (2.375, -2.75) {};
 		\node [style=none] (51) at (1.6, -1.25) {};
 		\node [style=none] (52) at (4.2, -1.25) {};
 		\node [style=Qdl] (53) at (4.525, 1) {};
 		\node [style=Qdr] (54) at (1.275, 1) {};
+		\node [style=cdlMat] (55) at (2.3, 2) {};
+		\node [style=cdlMat] (56) at (3.525, 2) {};
+		\node [style=none] (57) at (2.4, 2.75) {};
 		\node [style=none] (58) at (1.6, 1.25) {};
 		\node [style=none] (59) at (4.2, 1.25) {};
 		\node [style=Qdpl] (60) at (-2.9, 2.75) {};
@@ -80,12 +92,18 @@
 		\draw [style=blackMidLine] (14.center) to (9.center);
 		\draw [style=greenMidLine] (1) to (15);
 		\draw [style=greenMidLine] (16) to (1);
+		\draw [style=cdlMatLeg, in=-15, out=105, looseness=1.25] (17) to (20.center);
+		\draw [style=cdlMatLeg, in=-165, out=75] (18) to (21.center);
+		\draw [style=cdlMatLeg, in=90, out=-165] (18) to (19.center);
 		\draw [style=greenMidLine] (3.center) to (16);
 		\draw [style=greenMidLine] (15) to (11.center);
 		\draw [style=greenMidLine] (23) to (0);
 		\draw [style=greenMidLine] (2.center) to (23);
 		\draw [style=greenMidLine] (0) to (22);
 		\draw [style=greenMidLine] (22) to (10.center);
+		\draw [style=cdlMatLeg, in=15, out=-105, looseness=1.25] (24) to (27.center);
+		\draw [style=cdlMatLeg, in=165, out=-75] (25) to (28.center);
+		\draw [style=cdlMatLeg, in=-90, out=165] (25) to (26.center);
 		\draw [style=greenMidLine] (33) to (34);
 		\draw [style=blackMidLine] (39.center)
 			 to (40.center)
@@ -98,21 +116,35 @@
 		\draw [style=blackMidLine] (39.center) to (45.center);
 		\draw [style=greenMidLine] (34) to (46);
 		\draw [style=greenMidLine] (47) to (34);
+		\draw [style=cdlMatLeg, in=-15, out=105, looseness=1.25] (48) to (51.center);
+		\draw [style=cdlMatLeg, in=-165, out=75] (49) to (52.center);
 		\draw [style=greenMidLine] (36.center) to (47);
 		\draw [style=greenMidLine] (46) to (44.center);
 		\draw [style=greenMidLine] (54) to (33);
 		\draw [style=greenMidLine] (35.center) to (54);
 		\draw [style=greenMidLine] (33) to (53);
 		\draw [style=greenMidLine] (53) to (43.center);
+		\draw [style=cdlMatLeg, in=15, out=-105, looseness=1.25] (55) to (58.center);
+		\draw [style=cdlMatLeg, in=165, out=-75] (56) to (59.center);
+		\draw [style=cdlMatLeg, in=-90, out=15] (55) to (57.center);
 		\draw [style=blackMidPureLine] (6.center) to (42.center);
 		\draw [style=greenMidLine] (0) to (60);
+		\draw [style=cdlMatLeg] (24) to (61.center);
+		\draw [style=cdlMatLeg] (17) to (63.center);
 		\draw [style=greenMidLine] (1) to (62);
 		\draw [style=greenMidLine] (64.center) to (60);
 		\draw [style=greenMidLine] (62) to (65.center);
+		\draw [style=cdlMatLeg, in=105, out=-90, looseness=0.75] (66.center) to (26.center);
+		\draw [style=cdlMatLeg, in=90, out=-105, looseness=1.50] (19.center) to (67.center);
 		\draw [style=greenMidLine] (33) to (68);
+		\draw [style=cdlMatLeg] (56) to (69.center);
+		\draw [style=cdlMatLeg] (49) to (71.center);
 		\draw [style=greenMidLine] (34) to (70);
 		\draw [style=greenMidLine] (68) to (72.center);
+		\draw [style=cdlMatLeg, in=-90, out=105, looseness=1.25] (57.center) to (73.center);
+		\draw [style=cdlMatLeg, in=60, out=0] (48) to (50.center);
 		\draw [style=greenMidLine] (70) to (74.center);
+		\draw [style=cdlMatLeg, in=90, out=-90, looseness=1.50] (50.center) to (75.center);
 		\draw [style=blackMidLine] (77.center)
 			 to (78.center)
 			 to (76.center)

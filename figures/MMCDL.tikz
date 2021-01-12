@@ -1,8 +1,6 @@
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
 		\node [style=cdlMbox] (0) at (-1.25, 0) {};
-		\node [style=none] (1) at (-2.75, 0.75) {};
-		\node [style=none] (2) at (-2.75, -0.75) {};
 		\node [style=none] (3) at (-2, 0.75) {};
 		\node [style=none] (4) at (-2, -0.75) {};
 		\node [style=none] (5) at (-1, 1) {};
@@ -14,8 +12,6 @@
 		\node [style=none] (11) at (0, 1.5) {};
 		\node [style=none] (12) at (0, -1.5) {};
 		\node [style=cdlMbox] (14) at (1.25, 0) {};
-		\node [style=none] (15) at (2.75, 0.75) {};
-		\node [style=none] (16) at (2.75, -0.75) {};
 		\node [style=none] (17) at (2, 0.75) {};
 		\node [style=none] (18) at (2, -0.75) {};
 		\node [style=none] (19) at (1, 1) {};
@@ -62,14 +58,10 @@
 		\node [style=none] (60) at (1.325, 0) {$M^{\dagger}$};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
-		\draw [style=cdlMatLeg] (1.center) to (3.center);
-		\draw [style=cdlMatLeg] (2.center) to (4.center);
 		\draw [style=cdlMatLeg, in=-135, out=90, looseness=0.75] (5.center) to (9.center);
 		\draw [style=cdlMatLeg, bend right=45, looseness=0.75] (6.center) to (10.center);
 		\draw [style=cdlMatLeg, in=180, out=45, looseness=0.50] (9.center) to (11.center);
 		\draw [style=cdlMatLeg, in=180, out=-45, looseness=0.50] (10.center) to (12.center);
-		\draw [style=cdlMatLeg] (15.center) to (17.center);
-		\draw [style=cdlMatLeg] (16.center) to (18.center);
 		\draw [style=cdlMatLeg, in=-45, out=90, looseness=0.75] (19.center) to (23.center);
 		\draw [style=cdlMatLeg, bend left=45, looseness=0.75] (20.center) to (24.center);
 		\draw [style=cdlMatLeg, in=0, out=135, looseness=0.50] (23.center) to (25.center);

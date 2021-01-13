@@ -16,8 +16,6 @@
 		\node [style=none] (18) at (2, -0.75) {};
 		\node [style=none] (19) at (1, 1) {};
 		\node [style=none] (20) at (1, -1) {};
-		\node [style=none] (21) at (0, 0.75) {};
-		\node [style=none] (22) at (0, -0.75) {};
 		\node [style=none] (23) at (0.9, 1.5) {};
 		\node [style=none] (24) at (0.9, -1.5) {};
 		\node [style=none] (25) at (0, 1.5) {};
@@ -66,10 +64,6 @@
 		\draw [style=cdlMatLeg, bend left=45, looseness=0.75] (20.center) to (24.center);
 		\draw [style=cdlMatLeg, in=0, out=135, looseness=0.50] (23.center) to (25.center);
 		\draw [style=cdlMatLeg, in=0, out=-135, looseness=0.50] (24.center) to (26.center);
-		\draw [style=cdlMatLeg] (27.center) to (21.center);
-		\draw [style=cdlMatLeg] (28.center) to (22.center);
-		\draw [style=cdlMatLeg] (21.center) to (29.center);
-		\draw [style=cdlMatLeg] (22.center) to (30.center);
 		\draw [style=cdlMatLeg] (31.center) to (32.center);
 		\draw [style=cdlMatLeg] (33.center) to (34.center);
 		\draw [style=cdlMatLeg] (35.center) to (36.center);

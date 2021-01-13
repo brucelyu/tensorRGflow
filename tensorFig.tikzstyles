@@ -4,13 +4,13 @@
 % \tikzstyle{NAME}=[PROPERTY LIST]
 
 % Node styles
-\tikzstyle{green}=[fill=green, draw=black, shape=circle, tikzit category=tensor]
+\tikzstyle{green}=[fill=yellow, draw=black, shape=circle, tikzit category=tensor]
 \tikzstyle{bluedot}=[fill=blue, draw=none, shape=circle, tikzit category=tensor, inner sep=0pt, outer sep=0pt, minimum size=4.0pt]
 \tikzstyle{blueSdot}=[fill=blue, draw=none, shape=circle, tikzit category=tensor, inner sep=0, minimum size=2pt]
-\tikzstyle{greenL}=[fill=green, draw=black, shape=circle, tikzit category=tensor, minimum size=0.7cm]
-\tikzstyle{greenS}=[fill=green, draw=black, shape=circle, tikzit category=tensor, inner sep=0pt, outer sep=0pt, minimum size=0.2cm]
-\tikzstyle{greenM}=[fill=green, draw=black, shape=circle, tikzit category=tensor, minimum size=0.4cm]
-\tikzstyle{mediumBox}=[fill=green, draw=black, shape=rectangle, minimum width=0.75cm, minimum height=1cm]
+\tikzstyle{greenL}=[fill=yellow, draw=black, shape=circle, tikzit category=tensor, minimum size=0.7cm]
+\tikzstyle{greenS}=[fill=yellow, draw=black, shape=circle, tikzit category=tensor, inner sep=0pt, outer sep=0pt, minimum size=0.2cm]
+\tikzstyle{greenM}=[fill=yellow, draw=black, shape=circle, tikzit category=tensor, minimum size=0.4cm]
+\tikzstyle{mediumBox}=[fill=yellow, draw=black, shape=rectangle, minimum width=0.75cm, minimum height=1cm]
 \tikzstyle{cdlMat}=[fill=white, draw=black, shape=circle, tikzit category=cdl, inner sep=0pt, outer sep=0pt, minimum size=5pt]
 \tikzstyle{cdlWhole}=[fill=magenta, draw=black, shape=circle, minimum size=0.6cm, fill opacity=0.3, dashed]
 \tikzstyle{textbox}=[fill=none, draw=none, shape=rectangle, align=center]
@@ -31,7 +31,6 @@
 \tikzstyle{tvec}=[fill={rgb,255: red,191; green,191; blue,191}, draw=black, shape=circle, inner sep=0pt, outer sep=0pt, minimum size=0.2cm]
 \tikzstyle{haldHalfCir}=[fill=white, draw=white, shape=semicircle, anchor=chord center, rotate=90, minimum width=0.4cm, outer sep=0pt, inner sep=0pt]
 \tikzstyle{haldHalfCir2}=[fill=white, draw=white, shape=semicircle, anchor=chord center, rotate=-90, minimum width=0.4cm, outer sep=0pt, inner sep=0pt]
-
 
 % Edge styles
 \tikzstyle{blackMidLine}=[-, fill={rgb,255: red,191; green,191; blue,191}, draw=black, thick]

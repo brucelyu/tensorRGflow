@@ -5,6 +5,10 @@
 		\node [style=none] (2) at (-2, 0) {};
 		\node [style=none] (3) at (2, 0) {};
 		\node [style=none] (4) at (0, -2) {};
+		\node [style=none] (5) at (-2, 0.5) {$i$};
+		\node [style=none] (6) at (0.5, 1.75) {$j$};
+		\node [style=none] (7) at (2, -0.5) {$k$};
+		\node [style=none] (8) at (-0.5, -1.75) {$l$};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw [style=greenMidLine] (0) to (1.center);

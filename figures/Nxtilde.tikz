@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (0, 0) {$\tilde{N}_x$};
+		\node [style=none] (1) at (-2, 0) {};
+		\node [style=none] (2) at (2, 0) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (0) to (2.center);
+		\draw [style=greenMidLine] (1.center) to (0);
+	\end{pgfonlayer}
+\end{tikzpicture}

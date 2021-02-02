@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (0, 0) {$A$};
+		\node [style=none] (1) at (1.75, 0) {};
+		\node [style=none] (2) at (0, 1.5) {};
+		\node [style=none] (3) at (-1.75, 0) {};
+		\node [style=none] (4) at (0, -1.5) {};
+		\node [style=none] (5) at (1, 1.5) {};
+		\node [style=none] (6) at (1, -1.5) {};
+		\node [style=none] (7) at (1, 0.1) {};
+		\node [style=none] (8) at (1, -0.125) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=greenMidLine] (0) to (1.center);
+		\draw [style=greenMidLine] (0) to (2.center);
+		\draw [style=greenMidLine] (0) to (3.center);
+		\draw [style=greenMidLine] (0) to (4.center);
+		\draw [style=greenMidLine, bend left=90, looseness=0.75] (2.center) to (5.center);
+		\draw [style=greenMidLine, bend right=90] (4.center) to (6.center);
+		\draw [style=greenMidLine] (5.center) to (7.center);
+		\draw [style=greenMidLine] (8.center) to (6.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

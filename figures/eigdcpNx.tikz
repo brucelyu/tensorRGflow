@@ -1,0 +1,40 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=envS] (0) at (0, 0) {};
+		\node [style=none] (4) at (1.75, 1) {$W_x^{-1}$};
+		\node [style=none] (5) at (-1, 0.5) {};
+		\node [style=none] (6) at (-1, -0.5) {};
+		\node [style=none] (7) at (-1.75, 0.5) {};
+		\node [style=none] (8) at (-1.75, -0.5) {};
+		\node [style=none] (9) at (-2.25, 0) {};
+		\node [style=none] (12) at (1, 0.5) {};
+		\node [style=none] (13) at (1, -0.5) {};
+		\node [style=none] (14) at (1.75, 0.5) {};
+		\node [style=none] (15) at (1.75, -0.5) {};
+		\node [style=none] (16) at (2.25, 0) {};
+		\node [style=none] (17) at (-1, 0) {};
+		\node [style=none] (18) at (1, 0) {};
+		\node [style=none] (19) at (-3, 0) {};
+		\node [style=none] (20) at (3, 0) {};
+		\node [style=none] (21) at (-1.5, 1) {$W_x$};
+		\node [style=none] (22) at (0, 0.75) {$\lambda$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=blackMidLine] (8.center)
+			 to (6.center)
+			 to (5.center)
+			 to (7.center)
+			 to (9.center)
+			 to cycle;
+		\draw [style=blackMidLine] (15.center)
+			 to (13.center)
+			 to (12.center)
+			 to (14.center)
+			 to (16.center)
+			 to cycle;
+		\draw [style=blackMidPureLine] (17.center) to (0);
+		\draw [style=blackMidPureLine] (0) to (18.center);
+		\draw [style=greenMidLine] (19.center) to (9.center);
+		\draw [style=greenMidLine] (16.center) to (20.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,0 +1,41 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (1.75, 0.5) {};
+		\node [style=none] (1) at (1.75, -0.5) {};
+		\node [style=none] (2) at (1, 0.5) {};
+		\node [style=none] (3) at (1, -0.5) {};
+		\node [style=none] (4) at (0.5, 0) {};
+		\node [style=none] (5) at (1.75, 0) {};
+		\node [style=none] (6) at (1.5, 1) {$W_x$};
+		\node [style=none] (9) at (-2, 0) {};
+		\node [style=none] (10) at (-0.1, 0.75) {};
+		\node [style=none] (11) at (-0.1, -0.75) {};
+		\node [style=none] (12) at (-1.175, -0.75) {};
+		\node [style=none] (13) at (-1.175, 0.75) {};
+		\node [style=none] (14) at (-1.425, 0) {};
+		\node [style=none] (15) at (-0.1, 0) {};
+		\node [style=none] (16) at (-0.7, 0) {$S_x$};
+		\node [style=envS] (17) at (2.5, 0) {};
+		\node [style=none] (18) at (3.25, 0) {};
+		\node [style=none] (19) at (2.75, 0.75) {$d_x$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=blackMidLine] (4.center)
+			 to (3.center)
+			 to (1.center)
+			 to (0.center)
+			 to (2.center)
+			 to cycle;
+		\draw [style=simMat] (14.center)
+			 to [in=180, out=-90, looseness=0.75] (12.center)
+			 to (11.center)
+			 to (15.center)
+			 to (10.center)
+			 to (13.center)
+			 to [in=90, out=180, looseness=0.75] cycle;
+		\draw [style=greenMidLine] (14.center) to (9.center);
+		\draw [style=greenMidLine] (15.center) to (4.center);
+		\draw [style=blackMidPureLine] (5.center) to (17);
+		\draw [style=blackMidPureLine] (17) to (18.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -729,8 +729,59 @@ Half of the gauge is fixed since $A$ is in the bases where the states in the eve
 the states in the odd sector is multiplied by $-1$ under the spin flip operation.
 %
 
-Most of the remaining gauge in the degenerate sectors of $A$ can be automatically fixed by the GILT-HOTRG due to the following property of its RG equation.
-The tensor RG equation in Eq.~\eqref{def:RGeqGiltHOTRG} can be written schematically as $A_c = \mathcal{T}\left(A\right)$.
+Most of the remaining gauge in the degenerate sectors of $A$ can be fixed by going to the diagonal bases of the tensor.
+We show how the $S_x$ gauge redundancies in Eq.~\eqref{def:gaugeTrans} are fixed. The $S_y$ ones can be dealt with in the same way.
+Given a tensor $A$, we first contract its two vertical legs to produce a transfer matrix $N_x$,
+%
+\begin{align}\label{def:Nx}
+    \scalebox{0.8}{\tikzfig{Nx}} = \scalebox{0.8}{\tikzfig{AvertContr}}.
+\end{align}
+%
+We then find the eigenvalue decomposition of this matrix,
+\begin{align}\label{eq:eigdcpNx}
+    \scalebox{0.8}{\tikzfig{Nx}} = \scalebox{0.8}{\tikzfig{eigdcpNx}},
+\end{align}
+%
+where $\lambda$ is the diagonal matrix encoding eigenvalues.
+The gauge fixing transformation in the horizontal direction is defined by acting the invertible matrix $W_x$ and its inverse on horizontal legs of the tensor $A$,
+%
+\begin{align}\label{def:gaugefixHori}
+    \scalebox{0.8}{\tikzfig{Aold}} \xrightarrow[\text{gauge fixing}]{\text{horizontal}} \scalebox{0.8}{\tikzfig{gaugefixAhori}}.
+\end{align}
+%
+To see why the gauge fixing procedure in Eqs.~\eqref{def:Nx} to~\eqref{def:gaugefixHori} defines a preferred set of bases, let us examine how the tensor $\tilde{A}$ in Eq.~\eqref{def:gaugeTrans} transforms.
+The contraction of two vertical legs of $\tilde{A}$ annihilates $S_y$ and $S_y^{-1}$ in the right hand side of Eq.~\eqref{def:gaugeTransPic}; the resultant $\tilde{N}_x$ is related to $N_x$ through
+%
+\begin{align}\label{eq:simTransNx}
+    \scalebox{0.8}{\tikzfig{Nxtilde}} = \scalebox{0.8}{\tikzfig{NxSimTrans}}.
+\end{align}
+%
+It is straightforward to see that the matrix $\tilde{W}_x$ coming from eigenvalue decomposition of the matrix $\tilde{N}_x$ is related to $W_x$ through
+%
+\begin{align}\label{eq:Wxtransf}
+    \scalebox{0.8}{\tikzfig{Wxtilde}} = \scalebox{0.8}{\tikzfig{WxSimtransf}},
+\end{align}
+%
+where $d_x$ is a diagonal matrix coming from phase ambiguities of eigenvectors, with its diagonal entries to be phases for general complex matrices. 
+For a real symmetric $N_x$, the diagonal entries of $d_x$ are $\pm 1$.
+After the horizontal gauge fixing, the tensor $\tilde{A}$ becomes
+%
+\begin{align}\label{eq:AtildegaugefixHori}
+    \scalebox{0.8}{\tikzfig{Atilde}}\xrightarrow[\text{gauge fixing}]{\text{horizontal}} \scalebox{0.8}{\tikzfig{gaugefixAtildeHori}}.
+\end{align}
+%
+Compare Eq.~\eqref{def:gaugefixHori} with Eq.~\eqref{eq:AtildegaugefixHori}, we see that the gauge redundancies in two horizontal legs are fixed except the phase ambiguities.
+For 2D classical statistical models with spatial reflection symmetries, for example, the 2D Ising model, the real matrix $N_x$ can be made symmetric, so the phase ambiguities become sign ambiguities.
+%
+
+The gauge fixing procedure described in Eqs.~\eqref{def:Nx} to~\eqref{def:gaugefixHori} is general for all TRG-type techniques.
+However, this procedure is not necessary for the GILT-HOTRG applied to systems with spatial reflection symmetries like the 2D Ising model, since the RG equation of the GILT-HOTRG has a preferred set of bases.
+As a result, the gauge redundancies in Eq.~\eqref{def:gaugeTrans} collapse into phase ambiguities (or sign ambiguities for real tensors) in the GILT-HOTRG\@.
+To make things as simple as possible, we focus on real tensors in the following discussions.
+The arguments can be trivially generalized to complex tensors.
+%
+
+Write the tensor RG equation in Eq.~\eqref{def:RGeqGiltHOTRG} schematically as $A_c = \mathcal{T}\left(A\right)$.
 For two real tensors $A, \tilde{A}$ that are related by the gauge transformation defined in Eq.~\eqref{def:gaugeTrans} where we further restrict $S_x,S_y$ to be orthogonal matrices, the new tensors produced by the GILT-HOTRG according to Eq.~\eqref{def:RGeqGiltHOTRG}, $A_c = \mathcal{T}\left(A\right), \tilde{A}_c = \mathcal{T}(\tilde{A})$ are equal up to sign ambiguities,
 %
 \begin{align}\label{eq:signAmbi}
@@ -759,7 +810,7 @@ For a fixed-point tensor, equation~\eqref{eq:HOTRGgaugefix} indicates that we ca
 %
 
 Let us prove the property of the tensor RG equation of the GILT-HOTRG in Eq.~\eqref{eq:signAmbi} and explain how the sign is fixed to have Eq.~\eqref{eq:HOTRGgaugefix}.
-We focus on the equivalence relation defined as
+We focus on the equivalence relation defined as 
 %
 \begin{align}\label{eq:simorth}
     \tikzfig{Atilde} 
@@ -767,9 +818,8 @@ We focus on the equivalence relation defined as
     \scalebox{0.8}{\tikzfig{AsimOrth}},
 \end{align}
 %
-where $S_x,S_y$ are orthogonal matrices. 
-It suffices to discuss the first half of the GILT-HOTRG coarse graining defined in
-Eq.~\eqref{def:ApycontrGilt}. 
+where $S_x,S_y$ are orthogonal matrices (the justification for the restriction to orthogonal matrices will come later).
+It suffices to discuss the first half of the GILT-HOTRG coarse graining defined in Eq.~\eqref{def:ApycontrGilt}. 
 We want to show that if $\tilde{A}$ is fed into the right hand side of Eq.~\eqref{def:ApycontrGilt}, the $\tilde{A}'$ we obtain in the left hand is related with the original $A'$ by 
 %
 \begin{align}\label{eq:Ap2Aptilde}
@@ -814,7 +864,7 @@ The above analysis shows that during the first half of the GILT-HOTRG, the gauge
 However, there is one more twist. In practice, we observe that the low-rank matrices are projection operators, which are highly degenerated. 
 As a result, the gauge redundancy in the degenerate subspace will leak out, which will be seen by the subsequent HOTRG process. 
 Luckily, the HOTRG has a similar feature as the GILT process.
-It favors bases where the positive semi-definite matrix $M M^{\dagger}$ (see the definition of matrix $M$ in Eq.~\eqref{def:M-AA}) is diagonal (the sign ambiguites coming from eigenvalue decomposition of $M M^{\dagger}$ would similarly kick in here and contribute to $d_x$ in Eq.~\eqref{eq:Ap2Aptilde}). 
+It favors bases where the positive semi-definite matrix $M M^{\dagger}$ (see the definition of matrix $M$ in Eq.~\eqref{def:M-AA}) is diagonal (the sign ambiguities coming from eigenvalue decomposition of $M M^{\dagger}$ would similarly kick in here and contribute to $d_x$ in Eq.~\eqref{eq:Ap2Aptilde}). 
 It is straightforward to see that the isometry $w$ will pick up the suitable $S_x,S_x^T$ matrices to cancel out the gauge transformation leaking out from the GILT process.
 There are still concerns about whether degeneracies occur in eigenvalues of $M M^{\dagger}$. 
 Our result in Fig.~\ref{fig:flowA}(b) shows, a posteriori, that this potential degeneracies do not cause any problem for the 2D Ising model at criticality.
@@ -835,8 +885,21 @@ Then, we can apply Eq.~\eqref{eq:finddx} in each degenerate sectors of the tenso
 The detailed implementation of the sign fixing procedure for $\mathbb{Z}_2$ symmetric tensors can be found in the source code of this paper (see Appendix~\ref{append:sc}).
 %
 
-We still have one last question to answer: why can we restrict invertible matrices $S_x, S_y$ to be orthogonal? 
-The justification comes from the numerical evidence in Sec.~\ref{benchmark:2DIsing}.
+We still have one last question to answer: why can we restrict invertible matrices $S_x, S_y$ in the gauge transformation to be orthogonal matrices? 
+This restriction is justified if the initial tensor $A$ of the system has spatial reflection symmetries, $A_{ijkl} = A_{kjil} = A_{ilkj}$ (see Eq.~\eqref{def:gaugeTrans} for the legs' order convention).
+This means that the transfer matrix $N_x$ in Eq.~\eqref{def:Nx} obtained by contracting two vertical legs of $A$ is symmetric.
+The transfer matrix constructed from the coarser tensor $A_c$ remains symmetric during the exact block-tensor transformation in Eq.~\eqref{eq:exactBlock}. 
+The approximation procedures in the GILT and the HOTRG preserve the symmetry of transfer matrices $N_x, N_y$.
+It can be seen by examining the symmetry properties of pieces of low-rank $Q_A, Q_B$ matrices and of the isometry $w$ in Eq.~\eqref{def:ApycontrGilt}.
+The low-rank matrices $Q_A, Q_B$ in Fig.~\ref{fig:gilt4hotrg} inherit the reflection symmetry of the tensor $A$, so they are both symmetric matrices.
+Furthermore, $Q_A$ and $Q_B$ are related to each other by a horizontal reflection since their environment plaquettes (see Eq.~\eqref{eq:bondEnvSVD}) are related to each other through such a symmetry transformation.
+These two symmetry properties of $Q_A$ and $Q_B$ ensures that the two transfer matrices $N_x, N_y$ constructed from the patch of tensors in the dashed circle in Fig.~\ref{fig:gilt4hotrg} are symmetric matrices.
+The subsequent HOTRG acts the isometry $w$ and its transpose on this patch of tensors, which also preserves the reflection symmetry of two transfer matrices.
+Consequently, the approximation procedures in the GILT-HOTRG preserve the symmetry of transfer matrices.
+This symmetry-preserving property of the GILT-HOTRG enforces the invertible matrices $S_x, S_y$ to be orthogonal matrices, because a general invertible matrix will break the reflection symmetry of transfer matrices. 
+%
+
+This restriction to orthogonal matrices is further supported by the numerical evidence in Sec.~\ref{benchmark:2DIsing}.
 Fig.~\ref{fig:flowAnorm}(a) and Fig.~\ref{fig:flowA}(a) demonstrate that the two fixed-point tensors before and after the GILT-HOTRG have the same Frobenius norm and also the same singular values defined in Eq.~\eqref{def:Asvd}. 
 These two quantities are not invariant under the most general gauge transformation defined in Eq.~\eqref{def:gaugeTrans}. 
 They are only invariant if the matrices $S_x,S_y$ are unitary. 

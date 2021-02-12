@@ -121,8 +121,8 @@
 		\node [style=textbox] (132) at (-5.25, 3) {The critical\\ fixed point};
 		\node [style=none] (133) at (-5.25, 2) {};
 		\node [style=none] (134) at (-5.5, 0.75) {};
-		\node [style=none] (135) at (-4.25, -3.5) {$(a)$};
-		\node [style=none] (136) at (4, -3.5) {$(b)$};
+		\node [style=none] (135) at (-4.25, -3.5) {(a)};
+		\node [style=none] (136) at (4, -3.5) {(b)};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw [style=blackArrMid, in=-150, out=60, looseness=0.50] (6) to (12.center);

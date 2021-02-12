@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=wblock] (0) at (-7, 3) {RG\\transformations};
+		\node [style=wblock] (1) at (0, 3) {Linearize\\around a\\fixed point};
+		\node [style=gblock] (2) at (9, 3) {Scaling\\dimensions};
+		\node [style=wblock] (3) at (-5, 0) {Tensor RG};
+		\node [style=gblock] (4) at (-8.5, -3) {Free\\energy};
+		\node [style=wblock] (5) at (-5, -5) {Filter out all\\short-range\\physics};
+		\node [style=wblock] (6) at (0, -5) {A\\fixed-point\\tensor};
+		\node [style=wblock] (7) at (0, -1) {Gauge\\fixing};
+		\node [style=kblock] (8) at (9, -5) {A 2D CFT\\theorem\\~\cite{GuWen2009,cardy1986}};
+		\node [style=kblock] (9) at (5, -1) {Construct the\\local scale\\transformation\\~\cite{EvenblyDilatationOp}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=normArr] (0) to (1);
+		\draw [style=thickArr] (1) to (2);
+		\draw [style=normArr] (3) to (4);
+		\draw [style=thickArr] (3) to (5);
+		\draw [style=thickArr] (5) to (6);
+		\draw [style=thickArr] (6) to (7);
+		\draw [style=thickArr] (7) to (1);
+		\draw [style=normArr] (6) to (8);
+		\draw [style=normArr] (8) to (2);
+		\draw [style=normArr] (7) to (9);
+		\draw [style=normArr] (9) to (2);
+	\end{pgfonlayer}
+\end{tikzpicture}

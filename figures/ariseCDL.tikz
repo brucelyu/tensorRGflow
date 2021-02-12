@@ -60,10 +60,10 @@
 		\node [style=cdlMat] (78) at (6.65, -2) {};
 		\node [style=none] (79) at (6.5, -3.25) {};
 		\node [style=none] (80) at (7.9, -1.85) {};
-		\node [style=none] (81) at (-1.5, 0.75) {C};
-		\node [style=none] (82) at (-1.5, -0.75) {C};
-		\node [style=none] (83) at (-3, 0.75) {C};
-		\node [style=none] (84) at (-3, -0.75) {C};
+		\node [style=none] (81) at (-1.5, 0.75) {$C$};
+		\node [style=none] (82) at (-1.5, -0.75) {$C$};
+		\node [style=none] (83) at (-3, 0.75) {$C$};
+		\node [style=none] (84) at (-3, -0.75) {$C$};
 		\node [style=cdlWhole] (85) at (-2.25, 0) {};
 		\node [style=textbox] (86) at (4.75, 0) {all spins inside\\ are summed\\ over};
 		\node [style=none] (87) at (0.75, 0) {$\Leftarrow$};

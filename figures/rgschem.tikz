@@ -184,17 +184,17 @@
 		\node [style=cdlMat] (182) at (6.15, -9.25) {};
 		\node [style=none] (183) at (6, -10.5) {};
 		\node [style=none] (184) at (7.4, -9.1) {};
-		\node [style=none] (185) at (-2, -6.5) {C};
-		\node [style=none] (186) at (-2, -8) {C};
-		\node [style=none] (187) at (-3.5, -6.5) {C};
-		\node [style=none] (188) at (-3.5, -8) {C};
+		\node [style=none] (185) at (-2, -6.5) {$C$};
+		\node [style=none] (186) at (-2, -8) {$C$};
+		\node [style=none] (187) at (-3.5, -6.5) {$C$};
+		\node [style=none] (188) at (-3.5, -8) {$C$};
 		\node [style=cdlWhole] (189) at (-2.75, -7.25) {};
 		\node [style=textbox] (190) at (4.25, -7.25) {all spins inside\\ are summed\\ over};
 		\node [style=none] (191) at (0.25, -7.25) {$\Leftarrow$};
 		\node [style=none] (192) at (-5.5, -7.25) {$\defeqfig$};
 		\node [style=none] (193) at (-7, -7.25) {$A^{\text{CDL}}$};
-		\node [style=none] (194) at (-8, 2.5) {$(a)$};
-		\node [style=none] (195) at (-8, -5) {$(b)$};
+		\node [style=none] (194) at (-8, 2.5) {(a)};
+		\node [style=none] (195) at (-8, -5) {(b)};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw [style=blackMidLine] (0.center) to (5.center);

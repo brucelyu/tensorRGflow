@@ -321,10 +321,10 @@
 		\node [style=none] (403) at (17.325, 0) {};
 		\node [style=none] (404) at (19.825, 0) {};
 		\node [style=none] (405) at (18.575, 0.5) {absorption};
-		\node [style=none] (406) at (-4.5, -7) {$(a)$};
-		\node [style=none] (407) at (4.5, -7) {$(b)$};
-		\node [style=none] (408) at (13.5, -7) {$(c)$};
-		\node [style=none] (409) at (23.5, -7) {$(d)$};
+		\node [style=none] (406) at (-4.5, -7) {(a)};
+		\node [style=none] (407) at (4.5, -7) {(b)};
+		\node [style=none] (408) at (13.5, -7) {(c)};
+		\node [style=none] (409) at (23.5, -7) {(d)};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw [style=greenMidLine] (0) to (2);

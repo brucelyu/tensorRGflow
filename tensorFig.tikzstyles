@@ -31,6 +31,9 @@
 \tikzstyle{tvec}=[fill={rgb,255: red,191; green,191; blue,191}, draw=black, shape=circle, inner sep=0pt, outer sep=0pt, minimum size=0.2cm]
 \tikzstyle{haldHalfCir}=[fill=white, draw=white, shape=semicircle, anchor=chord center, rotate=90, minimum width=0.4cm, outer sep=0pt, inner sep=0pt]
 \tikzstyle{haldHalfCir2}=[fill=white, draw=white, shape=semicircle, anchor=chord center, rotate=-90, minimum width=0.4cm, outer sep=0pt, inner sep=0pt]
+\tikzstyle{wblock}=[fill=white, draw=black, shape=rectangle, rounded corners, align=center, tikzit category=tensor, minimum height=3em]
+\tikzstyle{gblock}=[fill={rgb,255: red,84; green,140; blue,53}, draw=black, shape=rectangle, tikzit category=tensor, rounded corners, align=center, minimum height=3em, text=white]
+\tikzstyle{kblock}=[fill={rgb,255: red,128; green,128; blue,128}, draw=black, shape=rectangle, tikzit category=tensor, rounded corners, align=center, minimum height=3em, text=white]
 
 % Edge styles
 \tikzstyle{blackMidLine}=[-, fill={rgb,255: red,191; green,191; blue,191}, draw=black, thick]
@@ -47,3 +50,5 @@
 \tikzstyle{greenArr}=[->, draw={rgb,255: red,255; green,128; blue,0}, thick]
 \tikzstyle{simMat}=[-, thick, fill={rgb,255: red,255; green,191; blue,191}]
 \tikzstyle{blueArrow}=[draw=blue, ->, semithick]
+\tikzstyle{normArr}=[->, >=stealth]
+\tikzstyle{thickArr}=[->, >=stealth, ultra thick]

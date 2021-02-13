@@ -191,7 +191,7 @@
 		\node [style=cdlWhole] (189) at (-2.75, -7.25) {};
 		\node [style=textbox] (190) at (4.25, -7.25) {all spins inside\\ are summed\\ over};
 		\node [style=none] (191) at (0.25, -7.25) {$\Leftarrow$};
-		\node [style=none] (192) at (-5.5, -7.25) {$\defeqfig$};
+		\node [style=none] (192) at (-5.5, -7.25) {$\equiv$};
 		\node [style=none] (193) at (-7, -7.25) {$A^{\text{CDL}}$};
 		\node [style=none] (194) at (-8, 2.5) {(a)};
 		\node [style=none] (195) at (-8, -5) {(b)};

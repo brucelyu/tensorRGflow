@@ -1,7 +1,7 @@
 % File              : tensorRGflow.tex
 % Author            : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
 % Date              : 12.02.2021
-% Last Modified Date: 13.02.2021
+% Last Modified Date: 14.02.2021
 % Last Modified By  : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
 %% ****** Start of file apstemplate.tex ****** %
 %%
@@ -132,8 +132,7 @@ The map is known as an RG equation.
 A well-behaved RG equation exhibits fixed points, each corresponding to a conformal field theory (CFT)~\cite{polchinski1988,nakayama2015}.
 A critical system is described by a fixed point.
 By linearizing the RG equation around the critical fixed point, universal properties like scaling dimensions of the critical system can be extracted.
-This canonical RG prescription of analyzing a fixed point also gives a theoretical framework to understand universality in critical phenomena.
-% However, the conventional RG schemes in Hamiltonian space lack generality and, in some cases, a systematic way to improve their results.
+This canonical RG prescription of analyzing a fixed point also provides a theoretical framework to understand universality in critical phenomena.
 However, for a systematic study with high-precision, the Hamiltonian may not be the most efficient representation of the system.
 %
 
@@ -156,7 +155,7 @@ Fortunately, in recent ten years, people have developed many tricks to solve the
 In 2009, Gu and Wen~\cite{GuWen2009} was the first to deal with this problem. 
 They followed Levin's suggestion~\cite{trg,LevinTalk} and focused on a toy model called corner double-line (CDL) tensors, which represent systems with only local correlations. 
 They showed that the CDL tensors are fixed points of the TRG, indicating that the local correlations at the smaller length scales will be carried to the larger ones. 
-A relative crude algorithm was proposed to filter the CDL tensors and the problem of the tensor RG flows was partially solved, followed up by an improved algorithm in 2017~\cite{looptnr}. 
+A crude algorithm was proposed to filter out the CDL tensors and the problem of the tensor RG flows was partially solved, followed up by an improved algorithm in 2017~\cite{looptnr}. 
 From 2015 to 2017, several similar methods were proposed~\cite{tnr,tnralgo,tnrplus}. 
 All of these advanced TRG-type techniques successfully produced critical fixed-point tensors. 
 %
@@ -248,7 +247,6 @@ is the tensor RG equation.
 %
 
 \subsection{General framework\label{RGprescrip}}
-% Our goal is to carry out the canonical RG prescription in tensor space.
 We first define the \textit{canonical} RG prescription in tensor space.
 To this end, it is helpful to start with a review of the old approach in Hamiltonian space (we follow the detailed review~\cite{kadanoff2014} and textbook~\cite{cardy_1996} closely).
 %
@@ -268,7 +266,7 @@ The map from the old Hamiltonian to the new one $\mathcal{H} \xrightarrow{\text{
     \mathbf{K}' = \mathcal{T}^{\text{old}}\left(\mathbf{K}\right).
 \end{align}
 %
-We require that the RG transformation should preserve the partition function of the system and should exhibit a fixed-point Hamiltonian $\mathcal{H}^{*}$ parameterized by coupling constants $\mathbf{K}^{*}$, such that $\mathbf{K}^{*}$ remain unchanged under the RG transformation,
+We require that the RG transformation should preserve the partition function of the system and should exhibit a fixed-point Hamiltonian $\mathcal{H}^{*}$ parameterized by coupling constants $\mathbf{K}^{*}$, such that $\mathbf{K}^{*}$ remains unchanged under the RG transformation,
 %
 \begin{align}\label{eq:oldRGKstar}
     \mathbf{K}^{*} =
@@ -285,7 +283,7 @@ The linearized RG equation around $\mathbf{K}^{*}$ is a matrix $\mathcal{R}^{\te
     \delta K_i' = \sum_j\mathcal{R}^{\text{old}}_{ij} \delta K_j.
 \end{align}
 %
-$\mathcal{R}^{\text{old}}$ has right and left eigenvectors $\{\psi^{\alpha}\}, \{\phi^{\alpha}\}$ with eigenvalues $\{\lambda^{\alpha}\}$,
+The matrix $\mathcal{R}^{\text{old}}$ has right and left eigenvectors $\{\psi^{\alpha}\}, \{\phi^{\alpha}\}$ with eigenvalues $\{\lambda^{\alpha}\}$,
 %
 \begin{align}\label{eq:eigsofRespM}
     \sum_j \mathcal{R}^{old}_{ij} \psi^{\alpha}_j = \lambda^{\alpha}
@@ -327,7 +325,7 @@ We claim that the components of the tensor $A$ can be thought of as some proxies
 %
 
 To see why this claim is reasonable, note that we can map the partition function of the system with Hamiltonian in Eq.~\eqref{eq:generalspinHam} to a tensor network using the method introduced in Ref.~\cite{trg}. 
-Each component of the initial tensor $A$ is the Boltzmann weight of a given local configuration that depends on the coupling constants, so we have 
+Each component of the initial tensor $A$ is the Boltzmann weight of a given local configuration and depends on the coupling constants,
 %
 \begin{align}\label{eq:K2A}
     A_{(i)} = f_{(i)}\left(\mathbf{K}\right),
@@ -392,11 +390,10 @@ concrete example to demonstrate the general argument above.
 \subsection{Technical obstacles\label{sec:obstacles}}
 There are two major obstacles for the fixed-point analysis in tensor space. 
 They prevent us from obtaining a fixed-point tensor satisfying Eq.~\eqref{eq:tensorRGAstar}.
-% The first one is that many TRG-type methods, if not carefully treated, tend to give rise to peculiar tensor RG flows.
 The two obstacles are the problem of local correlations and the gauge redundancy in tensor network language.
 %
 
-Levin and Nave anticipated the first obstacles when looking from fixed points of the RG equation of the TRG~\cite{LevinTalk}.
+Levin and Nave anticipated the first obstacles when looking for fixed points of the RG equation of the TRG~\cite{LevinTalk}.
 One of the earliest numerical evidence for the peculiar tensor RG flows of the 2D Ising model was provided by Hinczewski and Berker~\cite{Berker2008}. 
 Their results indicate that the TRG-type techniques have difficulty in integrating out all the local correlations at short distances, so physics at the lattice scale is carried all the way to the physics at larger ones. 
 This shortcoming of the TRG-type techniques makes identification of both non-critical and critical fixed-point tensors very difficult.
@@ -439,10 +436,9 @@ lattice scale.
 \end{figure}
 %
 The process is similar to the decimation in the conventional approaches.
-After the spin variables shared by four $A$ tensors forming the same $A_c$ are summed over, we are left with four bigger squares, with two spin variables sitting on each side of each square.
+After the spin variables shared by every two $A$ tensors forming the same $A_c$ are summed over, we are left with four bigger squares, with two spin variables sitting on each side of each square.
 When the squares become large enough as the block-tensor transformation goes on, we expect that, roughly speaking, the spin variables on different edges are far away from each other and thus uncorrelated. 
 The only exception is for the spin variables around the four corners.
-% See Fig.~\ref{fig:rgschem}(b). 
 We can use a matrix $C$ in Fig.~\ref{fig:rgschem}(b) to capture the correlations around the corners; the matrix $C$ must contain physics at the scale of the original lattice constant. 
 Since the spin variables around different corners are far away from each other, the tensor $A^{\text{CDL}}$ corresponding to this black square should factorize into the tensor product of four corner matrices $C$. 
 A tensor with the structure of $A^{\text{CDL}}$ is called a CDL tensor.
@@ -453,7 +449,7 @@ This shows that the TRG and the HOTRG have difficulty in integrating out the loc
 If we start with two temperatures $T_1 \neq T_2$, both larger than the critical temperature $T_c$ of the 2D Ising model, either of these two methods will generate tensors flowing to two different CDL tensors $A^{\text{CDL}}_1 \neq A^{\text{CDL}}_2$, as a natural consequence of the fact that these CDL tensors depend, directly, on the bare interaction constants. 
 At criticality, the previous numerical calculations indicate that we will never reach a critical fixed-point tensor~\cite{Berker2008,tnr}.
 Their calculations suggest tensor RG flows shown in Fig.~\ref{fig:tensorRGflow}(b), where the low- and high-temperature fixed points turn into two fixed lines and the critical fixed point disappears. 
-As a comparison, the correct RG flow is shown in Fig.~\ref{fig:tensorRGflow}(a).
+By comparison, the correct RG flow is shown in Fig.~\ref{fig:tensorRGflow}(a).
 We will introduce a way to solve the problem of CDL tensors for the HOTRG in Sec.~\ref{sec:gilthotrg}.
 %
 \begin{figure}[t]
@@ -489,9 +485,8 @@ or pictorially as
 the tensors $A$ and $\tilde{A}$ represent the same partition function $Z$.
 Equation~\eqref{def:gaugeTrans} defines a equivalence relation where all the elements in an equivalence class represent a same partition function $Z$.
 The gauge redundancy makes the correspondence between a tensor $A$ and the partition function $Z$ no longer one-to-one.
-% Instead, the whole equivalence class $[A]$ corresponds to a single $Z$; any element $\tilde{A}$ in this equivalence class can represent $Z$.
 In the following, we refer to the equivalence class defined by the gauge transformation in Eq.~\eqref{def:gaugeTrans} as $[A]$.
-In comparison, in the conventional Hamiltonian approach, we fix the form of the new Hamiltonian $\mathcal{H}'$ to be the same as the old one $\mathcal{H}$ in Eq.~\eqref{eq:generalspinHam}, with $\mathcal{H}' $ characterized by a set of new coupling constants $\mathbf{K}'$. 
+In comparison, in the conventional Hamiltonian approach, we fix the form of the new Hamiltonian $\mathcal{H}'$ to be the same as the old $\mathcal{H}$ in Eq.~\eqref{eq:generalspinHam}, with $\mathcal{H}' $ characterized by a set of new coupling constants $\mathbf{K}'$. 
 % They have the same interaction terms $s_j(\mathbf{r})$, coupled to different coupling constants $\mathbf{K}$ and $\mathbf{K}'$. 
 This gives a one-to-one correspondence between a set of coupling constants $\mathbf{K} = \{K_j \}$ and a Hamiltonian $\mathcal{H}$ (or a partition function $Z$).
 %
@@ -511,7 +506,7 @@ We will show how the gauge is fixed for a HOTRG-like scheme in Sec.~\ref{sec:gau
 
 
 \subsection{GILT-HOTRG\label{sec:gilthotrg}}
-In this subsection, we present a HOTRG-like scheme to solve the first technical obstacles.
+In this subsection, we present a HOTRG-like scheme to solve the first technical obstacle.
 Compared with the state-of-the-art TRG-type methods~\cite{GuWen2009,tnr,tnralgo,tnrplus,looptnr,harada2018,fet,tns,tensor-ring,gilts} that can generate correct tensor RG flows, our scheme can be most easily generalized to dimensions higher than 2 and is convenient for the subsequent gauge fixing and linearization procedure.
 The graph-independent local truncation (GILT)~\cite{gilts} is performed to filter out the problematic local correlations before the coarse graining of the HOTRG\@.
 We call this scheme GILT-HOTRG\@.
@@ -620,7 +615,7 @@ We use the approximation to replace all pairs of $A$ tensors in the tensor netwo
     \tikzfig{Z-approy} \nonumber\\ &= \tikzfig{Z-contry}\text{  },
 \end{align}
 %
-where in the second step, we contract two $A$ tensors and two isometric tensors $w, w^{\dagger}$ in the dashed circle to get a coarser tensor $A'$,
+where in the second step, we contract two $A$ tensors and $w, w^{\dagger}$ in the dashed circle to get a coarser tensor $A'$,
 %
 \begin{align}\label{def:Apycontr}
     \tikzfig{Ap-ycontr} \equiv \tikzfig{twoAcoarse}\text{ }.
@@ -628,6 +623,7 @@ where in the second step, we contract two $A$ tensors and two isometric tensors 
 %
 Notice in the approximation step in Eq.~\eqref{eq:Zapproxy}, we move the two leftmost $w$ tensors to the far right because we have a periodic boundary condition. 
 Equation~\eqref{def:Apycontr} defines the HOTRG coarse graining in the vertical direction.
+We usually choose $\tilde{\chi} \leq \chi_{\text{max}}$ in Eq.~\eqref{eq:hotrgProjTrun} to prevent the bond dimension from growing.
 %
 
 It is shown in Ref.~\cite{hotrgfixpoint} that the HOTRG in the vertical direction transforms the $A^{\text{CDL}}$ in Fig.~\ref{fig:rgschem}(b) in the following way,
@@ -640,7 +636,7 @@ which means that although the HOTRG can detect and project out four inner $C$ ma
 Therefore, the GILT should be applied to filter out these four outer $C$ matrices before the HOTRG coarse graining. 
 To this end, we apply the GILT to the plaquettes where the loops of local correlations are drawn explicitly in Fig.~\ref{fig:gilt4hotrg} and insert two low-rank matrices $Q_A,Q_B$ into the upper and lower bonds for each plaquette. 
 The legs of the unwanted $C$ matrices will be truncated after the splitting of $Q_A, Q_B$. 
-Finally, we apply the ordinary HOTRG coarse graining in the vertical direction (see Ref.~\cite{hotrg,tnralgo} for details) to the local patch of tensors in the dashed circle in Fig.~\ref{fig:gilt4hotrg} to get the coarser tensor $A'$
+Finally, we apply the ordinary HOTRG in the vertical direction to the local patch of tensors in the dashed circle in Fig.~\ref{fig:gilt4hotrg} to get the coarser tensor $A'$
 %
 \begin{align}\label{def:ApycontrGilt}
     \tikzfig{Ap-ycontr}
@@ -734,7 +730,7 @@ the states in the odd sector is multiplied by $-1$ under the spin flip operation
 %
 
 Most of the remaining gauge in the degenerate sectors of $A$ can be fixed by going to the diagonal bases of the tensor.
-We show how the $S_x$ gauge redundancies in Eq.~\eqref{def:gaugeTrans} are fixed. The $S_y$ ones can be dealt with in the same way.
+We show how the $S_x$ gauge redundancy in Eq.~\eqref{def:gaugeTrans} is fixed. The $S_y$ one can be dealt with in the same way.
 Given a tensor $A$, we first contract its two vertical legs to produce a transfer matrix $N_x$,
 %
 \begin{align}\label{def:Nx}
@@ -747,7 +743,7 @@ We then find the eigenvalue decomposition of this matrix,
 \end{align}
 %
 where $\lambda$ is the diagonal matrix encoding eigenvalues.
-The gauge fixing transformation in the horizontal direction is defined by acting the invertible matrix $W_x$ and its inverse on horizontal legs of the tensor $A$,
+The gauge fixing transformation in the horizontal direction is defined by acting the invertible matrix $W_x$ and its inverse on the horizontal legs of the tensor $A$,
 %
 \begin{align}\label{def:gaugefixHori}
     \scalebox{0.8}{\tikzfig{Aold}} \xrightarrow[\text{gauge fixing}]{\text{horizontal}} \scalebox{0.8}{\tikzfig{gaugefixAhori}}.
@@ -780,7 +776,7 @@ For 2D classical statistical models with spatial reflection symmetries, for exam
 
 The gauge fixing procedure described in Eqs.~\eqref{def:Nx} to~\eqref{def:gaugefixHori} is general for all TRG-type techniques.
 However, this procedure is not necessary for the GILT-HOTRG applied to systems with spatial reflection symmetries like the 2D Ising model, since the RG equation of the GILT-HOTRG has a preferred set of bases.
-As a result, the gauge redundancies in Eq.~\eqref{def:gaugeTrans} collapse into phase ambiguities (or sign ambiguities for real tensors) in the GILT-HOTRG\@.
+As a result, the gauge redundancy in Eq.~\eqref{def:gaugeTrans} collapses into phase ambiguities (or sign ambiguities for real tensors) in the GILT-HOTRG\@.
 To make things as simple as possible, we focus on real tensors in the following discussions.
 The generalization to complex tensors is straightforward.
 %
@@ -803,8 +799,6 @@ Imagine that we manage to fix the sign ambiguities, then the GILT-HOTRG ensures
 Since the orthogonal matrices $S_x, S_y$ are arbitrary, equation~\eqref{eq:HOTRGgaugefix} says that the whole equivalence class $[A]$ will be mapped into the same tensor $A_c$. 
 This means that the GILT-HOTRG, after incorporating the sign fixing step, will choose a preferred set of bases. 
 It is worth to mention that the TRG has a similar property~\cite{kadanoff2014}.
-%
-
 For a fixed-point tensor, equation~\eqref{eq:HOTRGgaugefix} indicates that we can start with any representation $\tilde{A}^*$ of the equivalence class $[A^*]$, and the GILT-HOTRG will bring $\tilde{A}^*$ to the proper bases; further GILT-HOTRG coarse graining will satisfy Eq.~\eqref{eq:tensorRGAstar},
 %
 \begin{align}\label{eq:GiltHOTRGfixT}
@@ -834,8 +828,8 @@ and
     \end{align} 
 \end{subequations}
 %
-where $O_x, O_y$ are orthogonal matrices and $O_x^2 = O_y^2 = \mathbb{1}$ and the legs' order convention is as per Eq.~\eqref{def:tensorA}.
-It can be shown that, if we start with a tensor with reflection symmetry, the GILT-HOTRG will preserve the reflection symmetry and will rotate the tensor into the set of bases where $O_x, O_y$ becomes diagonal, with their diagonal entries $\pm 1$~\footnote{This is because the pieces of low-rank matrices and the isometric tensors in the RG equation of the GILT-HOTRG in Eq.~\eqref{def:RGeqGiltHOTRG} will inherit the reflection symmetry of the input tensor $A$.}.
+where $O_x, O_y$ are orthogonal matrices, also with $O_x^2 = O_y^2 = \mathbb{1}$, and the legs' order convention is as per Eq.~\eqref{def:tensorA}.
+It can be shown that, if we start with a tensor with reflection symmetry, the GILT-HOTRG will preserve the reflection symmetry and will rotate the tensor into the set of bases where $O_x, O_y$ become diagonal, with their diagonal entries $\pm 1$~\footnote{This is because the pieces of low-rank matrices and the isometric tensors in the RG equation of the GILT-HOTRG in Eq.~\eqref{def:RGeqGiltHOTRG} will inherit the reflection symmetry of the input tensor $A$.}.
 %
 
 It suffices to discuss the first half of the GILT-HOTRG coarse graining defined in Eq.~\eqref{def:ApycontrGilt}. 
@@ -868,7 +862,7 @@ Finally, equation~\eqref{def:QfromUtp} gives
 \end{align}
 %
 Equation~\eqref{eq:QAtilde} means that the low rank matrix $Q_A$ transforms in a nice way when we perform a gauge transformation of the tensor $A$ defined in Eq.~\eqref{eq:simorth}. 
-If the singular values of $Q_A$ \textit{does not have degeneracies}, after splitting of $Q_A$, we have $Q_{Ar},Q_{Al}$ transform like (the sign ambiguities coming from singular value decomposition of $Q_A$ and $\tilde{Q}_A$ would kick in and contribute to $d_x$ in Eq.~\eqref{eq:Ap2Aptilde}, but they are not drawn explicitly in the equation below)
+If the singular values of $Q_A$ \textit{do not have degeneracy}, after splitting of $Q_A$, we have $Q_{Ar},Q_{Al}$ transform like (the sign ambiguities coming from singular value decomposition of $Q_A$ and $\tilde{Q}_A$ would kick in and contribute to $d_x$ in Eq.~\eqref{eq:Ap2Aptilde}, but they are not drawn explicitly in the equation below)
 %
 \begin{align}\label{eq:QpieceTrans}
     \tikzfig{QArTransf} \text{ and } \tikzfig{QAlTransf}\text{ }. 
@@ -885,8 +879,8 @@ As a result, the gauge redundancy in the degenerate subspace will leak out, whic
 Luckily, the HOTRG has a similar feature as the GILT process.
 It favors bases where the positive semi-definite matrix $M M^{\dagger}$ (see the definition of matrix $M$ in Eq.~\eqref{def:M-AA}) is diagonal (the sign ambiguities coming from eigenvalue decomposition of $M M^{\dagger}$ would similarly kick in here and contribute to $d_x$ in Eq.~\eqref{eq:Ap2Aptilde}). 
 It is straightforward to see that the isometry $w$ will pick up the suitable $S_x,S_x^T$ matrices to cancel out the gauge transformation leaking out from the GILT process.
-There are still concerns about whether degeneracies occur in eigenvalues of $M M^{\dagger}$. 
-Our result in Fig.~\ref{fig:flowA}(b) shows, a posteriori, that this potential degeneracies do not cause any problem for the 2D Ising model at criticality.
+There are still concerns about whether degeneracy occurs in eigenvalues of $M M^{\dagger}$. 
+Our result in Fig.~\ref{fig:flowA}(b) shows, a posteriori, that the potential degeneracy does not cause any problem for the 2D Ising model at criticality.
 %
 
 The sign ambiguities $d_x,d_y$ in Eq.~\eqref{eq:signAmbi} can be determined by comparing the sign of the components of $\tilde{A}_c$ and $A_c$.
@@ -934,7 +928,7 @@ The Ising model in 2D provides more nontrivial benchmark results for our method.
 \subsection{The Ising Model in 1D\label{benchmark:1DIsing}}
 The Ising model in 1D has an exact real-space RG transformation realized via decimation. 
 Even better, the decimation has a natural tensor network representation. 
-This makes the Ising model in 1D a nice example to see the relation between the old and the new approaches of canonical RG prescription.
+This makes the Ising model in 1D a nice example to see the relation between the old and the new approaches of the canonical RG prescription.
 %
 
 The partition function is
@@ -944,7 +938,7 @@ The partition function is
     \mathscr{H}\left(\sigma_i,\sigma_{i+1}\right)  \right]},
 \end{align}
 %
-where the local interactions involve nearest-neighbor at most
+where the local interactions involve the nearest-neighbor term at most
 %
 \begin{align}\label{def:H4Ising1D}
     \mathscr{H}\left(\sigma_1, \sigma_2\right) = g +
@@ -961,7 +955,7 @@ renumber the remaining odd-numbered spins.
         The decimation for the 1D Ising model. 
         The black dots are spin variables. 
         The spins on even sites $\sigma_2,\sigma_4,\ldots$ are summed over and the remaining spins $\sigma_1,\sigma_3,\ldots$ are renamed $\sigma_1',\sigma_2',\ldots$ to become new spin variables. 
-        In the tensor network language, this decimation is nothing but a matrix multiplication of two transfer matrices $A$ to form a coarse-grained matrix $A_c = AA$.
+        In the tensor network language, this decimation is nothing but a matrix multiplication of two transfer matrices to form a coarse-grained matrix $A_c = AA$.
     }
 \end{figure}
 %
@@ -1259,7 +1253,7 @@ However, we roll back to ordinary tensors when performing the RG prescription in
 
 The second remark is about the improvement of the accuracy as the bond dimension $\chi$ increases. 
 There are two sources of approximation errors in the above computations. 
-One comes from the truncations of the CDL tensors during the GILT that is necessary to produce the critical fixed point. 
+One comes from the truncations of the CDL tensors during the GILT that is necessary for producing the critical fixed point. 
 This error is controlled by the hyper-parameter $\epsilon_{\text{gilt}}$. 
 The other source is the leg squeezing step during the HOTRG to prevent the grow of the bond dimension.
 This error can be reduced by increasing the bond dimension $\chi$. 

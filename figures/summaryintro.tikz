@@ -1,7 +1,7 @@
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
 		\node [style=wblock] (0) at (-7, 3) {RG\\transformations};
-		\node [style=wblock] (1) at (0, 3) {Linearize\\around a\\fixed point};
+		\node [style=wblock] (1) at (0, 3) {Linearize the RG\\equation around a\\fixed point};
 		\node [style=gblock] (2) at (9, 3) {Scaling\\dimensions};
 		\node [style=wblock] (3) at (-5, 0) {Tensor RG};
 		\node [style=gblock] (4) at (-8.5, -3) {Free\\energy};

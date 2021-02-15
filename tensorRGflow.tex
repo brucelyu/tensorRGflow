@@ -1,7 +1,7 @@
 % File              : tensorRGflow.tex
 % Author            : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
 % Date              : 12.02.2021
-% Last Modified Date: 14.02.2021
+% Last Modified Date: 15.02.2021
 % Last Modified By  : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
 %% ****** Start of file apstemplate.tex ****** %
 %%
@@ -283,7 +283,7 @@ The linearized RG equation around $\mathbf{K}^{*}$ is a matrix $\mathcal{R}^{\te
     \delta K_i' = \sum_j\mathcal{R}^{\text{old}}_{ij} \delta K_j.
 \end{align}
 %
-The matrix $\mathcal{R}^{\text{old}}$ has right and left eigenvectors $\{\psi^{\alpha}\}, \{\phi^{\alpha}\}$ with eigenvalues $\{\lambda^{\alpha}\}$,
+The matrix $\mathcal{R}^{\text{old}}$ has right and left eigenvectors $\{\psi^{\alpha}\}, \{\phi^{\alpha}\}$ with the same set of eigenvalues $\{\lambda^{\alpha}\}$,
 %
 \begin{align}\label{eq:eigsofRespM}
     \sum_j \mathcal{R}^{old}_{ij} \psi^{\alpha}_j = \lambda^{\alpha}
@@ -482,7 +482,7 @@ or pictorially as
     \end{align}
 \end{subequations}
 %
-the tensors $A$ and $\tilde{A}$ represent the same partition function $Z$.
+The two tensor networks formed by $A$ and $\tilde{A}$ represent the same partition function $Z$.
 Equation~\eqref{def:gaugeTrans} defines a equivalence relation where all the elements in an equivalence class represent a same partition function $Z$.
 The gauge redundancy makes the correspondence between a tensor $A$ and the partition function $Z$ no longer one-to-one.
 In the following, we refer to the equivalence class defined by the gauge transformation in Eq.~\eqref{def:gaugeTrans} as $[A]$.
@@ -621,7 +621,7 @@ where in the second step, we contract two $A$ tensors and $w, w^{\dagger}$ in th
     \tikzfig{Ap-ycontr} \equiv \tikzfig{twoAcoarse}\text{ }.
 \end{align}
 %
-Notice in the approximation step in Eq.~\eqref{eq:Zapproxy}, we move the two leftmost $w$ tensors to the far right because we have a periodic boundary condition. 
+Notice in the approximation step in Eq.~\eqref{eq:Zapproxy}, we move the two leftmost $w$ tensors to the right because we have a periodic boundary condition. 
 Equation~\eqref{def:Apycontr} defines the HOTRG coarse graining in the vertical direction.
 We usually choose $\tilde{\chi} \leq \chi_{\text{max}}$ in Eq.~\eqref{eq:hotrgProjTrun} to prevent the bond dimension from growing.
 %
@@ -722,7 +722,7 @@ We show how the gauge is fixed and give the explicit expression of the linearize
 %
 
 Part of the gauge can be fixed if the physical model possesses a global internal symmetry.
-The global symmetry can be incorporate into the tensor network representation of the model~\cite{Singh2010SymTen,Singh2011U1Ten,Singh2012SU2Ten}; it is a generalization of Schur's lemma from matrices to general tensors.
+The global symmetry can be incorporated into the tensor network representation of the model~\cite{Singh2010SymTen,Singh2011U1Ten,Singh2012SU2Ten}; it is a generalization of Schur's lemma from matrices to general tensors.
 For the 2D Ising model, $\mathbb{Z}_2$ symmetry can be imposed.
 Each index of the tensor $A$ breaks into even and odd sectors.
 Half of the gauge is fixed since $A$ is in the bases where the states in the even sector transform trivially and
@@ -1041,7 +1041,7 @@ In terms of the new $A_c$ matrix, the partition function is
 %
 Equation~\eqref{def:Ising1DRGeqTen} is the RG equation in the tensor network language. 
 Now, each component of $A_c$ is a function of coupling constants $g,h,K$ but with different functional form, as is claimed in Eq.~\eqref{eq:tensorEleRG}. 
-If we further require $A_c$ has the same form as $A$ in Eq.~\eqref{def:A4Ising1D} but with $\mathscr{H}$ replaced by $\mathscr{H}'$, new coupling constants $g',h',K'$ can be solved in terms of the old ones, which is what we do in the conventional approach. 
+If we further require that $A_c$ should have the same form as $A$ in Eq.~\eqref{def:A4Ising1D} but with $\mathscr{H}$ replaced by $\mathscr{H}'$, new coupling constants $g',h',K'$ can be solved in terms of the old ones, which is what we do in the conventional approach. 
 The advantage of using the tensor network language is that the RG equation in Eq.~\eqref{def:Ising1DRGeqTen} suffices for the canonical RG prescription in tensor space. 
 First, let us set the coupling constants in Eq.~\eqref{def:A4Ising1Depl} to be the high-temperature fixed point $g^* = \log{\left(1/2\right)}, h^*=0, K^* = 0$ to get the fixed-point tensor,
 %
@@ -1092,7 +1092,7 @@ the matrix takes the following value
 \end{pmatrix}.
 \end{align}
 %
-It is a symmetric matrix, and we can find its eigenvalues and eigenvectors: $\lambda_1 = 2,\mathbf{v}_1 = (1,1,1,1)^T$; $\lambda_2 = 1,\mathbf{v}_2 = (1,0,0,-1)^T$; $\lambda_3 =1, \mathbf{v}_3 = (0,1,-1,0)^T$ and $\lambda_4 = 0, \mathbf{v}_4 = (1,-1,-1,1)^T$. 
+This matrix $\mathcal{R}$ in Eq.~\eqref{eq:Ising1DRespMatNum} is a symmetric, and we can find its eigenvalues and eigenvectors: $\lambda_1 = 2,\mathbf{v}_1 = (1,1,1,1)^T$; $\lambda_2 = 1,\mathbf{v}_2 = (1,0,0,-1)^T$; $\lambda_3 =1, \mathbf{v}_3 = (0,1,-1,0)^T$ and $\lambda_4 = 0, \mathbf{v}_4 = (1,-1,-1,1)^T$. 
 The eigenvalues are the same as what we get in the conventional method. 
 %
 

@@ -1,7 +1,7 @@
 % File              : tensorRGflow.tex
 % Author            : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
 % Date              : 12.02.2021
-% Last Modified Date: 15.02.2021
+% Last Modified Date: 16.02.2021
 % Last Modified By  : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
 %% ****** Start of file apstemplate.tex ****** %
 %%
@@ -590,9 +590,9 @@ The HOTRG is an approximate tensor RG transformation, which can keep the bond di
 For the HOTRG in the vertical direction, we aim at the following approximation of a local patch of two copies of $A$ put together vertically,
 %
 \begin{align}\label{eq:hotrgProjTrun}
-    \tikzfig{twoAProj} 
+    \scalebox{0.8}{\tikzfig{twoAProj}} 
     \approx 
-    \tikzfig{twoA}\text{ },
+    \scalebox{0.8}{\tikzfig{twoA}}\text{ },
 \end{align}
 %
 where $w$ is an isometric tensor to be determined and $w^{\dagger}$ its hermitian conjugate.
@@ -602,9 +602,9 @@ It is shown in Ref.~\cite{hotrg,tnralgo} that a good approximation can be achiev
 %
 \begin{align}\label{def:M-AA} 
     M = 
-    \tikzfig{M-AA} 
+    \scalebox{0.9}{\tikzfig{M-AA}} 
     \equiv 
-    \tikzfig{twoA2M}\text{ }.
+    \scalebox{0.8}{\tikzfig{twoA2M}}\text{ }.
 \end{align}
 %
 We use the approximation to replace all pairs of $A$ tensors in the tensor network representation of the partition function $Z_{4\times4}$ in Eq.~\eqref{eq:ZunderRG} to get
@@ -618,7 +618,7 @@ We use the approximation to replace all pairs of $A$ tensors in the tensor netwo
 where in the second step, we contract two $A$ tensors and $w, w^{\dagger}$ in the dashed circle to get a coarser tensor $A'$,
 %
 \begin{align}\label{def:Apycontr}
-    \tikzfig{Ap-ycontr} \equiv \tikzfig{twoAcoarse}\text{ }.
+    \tikzfig{Ap-ycontr} \equiv \scalebox{0.8}{\tikzfig{twoAcoarse}}\text{ }.
 \end{align}
 %
 Notice in the approximation step in Eq.~\eqref{eq:Zapproxy}, we move the two leftmost $w$ tensors to the right because we have a periodic boundary condition. 
@@ -629,7 +629,7 @@ We usually choose $\tilde{\chi} \leq \chi_{\text{max}}$ in Eq.~\eqref{eq:hotrgPr
 It is shown in Ref.~\cite{hotrgfixpoint} that the HOTRG in the vertical direction transforms the $A^{\text{CDL}}$ in Fig.~\ref{fig:rgschem}(b) in the following way,
 %
 \begin{align}\label{eq:cdlHOTRG}
-    \tikzfig{cdlHOTRG} \propto \tikzfig{singleCDL}\text{ },
+    \scalebox{0.8}{\tikzfig{cdlHOTRG}} \propto \tikzfig{singleCDL}\text{ },
 \end{align}
 %
 which means that although the HOTRG can detect and project out four inner $C$ matrices, it can do nothing about the four outer $C$ matrices.
@@ -663,7 +663,7 @@ The coarse graining defined in Eq.~\eqref{def:RGeqGiltHOTRG} is able to simplify
     \tikzfig{singleCDL}
     \xrightarrow{\text{GILT-HOTRG}}
     \left(
-        \tikzfig{CDLnumber}
+        \scalebox{0.8}{\tikzfig{CDLnumber}}
     \right)^4.
 \end{align}
 %
@@ -811,7 +811,7 @@ Let us prove the property of the tensor RG equation of the GILT-HOTRG in Eq.~\eq
 We focus on the equivalence relation defined as 
 %
 \begin{align}\label{eq:simorth}
-    \tikzfig{Atilde} 
+    \scalebox{0.8}{\tikzfig{Atilde}} 
     = 
     \scalebox{0.8}{\tikzfig{AsimOrth}},
 \end{align}
@@ -836,7 +836,7 @@ It suffices to discuss the first half of the GILT-HOTRG coarse graining defined 
 We want to show that if $\tilde{A}$ is fed into the right hand side of Eq.~\eqref{def:ApycontrGilt}, the $\tilde{A}'$ we obtain in the left hand is related with the original $A'$ by 
 %
 \begin{align}\label{eq:Ap2Aptilde}
-    \tikzfig{Aptilde} 
+    \scalebox{0.8}{\tikzfig{Aptilde}} 
     = 
     \scalebox{0.8}{\tikzfig{ApsimOrth}},
 \end{align}
@@ -849,7 +849,7 @@ The environment in Eq.~\eqref{eq:bondEnvSVD} is multiplied by several orthogonal
 It is easy to check that the tensor $U$ in the singular value decomposition becomes (the sign ambiguities coming from the singular value decomposition does not matter here)
 %
 \begin{align}\label{eq:Utilde}
-    \tikzfig{Utilde} = \tikzfig{U2Utilde}.
+    \scalebox{0.8}{\tikzfig{Utilde}} = \scalebox{0.8}{\tikzfig{U2Utilde}}.
 \end{align}
 %
 The vector $\tilde{t}$ is thus the same as the original $t$ by its definition in Eq.~\eqref{def:tfromU}, which further gives $\tilde{t}'_i= t'_i$ since the tilde version of the right hand side of Eq.~\eqref{eq:tpfromt} is the same as the original version. 
@@ -857,7 +857,7 @@ Finally, equation~\eqref{def:QfromUtp} gives
 %
 \begin{align}\label{eq:QAtilde}
     \tikzfig{QAtildeMat} \texteq{\eqref{def:QfromUtp}}
-    \tikzfig{Utp2QAtilde} &= \tikzfig{Utp2Qupdate} \nonumber\\ 
+    \tikzfig{Utp2QAtilde} &= \scalebox{0.8}{\tikzfig{Utp2Qupdate}} \nonumber\\ 
                           &= \tikzfig{QAMatUU}.  
 \end{align}
 %

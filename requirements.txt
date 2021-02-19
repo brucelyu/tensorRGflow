@@ -1,0 +1,3 @@
+jax
+ncon
+git+https://github.com/mhauru/tntools

@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# File              : hotrgTc.py
+# Author            : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
+# Date              : 22.02.2021
+# Last Modified Date: 22.02.2021
+# Last Modified By  : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
+# -*- coding: utf-8 -*-
 """
 Created on Sun Aug 16 16:54:09 2020
 Perform the similar analysis of Hinczewski and Berker (2008), Fig. 4,
@@ -18,7 +24,7 @@ import argparse
 
 # argument parser
 parser = argparse.ArgumentParser(
-    "Generate of flow of tensor represented by its Frobenius norm." + 
+    "Generate of flow of tensor represented by its Frobenius norm." +
     " HOTRG is applied")
 parser.add_argument("--chi", dest = "chi", type = int,
                     help = "bound dimension (default: 10)",
@@ -28,7 +34,7 @@ parser.add_argument("--maxiter", dest = "maxiter", type = int,
                    default = 35)
 parser.add_argument("--rootiter", dest = "rootiter", type = int,
                     help = "iteration of finding the Tc (default:21)",
-                    default = 21)  
+                    default = 21)
 parser.add_argument("--isGilt", help = "whether to use Gilts",
                         action = "store_true")
 parser.add_argument("--isSym", help = "whether to use Z2 symmetric tensor",
@@ -85,7 +91,7 @@ loopred = args.loopred
 chitid = args.chitid
 stablek = args.stbk
 
-argsFET = {'chitid':chitid, 'maxiter':40, 'initscheme':'Gilt', 
+argsFET = {'chitid':chitid, 'maxiter':40, 'initscheme':'Gilt',
                'giltdeg':0.5}
 
 # # input and output file name
@@ -98,7 +104,7 @@ argsFET = {'chitid':chitid, 'maxiter':40, 'initscheme':'Gilt',
 #         raise ValueError("--ver argument is not valid.")
 # else:
 #     figdir = "hotrgflow"
-    
+
 # input and output file name
 if isGilt:
     figdir = "gilt_hotrg{:d}{:d}_flow".format(Ngilt, legcut)
@@ -106,7 +112,7 @@ else:
     figdir = "hotrg"
 
 
-    
+
 # create a directory with the name ?? to save all the figures
 # if the directory does not exist
 if isGilt:
@@ -133,25 +139,25 @@ Tdiff = abs(Thi - Tlow) / (Thi + Tlow)
 accTc = "{:.2e}".format(Tdiff)
 accTc = accTc[-2:]
 print("Start the bisection algorithm...")
-AnormL = normFlowHOTRG(Tlow,[chi,chi], iter_max, isDisp = False, 
+AnormL = normFlowHOTRG(Tlow,[chi,chi], iter_max, isDisp = False,
                          isGilt = isGilt, isSym = isSym,
                          gilt_eps = gilteps, cg_eps = cgeps,
                          N_gilt = Ngilt, legcut = legcut,
                          stableStep = stablek)[0]
-AnormH = normFlowHOTRG(Thi,[chi,chi], iter_max, isDisp = False, 
+AnormH = normFlowHOTRG(Thi,[chi,chi], iter_max, isDisp = False,
                          isGilt = isGilt, isSym = isSym,
                          gilt_eps = gilteps, cg_eps = cgeps,
                          N_gilt = Ngilt, legcut = legcut,
                          stableStep = stablek)[0]
 
 
-for i in range(iterRoot): 
+for i in range(iterRoot):
     print("Performing {}-th iteration to find the Tc".format(i+1))
     print("Tc estimated lowbound = {},\n highbound = {}".format(Tlow, Thi))
     # Examine the tensor RG flow at Ttry
     Ttry = 0.5*(Tlow + Thi)
     Tdiff = abs(Thi - Ttry) / Ttry
-    AnormTry = normFlowHOTRG(Ttry,[chi,chi], iter_max, isDisp = False, 
+    AnormTry = normFlowHOTRG(Ttry,[chi,chi], iter_max, isDisp = False,
                          isGilt = isGilt, isSym = isSym,
                          gilt_eps = gilteps, cg_eps = cgeps,
                          N_gilt = Ngilt, legcut = legcut,
@@ -170,7 +176,7 @@ for i in range(iterRoot):
         pylab.ylabel("$|A|$")
         pylab.savefig(savedirectory + "/chi{:02d}{:02d}.png".format(chi,i+1), dpi=300)
         # pylab.show()
-    
+
     # Calculate the "distances" of the Ttry tensor RG flow with
     # the original Thi and Tlow flows respectively
     if isGilt:
@@ -186,12 +192,12 @@ for i in range(iterRoot):
     else:
         Thi = Ttry
         AnormH = AnormTry.copy()
-        
+
 # save the lower and upper bound of Tc
 with open(Tcfile,"wb") as f:
     pkl.dump([Tlow,Thi],f)
 # Append all figures
-orgfile = savedirectory + '/chi{:02d}*.png '.format(chi)
-tarfile = savedirectory + '/allchi.png'
-os.system('convert ' + orgfile + "-append " + tarfile)
-os.system('rm ' + orgfile)
+# orgfile = savedirectory + '/chi{:02d}*.png '.format(chi)
+# tarfile = savedirectory + '/allchi.png'
+# os.system('convert ' + orgfile + "-append " + tarfile)
+# os.system('rm ' + orgfile)

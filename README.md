@@ -64,3 +64,5 @@ Draw the estimated scaling dimensions at different RG steps by running
 python drawScD.py --chi 20 --gilteps 6e-5 --Ngilt 2 --legcut 2
 ```
 Again, the figure will be save to `tensorRGflow/out/eps6e-05_chi20` directory.
+
+At the bond dimension 20, the whole analysis will take a few minutes.

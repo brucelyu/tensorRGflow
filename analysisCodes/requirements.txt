@@ -1,3 +1,4 @@
-jax
+jax==0.1.66
+jaxlib==0.1.46
 ncon
 git+https://github.com/mhauru/tntools

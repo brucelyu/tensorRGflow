@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# File              : hotrgScale.py
+# Author            : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
+# Date              : 11.03.2021
+# Last Modified Date: 11.03.2021
+# Last Modified By  : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
+# -*- coding: utf-8 -*-
 """
 Created on Tue Aug 18 10:56:25 2020
 Calculate the scaling dimension by differentiating on RG step.
@@ -14,7 +20,7 @@ import time
 from HOTRG import diffGiltHOTRG, scDimWen
 
 parser = argparse.ArgumentParser(
-    "Test calculation of scaling dimensions of 2d-Ising using differentiation" + 
+    "Test calculation of scaling dimensions of 2d-Ising using differentiation" +
     "techniques applied on HOTRG.")
 parser.add_argument("--chi", dest = "chi", type = int,
                 help = "horizontal and vertical bound dimension (default: 10)",
@@ -62,7 +68,7 @@ chieps = "eps{:.0e}_chi{:02d}".format(gilteps, chi)
 Tsdata = "./data/" + figdir + "/" + chieps + "/otherTs.pkl"
 with open(Tsdata, "rb") as f:
     Anorm, isomlist, RABslist, RABshlist = pkl.load(f)
-    
+
 
 ## file to read or save scaling dimensions
 scDFile = "../out/" + figdir +  "/" + chieps + "/scDim.pkl"
@@ -76,7 +82,7 @@ for k in range(lowRG, hiRG):
     klist.append(k)
     print("Performing {}-th to {}-th RG...".format(k,k+1))
 
-    print("Calculate the response matrix using jax.linearize routine, " + 
+    print("Calculate the response matrix using jax.linearize routine, " +
           "and calculate the first {:d} scaling dimensions from its eigenvalues.".format(NscaleD))
 
     startT = time.time()
@@ -93,7 +99,7 @@ for k in range(lowRG, hiRG):
     diffT = endT - startT
     # if type(scDims) == int:
     #     scDims = np.zeros(NscaleD)
-    
+
     # save scaling dimensions
     scDlist.append(scDims)
     print("finished! Time elapsed = {:.2f}".format(diffT))
@@ -103,10 +109,10 @@ for k in range(lowRG, hiRG):
     print("------------------------------------")
     print("Calculating the scaling dimensions a la Gu and Wen (2009)")
     Ainv = Acur * (Anormcur) ** (-1/3)
-    scDimsW, ccharge = scDimWen(Ainv)
+    scDimsW, ccharge = scDimWen(Ainv, scaleN=NscaleD)
     print("The scaling dimensions are:")
     with np.printoptions(precision = 5, suppress = True):
-        print(scDimsW)
+        print(scDimsW[:NscaleD])
     print("------------------------------------")
     print("------------------------------------")
 

@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# File              : HOTRG.py
+# Author            : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
+# Date              : 11.03.2021
+# Last Modified Date: 11.03.2021
+# Last Modified By  : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
+# -*- coding: utf-8 -*-
 """
 Created on Tue Feb 25 23:31:37 2020
 Implementation of high order TRG (HOTRG)
@@ -78,7 +84,7 @@ def getInvA(A, Anorm):
     return Ainv
 
 ## Calculating scaling dimensions a la Gu and Wen (2009)
-def scDimWen(A):
+def scDimWen(A, scaleN = 20):
     """
     Calculate scaling dimensions a la Wen (2009)
        k|
@@ -94,15 +100,15 @@ def scDimWen(A):
 
     """
     A = convertAbe(A)
-    Minv = ncon([A],[[1,1,-1,-2]])
-    # s = LA.svd(Minv, full_matrices=False, compute_uv=False)
-    u,s,v = Minv.svd([0],[1])
+    # Minv = ncon([A],[[1,1,-1,-2]])
+    Minv = ncon([A, A], [[1, 2, -1, -3], [2, 1, -2, -4]])
+    s = Minv.eig([0, 1], [2, 3], sparse=True, chis=scaleN)[0]
     s = s.to_ndarray()
     s = np.abs(s)
     s = -np.sort(-s)
     ccharge = np.log(s[0]) * 6 / np.pi
-    scdim = -np.log(s/s[0])/(2*np.pi)
-    return scdim,ccharge
+    scdim = -np.log(s/s[0])/(2*np.pi) * 2
+    return scdim, ccharge
 
 def eigDecp(rho,chiCut, isjax = False, epsilon = 1e-15):
     """
@@ -114,10 +120,10 @@ def eigDecp(rho,chiCut, isjax = False, epsilon = 1e-15):
         dtemp, utemp = LA.eigh(rho)
     else:
         dtemp, utemp = jLA.eigh(rho)
-    
+
     # Be careful the value in dtemp is in ascending order
     chiCut = np.min([chiCut, np.sum(dtemp/dtemp[-1] > epsilon)])
-    
+
     dcut = dtemp[:-chiCut - 1:-1]
     ucut = utemp[:,:-chiCut - 1:-1]
     if not isjax:
@@ -133,13 +139,13 @@ def yProjectorAB(B, A, chiH, cg_eps = 1e-7, isjax = False,
     """
     Determine the projector for the contraction along y direction
     """
-    
+
     if not isjax:
         B = convertAbe(B)
         A = convertAbe(A)
         M = ncon([B,A,B.conjugate(),A.conjugate()],
              [[-1,2,1,5],[-2,4,5,3],[-3,2,1,6],[-4,4,6,3]])
-        d, w, err = M.eig([0,1],[2,3], hermitian = True, 
+        d, w, err = M.eig([0,1],[2,3], hermitian = True,
                  chis = [i+1 for i in range(chiH)], eps = cg_eps,
                  evenTrunc = evenTrunc,
                  return_rel_err = True)
@@ -160,13 +166,13 @@ def xProjectorAB(B, A, chiV, cg_eps = 1e-7, isjax = False,
     """
     Determine the projector for the contraction along x direction
     """
-    
+
     if not isjax:
         B = convertAbe(B)
         A = convertAbe(A)
         M = ncon([B,A,B.conjugate(),A.conjugate()],
                  [[1,5,-1,2],[5,3,-2,4],[1,6,-3,2],[6,3,-4,4]])
-        d, v, err = M.eig([0,1],[2,3], hermitian = True, 
+        d, v, err = M.eig([0,1],[2,3], hermitian = True,
                  chis = [i+1 for i in range(chiV)], eps = cg_eps,
                  evenTrunc = evenTrunc,
                  return_rel_err = True)
@@ -194,7 +200,7 @@ def applySignFix(T, dh, dv):
     return res
 
 def fixSign(T,Told, trylegs = [0,2,0,2], debug = False):
-    
+
     """
     Fixed the sign ambiguity of T tensor according to Told tensor
     This algorithm is design for abeliantensors.symmetrytensors.TensorZ2 type
@@ -253,7 +259,7 @@ def fixSign(T,Told, trylegs = [0,2,0,2], debug = False):
     dv10 = np.sign(Told[(1,0,1,0)][0,0,0,0] * T[(1,0,1,0)][0,0,0,0])
     dv.append(dv10 * np.sign(legSlice(Told[(0,0,1,1)], legv1) * \
                              legSlice(T[(0,0,1,1)], legv1)))
-    
+
     # apply dh and dv on T to fixed the sign ambiguities
     Tfix = T.copy()
     for key in Tfix.sects.keys():
@@ -282,7 +288,7 @@ def fixBestSign(T,Told, debug = False):
     diffTmin = 100
     hrange = range(2)
     vrange = range(2,4)
-    for legh0, legv0, legh1, legv1 in product(hrange, vrange, 
+    for legh0, legv0, legh1, legv1 in product(hrange, vrange,
                                               hrange, vrange):
         tryleglist = [legh0, legv0, legh1, legv1]
         Tfix = fixSign(T, Told, tryleglist)[0]
@@ -309,13 +315,13 @@ def halfHOTRG(B, A, chi, direction = "v", verbose = True, cg_eps = 1e-6,
     """
     Perform half of the HOTRG coarse graining
     """
-    
+
     if direction == "v":
         if verbose:
             print("Coarse graining in y direction...")
         # determine the isometry that squeezes legs in y direction
         if not isjax:
-            w, dw, SP1err = yProjectorAB(B, A, chi, cg_eps, 
+            w, dw, SP1err = yProjectorAB(B, A, chi, cg_eps,
                                          evenTrunc = evenTrunc)
         else:
             w, dw, SP1err = yProjectorAB(B, A, chi, isjax = True)
@@ -369,9 +375,9 @@ def halfHOTRG(B, A, chi, direction = "v", verbose = True, cg_eps = 1e-6,
 
 
 def oneHOTRG(A, allchi, isfixGauge = False, verbose = False,
-             isGilt = False, gilt_eps = 1e-7, cg_eps = 1e-6, 
-             N_gilt = 2, legcut = 2, loop_red_scheme = "Gilt", 
-             argsFET = {}, RoptVerbose = False, 
+             isGilt = False, gilt_eps = 1e-7, cg_eps = 1e-6,
+             N_gilt = 2, legcut = 2, loop_red_scheme = "Gilt",
+             argsFET = {}, RoptVerbose = False,
              suggestChiABvh = [[False, 1, 1], [False, 1, 1]],
              evenTrunc = False):
     """
@@ -394,7 +400,7 @@ def oneHOTRG(A, allchi, isfixGauge = False, verbose = False,
     verbose : boolean, optional
         whether to print out information. The default is False.
     isGilt : boolean, optional
-        whether to apply the Gilts to truncation the input tensor A. 
+        whether to apply the Gilts to truncation the input tensor A.
         The default is False.
 
     Returns
@@ -419,7 +425,7 @@ def oneHOTRG(A, allchi, isfixGauge = False, verbose = False,
                           cg_eps = cg_eps, evenTrunc = evenTrunc)
         Ap, v = halfHOTRG(Ap, Ap, chiV, direction = "h", verbose = verbose,
                           cg_eps = cg_eps, evenTrunc = evenTrunc)
-        
+
         if verbose:
             print("HOTRG without loop reductions finished!")
             print("------------------------------")
@@ -431,13 +437,13 @@ def oneHOTRG(A, allchi, isfixGauge = False, verbose = False,
         if verbose:
             print("Perform coarse graining with {:s}.".format(loop_red_scheme))
             print("First perform {:s} for y direction...".format(loop_red_scheme))
-        # be careful with the different convention of 
+        # be careful with the different convention of
         # order of legs in Gilts and HOTRG
         suggestChiv = suggestChiABvh[0]
         Ap, Bp, RABs = gilt_hotrgplaq(A.transpose([0,2,1,3]),
                                 A.transpose([0,2,1,3]),
                                 gilt_eps, verbose = verbose, legcut = legcut,
-                                loop_red_scheme = loop_red_scheme, 
+                                loop_red_scheme = loop_red_scheme,
                                 argsFET = argsFET, RoptVerbose = RoptVerbose,
                                 suggestChiAB = suggestChiv)
         # transpose the order of leg back to HOTRG convention
@@ -445,7 +451,7 @@ def oneHOTRG(A, allchi, isfixGauge = False, verbose = False,
         Bp = Bp.transpose([0,2,1,3])
         Ap, w = halfHOTRG(Bp, Ap, chiH, direction = "v", verbose = verbose,
                           cg_eps = cg_eps, evenTrunc = evenTrunc)
-        
+
         if N_gilt == 2:
             if verbose:
                 print("Perform {:s} for x direction...".format(loop_red_scheme))
@@ -454,7 +460,7 @@ def oneHOTRG(A, allchi, isfixGauge = False, verbose = False,
                                     Ap.transpose([0,2,1,3]),
                                     gilt_eps, verbose = verbose,
                                     direction = "h", legcut = legcut,
-                                    loop_red_scheme = loop_red_scheme, 
+                                    loop_red_scheme = loop_red_scheme,
                                     argsFET = argsFET, RoptVerbose = RoptVerbose,
                                     suggestChiAB = suggestChih)
             # transpose the order of leg back to HOTRG convention
@@ -488,9 +494,9 @@ def oneHOTRG(A, allchi, isfixGauge = False, verbose = False,
             # the 1-d array dh (or dv) will multiply the last index of w (or v)
             w = w * dh
             v = v * dv
-        
+
         isometries = [w,v]
-        
+
         # check we can recover Ap by using isometries and RABs directly.
         # This part is purely for debug
         if verbose:
@@ -513,10 +519,10 @@ def oneHOTRG(A, allchi, isfixGauge = False, verbose = False,
             elif loop_red_scheme == "FET":
                 Apcheck = ncon([A, RAl, RAr], [[1, 2, -3, -4], [1,-1], [2,-2]])
                 Bpcheck = ncon([A, RBl, RBr], [[1, 2, -3, -4], [1,-1],[2,-2]])
-                
+
             # perform half HOTRG
             Apcheck = doHalfHOTRGknownWV(Bpcheck, Apcheck, w, direction = "v")
-            
+
             # horizontal procedure start
             if N_gilt == 1:
                 Apcheck = doHalfHOTRGknownWV(Apcheck, Apcheck, v, direction = "h")
@@ -547,7 +553,7 @@ def oneHOTRG(A, allchi, isfixGauge = False, verbose = False,
             print(LA.norm(Ap.to_ndarray() - Apcheck))
             print("-------------------------------\n")
 
-    
+
     return Ap, Anorm, isometries, RABs, RABsh
 
 ## The isometric tensors are given, contract them with original tensors
@@ -576,16 +582,16 @@ def get_spectrum_A(A, leftgrp = [0,2], rightgrp = [1,3]):
 
 
 def normFlowHOTRG(relT, allchi, iterN = 12, isDisp = True, isfixGauge = False,
-                  isGilt = False, isSym = False, gilt_eps = 1e-7, 
+                  isGilt = False, isSym = False, gilt_eps = 1e-7,
                   cg_eps = 1e-6, return_sing = False,
-                  N_gilt = 1, legcut = 4, loop_red_scheme = "Gilt", 
+                  N_gilt = 1, legcut = 4, loop_red_scheme = "Gilt",
                   argsFET = {}, stableStep = 9, saveData = [False, '']):
     """
     Similar to iterHOTRG, but here we just keep track of all the
     tensor norms. So this function is desgined to analyze the flow
     of tensor norms
-    
-    
+
+
     If saveData[0] is False, we simply save all data into a list
     and output them after all iterations.
     If saveData[0] is True, we will save tensor A into the directory
@@ -650,7 +656,7 @@ def normFlowHOTRG(relT, allchi, iterN = 12, isDisp = True, isfixGauge = False,
         A0cur, Anorm[k+1], isomlist[k], RABslist[k], RABshlist[k] = oneHOTRG(A0, allchi, isfixGauge, isDisp,
                                   isGilt, gilt_eps, cg_eps,
                                   N_gilt = N_gilt, legcut = legcut,
-                                  loop_red_scheme = loop_red_scheme, 
+                                  loop_red_scheme = loop_red_scheme,
                                   argsFET = argsFET,
                                   suggestChiABvh = suggestChiABvh,
                                   evenTrunc = evenTrunc)
@@ -711,12 +717,12 @@ def diffGiltHOTRG(A, Anorm, isom, RABs, RABsh, scaleN = 20,
     RAr = convertAbeBack(RAr)
     RBl = convertAbeBack(RBl)
     RBr = convertAbeBack(RBr)
-    
+
     RAlh = convertAbeBack(RAlh)
     RArh = convertAbeBack(RArh)
     RBlh = convertAbeBack(RBlh)
     RBrh = convertAbeBack(RBrh)
-    
+
     # define the RG equation
     def equationRG(psiA):
         Aorg = psiA.reshape(N1,N2,N3,N4)
@@ -760,10 +766,10 @@ def diffGiltHOTRG(A, Anorm, isom, RABs, RABsh, scaleN = 20,
 if __name__ == "__main__":
     import argparse
     from datetime import datetime
-    
+
     parser = argparse.ArgumentParser(
         "Test implementation of HOTRG.")
-    parser.add_argument("func", type = str, 
+    parser.add_argument("func", type = str,
                         help = "the function to be tested",
                         choices = ["old-Gilt-HOTRG", "Gilt-HOTRG-imp-gerr",
                                    "oneHOTRG", "Gilt-Full-HOTRG-gerr"],
@@ -786,7 +792,7 @@ if __name__ == "__main__":
                         "singluar values for the environment spectrum is zero" +
                         "(default: 1e-7)",
                         default = 1e-7)
-    parser.add_argument("--returnIsoRuv", 
+    parser.add_argument("--returnIsoRuv",
                        help = "whether to return isometries and Ruv matrices",
                        action = "store_true")
     parser.add_argument("--Ngilt", dest = "Ngilt", type = int,
@@ -804,8 +810,8 @@ if __name__ == "__main__":
     parser.add_argument("--stbk", dest = "stbk", type = int,
                     help = "A int after which we will try to stabilize the gilt process",
                     default = 8)
-    
-    
+
+
     args = parser.parse_args()
     testFun = args.func
     chi = args.chi
@@ -820,8 +826,8 @@ if __name__ == "__main__":
     loopred = args.loopred
     chitid = args.chitid
     stablek = args.stbk
-    
-    argsFET = {'chitid':chitid, 'maxiter':20, 'initscheme':'Gilt', 
+
+    argsFET = {'chitid':chitid, 'maxiter':20, 'initscheme':'Gilt',
                'giltdeg':0.5}
     now = datetime.now()
     current_time = now.strftime("%Y-%m-%d. %H:%M:%S")
@@ -834,7 +840,7 @@ if __name__ == "__main__":
         # rotation order of leg to HOTRG convention
         cdlT = cdlT.transpose([0,2,1,3])
         print("Test oneHOTRG on a random CDL tensor...")
-        Ap, Anorm,isometries,RABs, RABsh = oneHOTRG(cdlT, [cdlchi]*2, 
+        Ap, Anorm,isometries,RABs, RABsh = oneHOTRG(cdlT, [cdlchi]*2,
                                              verbose = True, isGilt = True,
                                              N_gilt = Ngilt, legcut = legcut,
                                              loop_red_scheme = loopred,
@@ -844,4 +850,4 @@ if __name__ == "__main__":
         errAp = (extAp - Anorm) / extAp
         print("Difference from exact Ap is {:.3e}".format(errAp))
         print("Test finished!!")
-    
+

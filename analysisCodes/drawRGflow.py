@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# File              : drawRGflow.py
+# Author            : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
+# Date              : 14.03.2021
+# Last Modified Date: 14.03.2021
+# Last Modified By  : Xinliang(Bruce) Lyu <lyu@issp.u-tokyo.ac.jp>
+# -*- coding: utf-8 -*-
 """
 Created on Thu Aug 20 11:20:06 2020
 
@@ -37,7 +43,7 @@ parser.add_argument("--gilteps", dest = "gilteps", type = float,
                         default = 1e-7)
 parser.add_argument("--nosignfix", help = "whether to not fix sign",
                         action = "store_true")
-parser.add_argument("--scheme", dest = "scheme", type = str, 
+parser.add_argument("--scheme", dest = "scheme", type = str,
                     help = "RG scheme to use",
                     choices = ["trg", "hotrg", "Gilt-HOTRG"],
                     default = "hotrg")
@@ -114,7 +120,7 @@ if os.path.exists(singValFile):
         Tsdata = "./data/" + figdir + "/" + chieps + "/otherTs.pkl"
         with open(Tsdata, "rb") as f:
             Anorm = pkl.load(f)[0]
-        
+
 if isDiffAcc:
     datadicFile = savedirectory + "/flowDiffAcc.pkl"
     with open(datadicFile,"rb") as f:
@@ -139,7 +145,7 @@ if isDiffAcc:
     elif scheme == "Gilt-HOTRG":
         plt.legend(loc="upper left")
         ax = plt.gca()
-        plt.text(0.02, 0.10, '(a) $\chi = 30$\n Gilt-HOTRG',
+        plt.text(0.02, 0.10, '(a) $\chi = 30$\n GILT $+$ HOTRG',
                  horizontalalignment='left',
                  verticalalignment='center',
                  transform = ax.transAxes)
@@ -148,8 +154,8 @@ if isDiffAcc:
     plt.minorticks_off()
     # plt.yticks([0.2, 1],[r"$2\times 10^{-1}$",
     #                         r"$10^0$"],rotation=45)
-   
-    plt.savefig(savedirectory + "/AnormFlowDiffAcc.pdf", bbox_inches = 'tight', 
+
+    plt.savefig(savedirectory + "/AnormFlowDiffAcc.pdf", bbox_inches = 'tight',
                 dpi = 300)
 
 
@@ -172,10 +178,10 @@ if scheme == "Gilt-HOTRG":
              horizontalalignment='left',
              verticalalignment='center',
              transform = ax.transAxes)
-    plt.savefig(savedirectory + 
+    plt.savefig(savedirectory +
                 "/flowA-singVal.pdf", bbox_inches = 'tight',
                 dpi = 300)
-    
+
     enteps = 1e-10
     entro = entropy(sarr > 1e-8, axis = 1, base = 2)
     plt.figure()
@@ -184,8 +190,8 @@ if scheme == "Gilt-HOTRG":
     plt.xlabel("RG step")
     plt.ylabel("Entropy")
     plt.savefig(savedirectory + "/flow_singSpectr_fixSign.png", dpi = 300)
-    
-    
+
+
     plt.figure()
     # plt.title("$\chi = ${:d}".format(chi))
     plt.plot(Anorm[:],"kx--",label="Tc = {:.10f}".format(relTc))
@@ -194,8 +200,8 @@ if scheme == "Gilt-HOTRG":
     plt.xlabel("RG step")
     plt.ylabel("$|A|$")
     plt.savefig(savedirectory + "/AnormFlow.png", dpi=300)
-    
-    
+
+
     plt.figure()
     plt.plot(Adifflist[14:31], "ko--", alpha = 0.6)
     plt.yscale("log")
@@ -208,7 +214,7 @@ if scheme == "Gilt-HOTRG":
              horizontalalignment='left',
              verticalalignment='center',
              transform = ax.transAxes)
-    plt.savefig(savedirectory + 
+    plt.savefig(savedirectory +
                 "/flowA-diff.pdf", bbox_inches = 'tight',
                 dpi = 300)
 
@@ -217,4 +223,4 @@ if scheme == "Gilt-HOTRG":
 
 
 
-    
+

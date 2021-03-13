@@ -145,7 +145,7 @@ if isDiffAcc:
     elif scheme == "Gilt-HOTRG":
         plt.legend(loc="upper left")
         ax = plt.gca()
-        plt.text(0.02, 0.10, '(a) $\chi = 30$\n GILT $+$ HOTRG',
+        plt.text(0.01, 0.08, '(a) $\chi = 30$\n GILT $+$ HOTRG',
                  horizontalalignment='left',
                  verticalalignment='center',
                  transform = ax.transAxes)

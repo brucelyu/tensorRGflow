@@ -1,4 +1,4 @@
-# Canonical RG prescription in tensor space using the GILT-HOTRG
+# Canonical RG prescription in tensor space using an HOTRG-like scheme (GILT + HOTRG)
 This repository keeps the latex files of the arXiv e-print, [*Scaling dimensions from linearized tensor renormalization group transformations*](https://arxiv.org/abs/2102.08136), and the Python3 codes of the numerical calculations in the e-print, including the implementation of the [graph independent local truncation](https://arxiv.org/abs/1709.07460) (GILT) and the [higer-order tensor renormalization group](https://arxiv.org/abs/1201.1144) (HOTRG).
 
 Apart from the standard computational libraries like NumPy and SciPy, the implementation here relies heavily on three other libraries: [tn-tools](https://github.com/mhauru/tntools), [ncon](https://github.com/mhauru/ncon) and [abeliantensors](https://github.com/mhauru/abeliantensors), all implemented by Markus Hauru.
@@ -20,10 +20,10 @@ We give a detailed explanation of the Python3 codes in the `analysisCodes` direc
 This is a package copied directly from the [abeliantensors](https://github.com/mhauru/abeliantensors) repository, with small adjustments to the `abeliantensors/abeliantensor.py` file to make the tensor RG flow more stable. The adjustments involve the `matrix_eig` function starting from line 1885. We add a boolean argument `evenTrunc` for this function. If `evenTrunc = True`, the bond dimension will be distributed evenly among two different sectors of a Z2 symmetric tensor.
 
 ### Functions
-* `jncon.py`— It is the jax version of `ncon` function for tensor contractions. It is based on the `ncon` function provided in Evenbly's [tensor network tutorial website](https://www.tensors.net/code). Basically, we replace NumPy matrix multiplications with the corresponding jax version. It will be useful when we linearize the RG equation of GILT-HOTRG to generate the linearized RG equation in Eq. (55) in the e-print.
+* `jncon.py`— It is the jax version of `ncon` function for tensor contractions. It is based on the `ncon` function provided in Evenbly's [tensor network tutorial website](https://www.tensors.net/code). Basically, we replace NumPy matrix multiplications with the corresponding jax version. It will be useful when we linearize the RG equation of the HOTRG-like scheme to generate the linearized RG equation in Eq. (55) in the e-print.
 * `Isings.py`— Contain a function, `Ising2dT`, to generate the initial tensor for the 2D Ising model, using the [tn-tools](https://github.com/mhauru/tntools) library.
 * `gilts.py`— Implementation of the [graph independent local truncation](https://arxiv.org/abs/1709.07460). I follow [Markus Hauru's implementation of the GILT](https://github.com/Gilt-TNR/Gilt-TNR) closely. Besides, I also implement Evenbly's [full environment truncation (FET)](https://arxiv.org/abs/1801.05390) here. I tried both the FET and GILT during the development phase of this research project, and my computations suggested that the GILT suits the purpose of this e-print better.
-* `HOTRG.py`— Implementation of the HOTRG, armed with the GILT and the sign fixing switches. Specifically, the function `normFlowHOTRG` generates tensor RG flows using the RG equation of the GILT-HOTRG implemented in the function `oneHOTRG`. The function `fixBestSign` fixes the sign ambiguity of the fixed-point tensor. The function `diffGiltHOTRG` uses the automatical differentiation in the JAX library to linearize the RG equation of the GILT-HOTRG, and calculates the scaling dimensions from the eigenvalues of the linearized RG equation.
+* `HOTRG.py`— Implementation of the HOTRG, armed with the GILT and the sign fixing switches. Specifically, the function `normFlowHOTRG` generates tensor RG flows using the RG equation of the HOTRG-like scheme implemented in the function `oneHOTRG`. The function `fixBestSign` fixes the sign ambiguity of the fixed-point tensor. The function `diffGiltHOTRG` uses the automatical differentiation in the JAX library to linearize the tensor RG equation, and calculates the scaling dimensions from the eigenvalues of the linearized RG equation.
 
 ### Scripts for analysis
 * `hotrgTc.py`— Analyze the flow of the tensor norm, and use bisection method to determine the approximated critical temeprature Tc. Save the estimated Tc to the disk.
@@ -55,7 +55,7 @@ The tensors at each RG step will be save to `tensorRGflow/analysisCodes/data` di
 ```shell
 python drawRGflow.py --chi 20 --isGilt --gilteps 6e-5 --scheme Gilt-HOTRG --Ngilt 2 --legcut 2
 ```
-All figures will be save to `tensorRGflow/out/eps6e-05_chi20` directory. Finally, we can linearze the RG equation of the GILT-HOTRG to calcuate scaling dimensions
+All figures will be save to `tensorRGflow/out/eps6e-05_chi20` directory. Finally, we can linearze the RG equation of the HOTRG-like scheme to calcuate scaling dimensions
 ```shell
 python hotrgScale.py --chi 20 --gilteps 6e-5 --Ngilt 2 --legcut 2 --iRGlow 5 --iRGhi 21
 ```

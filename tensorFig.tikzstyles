@@ -52,3 +52,4 @@
 \tikzstyle{blueArrow}=[draw=blue, ->, semithick]
 \tikzstyle{normArr}=[->, >=stealth]
 \tikzstyle{thickArr}=[->, >=stealth, ultra thick]
+\tikzstyle{whilefill}=[-, draw=black, fill=white, thick]

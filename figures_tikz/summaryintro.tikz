@@ -1,6 +1,6 @@
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
-		\node [style=wblock] (0) at (-7, 3) {RG\\transformations};
+		\node [style=wblock] (0) at (-7, 3) {Hamiltonian-based\\RG transformations};
 		\node [style=wblock] (1) at (0, 3) {Linearize the RG\\equation around a\\fixed point};
 		\node [style=gblock] (2) at (9, 3) {Scaling\\dimensions};
 		\node [style=wblock] (3) at (-5, 0) {Tensor RG};
@@ -8,8 +8,8 @@
 		\node [style=wblock] (5) at (-5, -5) {Filter out all\\short-range\\physics};
 		\node [style=wblock] (6) at (0, -5) {A\\fixed-point\\tensor};
 		\node [style=wblock] (7) at (0, -1) {Gauge\\fixing};
-		\node [style=kblock] (8) at (9, -5) {A 2D CFT\\theorem\\~\cite{GuWen2009,cardy1986}};
-		\node [style=kblock] (9) at (5, -1) {Construct the\\local scale\\transformation\\~\cite{EvenblyDilatationOp}};
+		\node [style=kblock] (8) at (9, -5) {A 2D CFT\\theorem};
+		\node [style=kblock] (9) at (5, -1) {Construct the\\local scale\\transformation};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw [style=normArr] (0) to (1);

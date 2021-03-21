@@ -1,0 +1,48 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=green] (0) at (-5, 0) {$\delta A_c$};
+		\node [style=none] (1) at (-7, 0) {};
+		\node [style=none] (2) at (-5, 2) {};
+		\node [style=none] (3) at (-3, 0) {};
+		\node [style=none] (4) at (-5, -2) {};
+		\node [style=none] (10) at (4, 3) {};
+		\node [style=none] (11) at (1, 0) {};
+		\node [style=none] (12) at (4, -3) {};
+		\node [style=none] (13) at (7, 0) {};
+		\node [style=none] (14) at (4, 1.5) {};
+		\node [style=none] (15) at (2.5, 0) {};
+		\node [style=none] (16) at (4, -1.5) {};
+		\node [style=none] (17) at (5.5, 0) {};
+		\node [style=green] (18) at (4, 0) {$\delta A$};
+		\node [style=none] (19) at (4, 4) {};
+		\node [style=none] (20) at (0, 0) {};
+		\node [style=none] (21) at (4, -4) {};
+		\node [style=none] (22) at (8, 0) {};
+		\node [style=none] (23) at (5.5, 1.75) {$\mathcal{R}$};
+		\node [style=none] (24) at (-1.75, 0) {$=$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=blackMidPureLine] (0) to (1.center);
+		\draw [style=blackMidPureLine] (2.center) to (0);
+		\draw [style=blackMidPureLine] (0) to (3.center);
+		\draw [style=blackMidPureLine] (0) to (4.center);
+		\draw [style=blackMidLine] (11.center)
+			 to [bend left=45] (10.center)
+			 to [bend left=45] (13.center)
+			 to [bend left=45] (12.center)
+			 to [bend left=45] cycle;
+		\draw [style=whilefill] (16.center)
+			 to [bend left=45] (15.center)
+			 to [bend left=45] (14.center)
+			 to [bend left=45] (17.center)
+			 to [bend left=45] cycle;
+		\draw [style=greenMidLine] (18) to (14.center);
+		\draw [style=greenMidLine] (18) to (17.center);
+		\draw [style=greenMidLine] (18) to (16.center);
+		\draw [style=greenMidLine] (15.center) to (18);
+		\draw [style=blackMidPureLine] (19.center) to (10.center);
+		\draw [style=blackMidPureLine] (13.center) to (22.center);
+		\draw [style=blackMidPureLine] (20.center) to (11.center);
+		\draw [style=blackMidPureLine] (12.center) to (21.center);
+	\end{pgfonlayer}
+\end{tikzpicture}
